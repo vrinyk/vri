@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function ArtCornerSection() {
+export function ArtCornerSection() {
   return (
     <>
       <div className="relative h-full w-full flex items-center justify-center">

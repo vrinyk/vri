@@ -27,7 +27,7 @@ const PROJECTS = [
   },
 ];
 
-export default function WorkSection() {
+export function WorkSection() {
   return (
     <>
       <div className="relative h-full w-full overflow-hidden rounded-lg">

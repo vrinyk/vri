@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function AboutSection() {
+export function AboutSection() {
   return (
     <>
       <div className="relative h-full w-full p-[6%]">
@@ -47,7 +47,7 @@ export default function AboutSection() {
           >
             {/* Tape pieces */}
             <div className="absolute -top-3 left-[20%] h-6 w-10 bg-amber-300/70 rotate-[-15deg] z-10" />
-            <div className="absolute -top-2 right-[10%] h-6 w-10 bg-amber-300/70 rotate-[20deg] z-10" />
+            <div className="absolute -top-2 right-[10%] h-6 w-10 bg-amber-300/70 rotate-20 z-10" />
             {/* Polaroid frame */}
             <div className="bg-white p-[6%] pb-[20%] shadow-md">
               <div className="w-full aspect-square bg-[#D1D3D4] rounded-sm" />
@@ -65,8 +65,8 @@ export default function AboutSection() {
             className="absolute left-[35%] top-[10%] w-[55%]"
           >
             {/* Tape pieces */}
-            <div className="absolute -top-3 left-[15%] h-6 w-10 bg-amber-300/70 rotate-[10deg] z-10" />
-            <div className="absolute -top-2 right-[15%] h-6 w-10 bg-amber-300/70 rotate-[-12deg] z-10" />
+            <div className="absolute -top-3 left-[15%] h-6 w-10 bg-amber-300/70 rotate-10 z-10" />
+            <div className="absolute -top-2 right-[15%] h-6 w-10 bg-amber-300/70 -rotate-12 z-10" />
             {/* Polaroid frame */}
             <div className="bg-white p-[6%] pb-[20%] shadow-md">
               <div className="w-full aspect-square bg-[#D1D3D4] rounded-sm" />

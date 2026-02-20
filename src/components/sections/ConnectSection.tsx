@@ -9,7 +9,7 @@ const TESTIMONIALS = [
   { name: "Vikas Singh", time: "1:43 PM", messages: ["Very elegant looking UI vrinda.", "just one suggestion, we dont have t..."] },
 ];
 
-export default function ConnectSection() {
+export function ConnectSection() {
   return (
     <>
       <div className="relative h-full w-full p-[6%]">

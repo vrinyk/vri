@@ -1,4 +1,4 @@
-import { useState, useCallback, type ReactNode } from "react";
+import { useState, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
@@ -7,12 +7,13 @@ import {
   animate,
 } from "motion/react";
 import type { SectionName } from "./Navbar";
-import CardWrapper from "./CardWrapper";
-import HeroSection, { HeroDecorations } from "./sections/HeroSection";
-import WorkSection from "./sections/WorkSection";
-import AboutSection from "./sections/AboutSection";
-import ArtCornerSection from "./sections/ArtCornerSection";
-import ConnectSection from "./sections/ConnectSection";
+import { CardWrapper } from "./CardWrapper";
+import { HeroSection, HeroDecorations } from "./sections/HeroSection";
+import { WorkSection } from "./sections/WorkSection";
+import { AboutSection } from "./sections/AboutSection";
+import { ArtCornerSection } from "./sections/ArtCornerSection";
+import { ConnectSection } from "./sections/ConnectSection";
+import type { ReactNode } from "react";
 
 const SECTION_ORDER: SectionName[] = [
   "Home",
@@ -26,6 +27,7 @@ interface SectionData {
   name: SectionName;
   content: ReactNode;
   decorations?: ReactNode;
+  isFullscreen?: boolean;
 }
 
 const SECTIONS: SectionData[] = [
@@ -34,7 +36,7 @@ const SECTIONS: SectionData[] = [
     content: <HeroSection />,
     decorations: <HeroDecorations />,
   },
-  { name: "Work", content: <WorkSection /> },
+  { name: "Work", content: <WorkSection />, isFullscreen: true },
   { name: "About Me", content: <AboutSection /> },
   { name: "Art Corner", content: <ArtCornerSection /> },
   { name: "Connect", content: <ConnectSection /> },
@@ -45,91 +47,96 @@ interface CardSliderProps {
   onSectionChange: (section: SectionName) => void;
 }
 
-/** Compute shortest-path direction between two section indices. */
-function getDirection(fromIdx: number, toIdx: number): number {
-  if (fromIdx === toIdx) return 1;
-  const len = SECTION_ORDER.length;
-  const fwd = (toIdx - fromIdx + len) % len;
-  const bwd = (fromIdx - toIdx + len) % len;
-  return fwd <= bwd ? 1 : -1;
+/**
+ * Returns hardware-accelerated transform + opacity for each deck position.
+ * Only uses `transform` and `opacity` — the two safest GPU-composited properties.
+ */
+function getDeckTransform(pos: number, cardRotation = 0) {
+  if (pos === 0) {
+    return {
+      transform: `translateX(0px) translateY(0px) scale(1) rotate(${cardRotation}deg)`,
+      opacity: 1,
+    };
+  }
+  if (pos === 1) {
+    return {
+      transform: `translateX(0px) translateY(35px) scale(0.95) rotate(${cardRotation}deg)`,
+      opacity: 0.7,
+    };
+  }
+  if (pos === 2) {
+    return {
+      transform: `translateX(0px) translateY(65px) scale(0.9) rotate(${cardRotation}deg)`,
+      opacity: 0.35,
+    };
+  }
+  if (pos >= 3) {
+    return {
+      transform: `translateX(0px) translateY(80px) scale(0.85) rotate(${cardRotation}deg)`,
+      opacity: 0,
+    };
+  }
+  // Swiped away (pos < 0) — exaggerate rotation in swipe direction
+  return {
+    transform: `translateX(-120%) translateY(-5%) scale(0.9) rotate(${cardRotation - 15}deg)`,
+    opacity: 0,
+  };
 }
 
-// Number of visible back-cards in the deck
-const BACK_CARDS = 3;
-
-// Card animation variants
-const cardVariants = {
-  enter: (direction: number) => ({
-    scale: 0.97,
-    y: 5,
-    opacity: 0.7,
-    x: direction > 0 ? 20 : -20,
-  }),
-  center: {
-    scale: 1,
-    y: 0,
-    opacity: 1,
-    x: 0,
-  },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -1300 : 1300,
-    rotateZ: direction > 0 ? -15 : 15,
-    opacity: 0,
-  }),
+// Per-section rotation for the active (top) card — gives each a hand-placed feel
+const SECTION_ROTATIONS: Record<string, number> = {
+  Home: -1.5,
+  Work: -45,       // fullscreen, no card
+  "About Me": 1,
+  "Art Corner": -2,
+  Connect: -1,
 };
 
-/**
- * Card deck — static decorative back-cards are always visible behind,
- * creating the stacked deck look. Only the top card (the active section)
- * animates on/off. When the top card peels away, the new section content
- * appears on a fresh top card that pops up from the deck.
- */
-export default function CardSlider({
+export function CardSlider({
   activeSection,
   onSectionChange,
 }: CardSliderProps) {
-  const [direction, setDirection] = useState(1);
-  const [prevIdx, setPrevIdx] = useState(SECTION_ORDER.indexOf(activeSection));
+  const [currentIndex, setCurrentIndex] = useState(
+    SECTION_ORDER.indexOf(activeSection)
+  );
 
+  // Sync currentIndex when activeSection changes from nav clicks
   const activeIdx = SECTION_ORDER.indexOf(activeSection);
-  const section = SECTIONS[activeIdx];
-
-  // Compute direction when activeSection changes from nav
-  // We derive it during render without useEffect by comparing with tracked prevIdx
-  let currentDirection = direction;
-  if (activeIdx !== prevIdx) {
-    currentDirection = getDirection(prevIdx, activeIdx);
-    // Schedule state updates for next render (won't cause cascading renders
-    // since we're using the derived value immediately)
-    // Using functional updates to batch
-    queueMicrotask(() => {
-      setDirection(currentDirection);
-      setPrevIdx(activeIdx);
-    });
+  if (activeIdx !== currentIndex) {
+    setCurrentIndex(activeIdx);
   }
 
-  // Drag support
-  const x = useMotionValue(0);
-  const rotateZ = useTransform(x, [-400, 0, 400], [-12, 0, 12]);
+  // Drag support — only for the active card
+  const dragX = useMotionValue(0);
+  const dragRotate = useTransform(dragX, [-400, 0, 400], [-12, 0, 12]);
   const dragOpacity = useTransform(
-    x,
+    dragX,
     [-400, -100, 0, 100, 400],
     [0.4, 1, 1, 1, 0.4]
   );
   const [isDragging, setIsDragging] = useState(false);
 
-  const navigateByOffset = useCallback(
-    (offset: number) => {
-      const currentIdx = SECTION_ORDER.indexOf(activeSection);
+  const navigateTo = useCallback(
+    (index: number) => {
       const len = SECTION_ORDER.length;
-      const nextIdx = (currentIdx + offset + len) % len;
-      const dir = offset > 0 ? 1 : -1;
-      setDirection(dir);
-      setPrevIdx(nextIdx);
+      const nextIdx = (index + len) % len;
+      setCurrentIndex(nextIdx);
       onSectionChange(SECTIONS[nextIdx].name);
     },
-    [activeSection, onSectionChange]
+    [onSectionChange]
   );
+
+  const navigateNext = useCallback(() => {
+    if (currentIndex < SECTION_ORDER.length - 1) {
+      navigateTo(currentIndex + 1);
+    }
+  }, [currentIndex, navigateTo]);
+
+  const navigatePrev = useCallback(() => {
+    if (currentIndex > 0) {
+      navigateTo(currentIndex - 1);
+    }
+  }, [currentIndex, navigateTo]);
 
   const handleDragEnd = (
     _: unknown,
@@ -143,95 +150,185 @@ export default function CardSlider({
       Math.abs(info.offset.x) > swipeThreshold ||
       Math.abs(info.velocity.x) > velocityThreshold
     ) {
-      const swipeDir = info.offset.x > 0 ? -1 : 1;
-      navigateByOffset(swipeDir);
+      if (info.offset.x < 0 && currentIndex < SECTION_ORDER.length - 1) {
+        navigateNext();
+      } else if (info.offset.x > 0 && currentIndex > 0) {
+        navigatePrev();
+      } else {
+        animate(dragX, 0, { type: "spring", stiffness: 500, damping: 30 });
+      }
     } else {
-      animate(x, 0, { type: "spring", stiffness: 500, damping: 30 });
+      animate(dragX, 0, { type: "spring", stiffness: 500, damping: 30 });
     }
   };
 
-  return (
-    <div className="relative mx-auto mt-4 w-full max-w-[1200px] px-10">
-      <div className="relative" style={{ aspectRatio: "16 / 9" }}>
-        {/* ─── Static back-cards (the deck behind) ─── */}
-        {Array.from({ length: BACK_CARDS }).map((_, i) => {
-          const depth = BACK_CARDS - i; // 3, 2, 1 (3 = furthest back)
-          return (
-            <div
-              key={`back-${i}`}
-              className="absolute inset-0"
-              style={{
-                zIndex: i + 1,
-                transform: `scale(${1 - depth * 0.03}) translateY(${depth * 10}px)`,
-                opacity: Math.max(0.2, 1 - depth * 0.22),
-              }}
-            >
-              <CardWrapper showPin={false} showBorder={false}>
-                {null}
-              </CardWrapper>
-            </div>
-          );
-        })}
+  // Find if Work (fullscreen) section is active
+  const activeSection2 = SECTIONS[currentIndex];
+  const isFullscreenActive = activeSection2?.isFullscreen && true;
 
-        {/* ─── Active top card with content ─── */}
-        <AnimatePresence mode="wait" custom={currentDirection}>
+  return (
+    <>
+      <div className="relative mx-auto mt-4 w-full max-w-[1200px] px-10">
+        <div className="relative" style={{ aspectRatio: "16 / 9" }}>
+          {SECTIONS.map((section, index) => {
+            let pos = index - currentIndex;
+            if (pos < -1) pos = -2;
+            if (pos > 3) pos = 3;
+
+            const isActive = pos === 0;
+            const activeRot = SECTION_ROTATIONS[section.name] ?? 0;
+            const deckStyle = getDeckTransform(pos, activeRot);
+
+            const zIndex = pos < 0 ? 15 : pos === 0 ? 12 : 12 - pos;
+
+            // Fullscreen sections are rendered outside the deck entirely
+            if (section.isFullscreen) {
+              return <div key={section.name} />;
+            }
+
+            return (
+              <div key={section.name}>
+                <motion.div
+                  className="absolute inset-0 will-change-transform"
+                  animate={
+                    isDragging && isActive
+                      ? undefined
+                      : {
+                          transform: deckStyle.transform,
+                          opacity: deckStyle.opacity,
+                        }
+                  }
+                  transition={{
+                    transform: {
+                      type: "tween",
+                      duration: 0.55,
+                      ease: [0.25, 1, 0.5, 1],
+                    },
+                    opacity: {
+                      type: "tween",
+                      duration: 0.4,
+                      ease: "easeOut",
+                    },
+                  }}
+                  style={{
+                    zIndex,
+                    pointerEvents: isActive ? "auto" : "none",
+                    ...(isDragging && isActive
+                      ? {
+                          x: dragX,
+                          rotateZ: dragRotate,
+                          opacity: dragOpacity,
+                        }
+                      : {}),
+                  }}
+                  {...(isActive
+                    ? {
+                        drag: "x" as const,
+                        dragConstraints: { left: 0, right: 0 },
+                        dragElastic: 0.85,
+                        onDragStart: () => setIsDragging(true),
+                        onDragEnd: handleDragEnd,
+                        whileDrag: { cursor: "grabbing" },
+                      }
+                    : {})}
+                >
+                  <div
+                    style={{ cursor: isActive ? "grab" : "default" }}
+                    className="h-full w-full"
+                  >
+                    <CardWrapper
+                      showPin={isActive || pos === 1}
+                      showBorder={pos <= 1}
+                    >
+                      {pos <= 2 ? section.content : null}
+                    </CardWrapper>
+                  </div>
+                </motion.div>
+
+                {/* Decorations — only for active non-fullscreen card */}
+                {isActive && section.decorations && (
+                  <motion.div
+                    key={`deco-${section.name}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.22, 1.0, 0.36, 1],
+                    }}
+                    className="pointer-events-none absolute inset-0"
+                    style={{ zIndex: 16 }}
+                  >
+                    {section.decorations}
+                  </motion.div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ─── Fullscreen Work overlay (outside deck to avoid transform containment) ─── */}
+      <AnimatePresence>
+        {isFullscreenActive && (
           <motion.div
-            key={section.name}
-            custom={currentDirection}
-            variants={cardVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
+            key="work-fullscreen"
+            className="fixed inset-0 z-20 overflow-hidden bg-blue-card grid-plus pt-[88px]"
+            initial={{
+              transform: "scale(0.85)",
+              opacity: 0.8,
+              borderRadius: 12,
+            }}
+            animate={{
+              transform: "scale(1)",
+              opacity: 1,
+              borderRadius: 0,
+            }}
+            exit={{
+              transform: "scale(0.85)",
+              opacity: 0,
+              borderRadius: 12,
+            }}
             transition={{
-              type: "tween",
-              duration: 0.45,
-              ease: [0.22, 1.0, 0.36, 1],
+              duration: 0.5,
+              ease: [0.25, 1, 0.5, 1],
             }}
-            className="absolute inset-0"
-            style={{
-              zIndex: BACK_CARDS + 1,
-              cursor: "grab",
-            }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.85}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={handleDragEnd}
-            whileDrag={{ cursor: "grabbing" }}
           >
             <motion.div
-              style={{
-                opacity: isDragging ? dragOpacity : 1,
-                x: isDragging ? x : 0,
-                rotateZ: isDragging ? rotateZ : 0,
-              }}
               className="h-full w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              transition={{ duration: 0.35, delay: 0.3 }}
             >
-              <CardWrapper>{section.content}</CardWrapper>
+              {activeSection2.content}
             </motion.div>
           </motion.div>
-        </AnimatePresence>
+        )}
+      </AnimatePresence>
 
-        {/* ─── Outer decorations layer ─── */}
-        <AnimatePresence mode="wait">
-          {section.decorations && (
-            <motion.div
-              key={`deco-${section.name}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-              transition={{
-                duration: 0.5,
-                ease: [0.22, 1.0, 0.36, 1],
-              }}
-              className="pointer-events-none absolute inset-0"
-              style={{ zIndex: BACK_CARDS + 2 }}
-            >
-              {section.decorations}
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Navigation Arrows */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-60 flex gap-5">
+        <button
+          onClick={navigatePrev}
+          disabled={currentIndex === 0}
+          aria-label="Previous"
+          className="flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#333] active:translate-y-0.5 active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+        >
+          <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+        </button>
+        <button
+          onClick={navigateNext}
+          disabled={currentIndex === SECTION_ORDER.length - 1}
+          aria-label="Next"
+          className="flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#333] active:translate-y-0.5 active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+        >
+          <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
+            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+          </svg>
+        </button>
       </div>
-    </div>
+    </>
   );
 }
