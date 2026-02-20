@@ -1,6 +1,6 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
-const SECTIONS = ["Work", "About Me", "Art Corner", "Connect"] as const;
+const SECTIONS = ["Work", "About Me", "Connect", "Art Corner"] as const;
 export type SectionName = (typeof SECTIONS)[number] | "Home";
 
 interface NavbarProps {
@@ -14,7 +14,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative z-30 flex items-center justify-between px-10 py-8"
+      className="relative z-30 grid grid-cols-[auto_1fr_auto] items-center px-10 py-8"
     >
       {/* Logo — clicking goes Home */}
       <motion.span
@@ -25,20 +25,21 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
         vrinda.work
       </motion.span>
 
-      <div className="flex items-center gap-10">
-        <ul className="flex gap-10 font-dm-sans text-[24px] capitalize text-black">
-          {SECTIONS.map((link) => (
-            <motion.li
-              key={link}
-              whileHover={{ y: -2 }}
-              onClick={() => onNavigate(link)}
-              className={`cursor-pointer transition-colors hover:text-blue-logo ${
-                activeSection === link
-                  ? "text-blue-logo font-semibold"
-                  : ""
-              }`}
-            >
-              {link}
+      {/* Centered nav links */}
+      <ul className="flex items-center justify-center gap-10 font-dm-sans text-[24px] capitalize text-black">
+        {SECTIONS.map((link) => (
+          <motion.li
+            key={link}
+            whileHover={{ y: -2 }}
+            onClick={() => onNavigate(link)}
+            className={`cursor-pointer transition-colors hover:text-blue-logo ${
+              activeSection === link
+                ? "text-blue-logo font-semibold"
+                : ""
+            }`}
+          >
+            {link}
+            <AnimatePresence>
               {activeSection === link && (
                 <motion.div
                   layoutId="nav-underline"
@@ -46,11 +47,13 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
-            </motion.li>
-          ))}
-        </ul>
-      </div>
+            </AnimatePresence>
+          </motion.li>
+        ))}
+      </ul>
 
+      {/* Empty right column — stamp badge is outside nav */}
+      <div />
     </motion.nav>
   );
 }

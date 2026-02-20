@@ -30,7 +30,7 @@ const PROJECTS = [
 export default function WorkSection() {
   return (
     <>
-      <div className="relative h-full w-full overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden rounded-lg">
         {/* ─── Marquee ─── */}
         <div className="absolute top-[3%] left-0 w-full overflow-hidden">
           <motion.div

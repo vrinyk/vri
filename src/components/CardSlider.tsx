@@ -1,13 +1,14 @@
-import { useState, useEffect, useRef, type ReactNode } from "react";
+import { useState, useCallback, type ReactNode } from "react";
 import {
   motion,
+  AnimatePresence,
   useMotionValue,
   useTransform,
   animate,
 } from "motion/react";
 import type { SectionName } from "./Navbar";
 import CardWrapper from "./CardWrapper";
-import HeroSection from "./sections/HeroSection";
+import HeroSection, { HeroDecorations } from "./sections/HeroSection";
 import WorkSection from "./sections/WorkSection";
 import AboutSection from "./sections/AboutSection";
 import ArtCornerSection from "./sections/ArtCornerSection";
@@ -23,15 +24,20 @@ const SECTION_ORDER: SectionName[] = [
 
 interface SectionData {
   name: SectionName;
-  component: ReactNode;
+  content: ReactNode;
+  decorations?: ReactNode;
 }
 
 const SECTIONS: SectionData[] = [
-  { name: "Home", component: <HeroSection /> },
-  { name: "Work", component: <WorkSection /> },
-  { name: "About Me", component: <AboutSection /> },
-  { name: "Art Corner", component: <ArtCornerSection /> },
-  { name: "Connect", component: <ConnectSection /> },
+  {
+    name: "Home",
+    content: <HeroSection />,
+    decorations: <HeroDecorations />,
+  },
+  { name: "Work", content: <WorkSection /> },
+  { name: "About Me", content: <AboutSection /> },
+  { name: "Art Corner", content: <ArtCornerSection /> },
+  { name: "Connect", content: <ConnectSection /> },
 ];
 
 interface CardSliderProps {
@@ -39,154 +45,97 @@ interface CardSliderProps {
   onSectionChange: (section: SectionName) => void;
 }
 
+/** Compute shortest-path direction between two section indices. */
+function getDirection(fromIdx: number, toIdx: number): number {
+  if (fromIdx === toIdx) return 1;
+  const len = SECTION_ORDER.length;
+  const fwd = (toIdx - fromIdx + len) % len;
+  const bwd = (fromIdx - toIdx + len) % len;
+  return fwd <= bwd ? 1 : -1;
+}
+
+// Number of visible back-cards in the deck
+const BACK_CARDS = 3;
+
+// Card animation variants
+const cardVariants = {
+  enter: (direction: number) => ({
+    scale: 0.97,
+    y: 5,
+    opacity: 0.7,
+    x: direction > 0 ? 20 : -20,
+  }),
+  center: {
+    scale: 1,
+    y: 0,
+    opacity: 1,
+    x: 0,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -1300 : 1300,
+    rotateZ: direction > 0 ? -15 : 15,
+    opacity: 0,
+  }),
+};
+
 /**
- * Card stack — all sections are stacked on top of each other.
- * Active section is on top. Clicking nav or dragging swipes the top card off,
- * revealing the next section beneath.
- *
- * The stack maintains a visual order separate from the section order:
- * the "stack" is an array of section indices where the last item is on top.
+ * Card deck — static decorative back-cards are always visible behind,
+ * creating the stacked deck look. Only the top card (the active section)
+ * animates on/off. When the top card peels away, the new section content
+ * appears on a fresh top card that pops up from the deck.
  */
 export default function CardSlider({
   activeSection,
   onSectionChange,
 }: CardSliderProps) {
-  // Visual stack order: array of section indices, last = top of stack
-  const [stack, setStack] = useState<number[]>(() => {
-    // Initialize: active on top, rest below
-    const activeIdx = SECTION_ORDER.indexOf(activeSection);
-    const rest = SECTIONS.map((_, i) => i).filter((i) => i !== activeIdx);
-    return [...rest, activeIdx];
-  });
+  const [direction, setDirection] = useState(1);
+  const [prevIdx, setPrevIdx] = useState(SECTION_ORDER.indexOf(activeSection));
 
-  const [swipingCard, setSwipingCard] = useState<number | null>(null);
-  const pendingSection = useRef<SectionName | null>(null);
+  const activeIdx = SECTION_ORDER.indexOf(activeSection);
+  const section = SECTIONS[activeIdx];
 
-  // When activeSection changes from parent (nav click),
-  // animate the current top card off then restack
-  useEffect(() => {
-    const currentTopIdx = stack[stack.length - 1];
-    const newIdx = SECTION_ORDER.indexOf(activeSection);
+  // Compute direction when activeSection changes from nav
+  // We derive it during render without useEffect by comparing with tracked prevIdx
+  let currentDirection = direction;
+  if (activeIdx !== prevIdx) {
+    currentDirection = getDirection(prevIdx, activeIdx);
+    // Schedule state updates for next render (won't cause cascading renders
+    // since we're using the derived value immediately)
+    // Using functional updates to batch
+    queueMicrotask(() => {
+      setDirection(currentDirection);
+      setPrevIdx(activeIdx);
+    });
+  }
 
-    if (currentTopIdx === newIdx) return; // already on top
-
-    // Store the pending target and trigger swipe-off of top card
-    pendingSection.current = activeSection;
-    setSwipingCard(currentTopIdx);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSection]);
-
-  const handleSwipeComplete = (swipedIdx: number) => {
-    setSwipingCard(null);
-
-    if (pendingSection.current) {
-      // Nav-triggered: put the target section on top
-      const targetIdx = SECTION_ORDER.indexOf(pendingSection.current);
-      pendingSection.current = null;
-      setStack((prev) => {
-        const without = prev.filter((i) => i !== targetIdx);
-        return [...without, targetIdx];
-      });
-    } else {
-      // Drag-triggered: move swiped card to bottom of stack
-      setStack((prev) => {
-        const without = prev.filter((i) => i !== swipedIdx);
-        const newTop = without[without.length - 1];
-        onSectionChange(SECTIONS[newTop].name);
-        return [swipedIdx, ...without];
-      });
-    }
-  };
-
-  return (
-    <div className="relative mx-auto mt-4 w-full max-w-[1200px] px-10">
-      <div className="relative" style={{ aspectRatio: "16 / 9" }}>
-        {stack.map((sectionIdx, stackPos) => {
-          const isTop = stackPos === stack.length - 1;
-          const distFromTop = stack.length - 1 - stackPos;
-          const maxVisible = 4;
-
-          // Visual properties based on stack position
-          const visible = distFromTop <= maxVisible;
-          const cardScale = visible ? 1 - distFromTop * 0.035 : 0.85;
-          const cardY = visible ? distFromTop * 10 : 0;
-          const cardOpacity = visible
-            ? Math.max(0.15, 1 - distFromTop * 0.2)
-            : 0;
-
-          return (
-            <StackCard
-              key={SECTIONS[sectionIdx].name}
-              isTop={isTop}
-              isSwiping={swipingCard === sectionIdx}
-              stackScale={cardScale}
-              stackY={cardY}
-              stackOpacity={cardOpacity}
-              zIndex={stackPos + 1}
-              onSwipeComplete={() => handleSwipeComplete(sectionIdx)}
-            >
-              <CardWrapper>
-                {SECTIONS[sectionIdx].component}
-              </CardWrapper>
-            </StackCard>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ─── Individual Stack Card ───
-
-interface StackCardProps {
-  children: ReactNode;
-  isTop: boolean;
-  isSwiping: boolean;
-  stackScale: number;
-  stackY: number;
-  stackOpacity: number;
-  zIndex: number;
-  onSwipeComplete: () => void;
-}
-
-function StackCard({
-  children,
-  isTop,
-  isSwiping,
-  stackScale,
-  stackY,
-  stackOpacity,
-  zIndex,
-  onSwipeComplete,
-}: StackCardProps) {
+  // Drag support
   const x = useMotionValue(0);
-  const rotateZ = useTransform(x, [-400, 0, 400], [-18, 0, 18]);
+  const rotateZ = useTransform(x, [-400, 0, 400], [-12, 0, 12]);
   const dragOpacity = useTransform(
     x,
-    [-400, -150, 0, 150, 400],
-    [0.3, 1, 1, 1, 0.3]
+    [-400, -100, 0, 100, 400],
+    [0.4, 1, 1, 1, 0.4]
   );
+  const [isDragging, setIsDragging] = useState(false);
 
-  // When this card is being swiped off via nav click
-  useEffect(() => {
-    if (isSwiping) {
-      // Animate the card off to the right with rotation
-      animate(x, 1300, {
-        duration: 0.45,
-        ease: [0.32, 0.72, 0, 1],
-        onComplete: () => {
-          x.set(0);
-          onSwipeComplete();
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSwiping]);
+  const navigateByOffset = useCallback(
+    (offset: number) => {
+      const currentIdx = SECTION_ORDER.indexOf(activeSection);
+      const len = SECTION_ORDER.length;
+      const nextIdx = (currentIdx + offset + len) % len;
+      const dir = offset > 0 ? 1 : -1;
+      setDirection(dir);
+      setPrevIdx(nextIdx);
+      onSectionChange(SECTIONS[nextIdx].name);
+    },
+    [activeSection, onSectionChange]
+  );
 
   const handleDragEnd = (
     _: unknown,
     info: { offset: { x: number }; velocity: { x: number } }
   ) => {
+    setIsDragging(false);
     const swipeThreshold = 100;
     const velocityThreshold = 400;
 
@@ -194,55 +143,95 @@ function StackCard({
       Math.abs(info.offset.x) > swipeThreshold ||
       Math.abs(info.velocity.x) > velocityThreshold
     ) {
-      const direction = info.offset.x > 0 ? 1 : -1;
-      animate(x, direction * 1300, {
-        duration: 0.4,
-        ease: [0.32, 0.72, 0, 1],
-        onComplete: () => {
-          x.set(0);
-          onSwipeComplete();
-        },
-      });
+      const swipeDir = info.offset.x > 0 ? -1 : 1;
+      navigateByOffset(swipeDir);
     } else {
       animate(x, 0, { type: "spring", stiffness: 500, damping: 30 });
     }
   };
 
-  const canDrag = isTop && !isSwiping;
-
   return (
-    <motion.div
-      className="absolute inset-0"
-      style={{
-        zIndex,
-        x: isTop ? x : 0,
-        rotateZ: isTop ? rotateZ : 0,
-        cursor: canDrag ? "grab" : "default",
-      }}
-      animate={{
-        scale: stackScale,
-        y: stackY,
-        opacity: stackOpacity,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 280,
-        damping: 28,
-      }}
-      drag={canDrag ? "x" : false}
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.85}
-      onDragEnd={canDrag ? handleDragEnd : undefined}
-      whileDrag={{ cursor: "grabbing" }}
-    >
-      <motion.div
-        style={{
-          opacity: isTop ? dragOpacity : 1,
-        }}
-        className="h-full w-full pointer-events-auto"
-      >
-        {children}
-      </motion.div>
-    </motion.div>
+    <div className="relative mx-auto mt-4 w-full max-w-[1200px] px-10">
+      <div className="relative" style={{ aspectRatio: "16 / 9" }}>
+        {/* ─── Static back-cards (the deck behind) ─── */}
+        {Array.from({ length: BACK_CARDS }).map((_, i) => {
+          const depth = BACK_CARDS - i; // 3, 2, 1 (3 = furthest back)
+          return (
+            <div
+              key={`back-${i}`}
+              className="absolute inset-0"
+              style={{
+                zIndex: i + 1,
+                transform: `scale(${1 - depth * 0.03}) translateY(${depth * 10}px)`,
+                opacity: Math.max(0.2, 1 - depth * 0.22),
+              }}
+            >
+              <CardWrapper showPin={false} showBorder={false}>
+                {null}
+              </CardWrapper>
+            </div>
+          );
+        })}
+
+        {/* ─── Active top card with content ─── */}
+        <AnimatePresence mode="wait" custom={currentDirection}>
+          <motion.div
+            key={section.name}
+            custom={currentDirection}
+            variants={cardVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              type: "tween",
+              duration: 0.45,
+              ease: [0.22, 1.0, 0.36, 1],
+            }}
+            className="absolute inset-0"
+            style={{
+              zIndex: BACK_CARDS + 1,
+              cursor: "grab",
+            }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.85}
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={handleDragEnd}
+            whileDrag={{ cursor: "grabbing" }}
+          >
+            <motion.div
+              style={{
+                opacity: isDragging ? dragOpacity : 1,
+                x: isDragging ? x : 0,
+                rotateZ: isDragging ? rotateZ : 0,
+              }}
+              className="h-full w-full"
+            >
+              <CardWrapper>{section.content}</CardWrapper>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* ─── Outer decorations layer ─── */}
+        <AnimatePresence mode="wait">
+          {section.decorations && (
+            <motion.div
+              key={`deco-${section.name}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+              transition={{
+                duration: 0.5,
+                ease: [0.22, 1.0, 0.36, 1],
+              }}
+              className="pointer-events-none absolute inset-0"
+              style={{ zIndex: BACK_CARDS + 2 }}
+            >
+              {section.decorations}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }

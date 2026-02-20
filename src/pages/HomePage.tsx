@@ -13,9 +13,9 @@ export default function HomePage() {
       {/* ─── Download Resume Stamp (fixed top-right) ─── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        animate={{ opacity: 1, scale: 1, rotate: 12 }}
         transition={{ duration: 0.6, delay: 0.8, type: "spring" }}
-        whileHover={{ scale: 1.05, rotate: 5 }}
+        whileHover={{ scale: 1.05, rotate: 18 }}
         className="fixed right-6 top-4 z-50 cursor-pointer"
       >
         <img
