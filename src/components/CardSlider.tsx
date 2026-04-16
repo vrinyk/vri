@@ -109,12 +109,19 @@ export function CardSlider({
   // Drag support — only for the active card
   const dragX = useMotionValue(0);
   const dragRotate = useTransform(dragX, [-400, 0, 400], [-12, 0, 12]);
-  const dragOpacity = useTransform(
-    dragX,
-    [-400, -100, 0, 100, 400],
-    [0.4, 1, 1, 1, 0.4]
-  );
-  const [isDragging, setIsDragging] = useState(false);
+  /** Clamp so elastic drag past ±400 does not extrapolate opacity below 0. */
+  const dragOpacity = useTransform(dragX, (x) => {
+    const t = Math.max(-400, Math.min(400, x));
+    if (t <= -100) {
+      const u = (t + 400) / 300;
+      return 0.4 + u * 0.6;
+    }
+    if (t >= 100) {
+      const u = (t - 100) / 300;
+      return 1 - u * 0.6;
+    }
+    return 1;
+  });
 
   const navigateTo = useCallback(
     (index: number) => {
@@ -142,7 +149,6 @@ export function CardSlider({
     _: unknown,
     info: { offset: { x: number }; velocity: { x: number } }
   ) => {
-    setIsDragging(false);
     const swipeThreshold = 100;
     const velocityThreshold = 400;
 
@@ -188,16 +194,13 @@ export function CardSlider({
 
             return (
               <div key={section.name}>
+                {/* Outer: deck stack transform must stay applied while dragging; inner applies drag offset. */}
                 <motion.div
                   className="absolute inset-0 will-change-transform"
-                  animate={
-                    isDragging && isActive
-                      ? undefined
-                      : {
-                          transform: deckStyle.transform,
-                          opacity: deckStyle.opacity,
-                        }
-                  }
+                  animate={{
+                    transform: deckStyle.transform,
+                    opacity: deckStyle.opacity,
+                  }}
                   transition={{
                     transform: {
                       type: "tween",
@@ -213,36 +216,41 @@ export function CardSlider({
                   style={{
                     zIndex,
                     pointerEvents: isActive ? "auto" : "none",
-                    ...(isDragging && isActive
-                      ? {
-                          x: dragX,
-                          rotateZ: dragRotate,
-                          opacity: dragOpacity,
-                        }
-                      : {}),
                   }}
-                  {...(isActive
-                    ? {
-                        drag: "x" as const,
-                        dragConstraints: { left: 0, right: 0 },
-                        dragElastic: 0.85,
-                        onDragStart: () => setIsDragging(true),
-                        onDragEnd: handleDragEnd,
-                        whileDrag: { cursor: "grabbing" },
-                      }
-                    : {})}
                 >
-                  <div
-                    style={{ cursor: isActive ? "grab" : "default" }}
+                  <motion.div
                     className="h-full w-full"
+                    style={
+                      isActive
+                        ? {
+                            x: dragX,
+                            rotateZ: dragRotate,
+                            opacity: dragOpacity,
+                          }
+                        : undefined
+                    }
+                    {...(isActive
+                      ? {
+                          drag: "x" as const,
+                          dragConstraints: { left: 0, right: 0 },
+                          dragElastic: 0.85,
+                          onDragEnd: handleDragEnd,
+                          whileDrag: { cursor: "grabbing" },
+                        }
+                      : {})}
                   >
-                    <CardWrapper
-                      showPin={isActive || pos === 1}
-                      showBorder={pos <= 1}
+                    <div
+                      style={{ cursor: isActive ? "grab" : "default" }}
+                      className="h-full w-full"
                     >
-                      {pos <= 2 ? section.content : null}
-                    </CardWrapper>
-                  </div>
+                      <CardWrapper
+                        showPin={isActive || pos === 1}
+                        showBorder={pos <= 1}
+                      >
+                        {pos <= 2 ? section.content : null}
+                      </CardWrapper>
+                    </div>
+                  </motion.div>
                 </motion.div>
 
                 {/* Decorations — only for active non-fullscreen card */}

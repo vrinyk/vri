@@ -1,7 +1,16 @@
-import {HomePage} from './pages/HomePage'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import { FreedDrpCaseStudyPage } from "./pages/FreedDrpCaseStudyPage";
 
 function App() {
-  return <HomePage />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/case-studies/freed-drp" element={<FreedDrpCaseStudyPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
