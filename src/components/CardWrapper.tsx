@@ -4,6 +4,7 @@ interface CardWrapperProps {
   children: React.ReactNode;
   showPin?: boolean;
   showBorder?: boolean;
+  isActive?: boolean;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -12,6 +13,7 @@ export function CardWrapper({
   children,
   showPin = true,
   showBorder = true,
+  isActive = true,
   className = "",
   style,
 }: CardWrapperProps) {
@@ -30,7 +32,11 @@ export function CardWrapper({
       /> */}
 
       {/* Main blue card */}
-      <div className="relative z-10 h-full w-full overflow-visible rounded-lg bg-blue-card grid-plus shadow-[8px_10px_24px_rgba(30,40,80,0.25)]">
+      <div
+        className={`relative z-10 h-full w-full overflow-visible rounded-lg grid-plus shadow-[8px_10px_24px_rgba(30,40,80,0.25)] transition-colors duration-500 ease-out ${
+          isActive ? "bg-blue-card" : "bg-blue-card-back"
+        }`}
+      >
         {/* Inner border frame */}
         {showBorder && (
           <div className="pointer-events-none absolute inset-[5%] rounded border border-white/35" />

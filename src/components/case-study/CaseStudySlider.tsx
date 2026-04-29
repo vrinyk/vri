@@ -75,13 +75,14 @@ const CaseStudySlider = () => {
   useEffect(() => {
     if (!emblaApi) return;
 
-    syncSliderState();
+    const initialSync = requestAnimationFrame(syncSliderState);
     emblaApi.on("select", syncSliderState);
     emblaApi.on("scroll", syncSliderState);
     emblaApi.on("settle", syncSliderState);
     emblaApi.on("reInit", syncSliderState);
 
     return () => {
+      cancelAnimationFrame(initialSync);
       emblaApi.off("select", syncSliderState);
       emblaApi.off("scroll", syncSliderState);
       emblaApi.off("settle", syncSliderState);

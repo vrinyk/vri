@@ -51,46 +51,38 @@ interface CardSliderProps {
  * Returns hardware-accelerated transform + opacity for each deck position.
  * Only uses `transform` and `opacity` — the two safest GPU-composited properties.
  */
-function getDeckTransform(pos: number, cardRotation = 0) {
+function getDeckTransform(pos: number) {
   if (pos === 0) {
+    // Active card lands horizontal (0deg) so siblings rotate up into alignment.
     return {
-      transform: `translateX(0px) translateY(0px) scale(1) rotate(${cardRotation}deg)`,
+      transform: `translateX(0px) translateY(0px) scale(1) rotate(0deg)`,
       opacity: 1,
     };
   }
   if (pos === 1) {
     return {
-      transform: `translateX(0px) translateY(35px) scale(0.95) rotate(${cardRotation}deg)`,
-      opacity: 0.7,
+      transform: `translateX(8px) translateY(20px) scale(0.97) rotate(-6deg)`,
+      opacity: 1,
     };
   }
   if (pos === 2) {
     return {
-      transform: `translateX(0px) translateY(65px) scale(0.9) rotate(${cardRotation}deg)`,
-      opacity: 0.35,
+      transform: `translateX(14px) translateY(34px) scale(0.93) rotate(-9deg)`,
+      opacity: 1,
     };
   }
   if (pos >= 3) {
     return {
-      transform: `translateX(0px) translateY(80px) scale(0.85) rotate(${cardRotation}deg)`,
+      transform: `translateX(18px) translateY(44px) scale(0.9) rotate(-11deg)`,
       opacity: 0,
     };
   }
   // Swiped away (pos < 0) — exaggerate rotation in swipe direction
   return {
-    transform: `translateX(-120%) translateY(-5%) scale(0.9) rotate(${cardRotation - 15}deg)`,
+    transform: `translateX(-120%) translateY(-5%) scale(0.9) rotate(-15deg)`,
     opacity: 0,
   };
 }
-
-// Per-section rotation for the active (top) card — gives each a hand-placed feel
-const SECTION_ROTATIONS: Record<string, number> = {
-  Home: -1.5,
-  Work: -45,       // fullscreen, no card
-  "About Me": 1,
-  "Art Corner": -2,
-  Connect: -1,
-};
 
 export function CardSlider({
   activeSection,
@@ -174,7 +166,7 @@ export function CardSlider({
 
   return (
     <>
-      <div className="relative mx-auto mt-4 w-full max-w-[1200px] px-10">
+      <div className="relative mx-auto mt-4 w-full max-w-[1100px] px-10">
         <div className="relative" style={{ aspectRatio: "16 / 9" }}>
           {SECTIONS.map((section, index) => {
             let pos = index - currentIndex;
@@ -182,8 +174,7 @@ export function CardSlider({
             if (pos > 3) pos = 3;
 
             const isActive = pos === 0;
-            const activeRot = SECTION_ROTATIONS[section.name] ?? 0;
-            const deckStyle = getDeckTransform(pos, activeRot);
+            const deckStyle = getDeckTransform(pos);
 
             const zIndex = pos < 0 ? 15 : pos === 0 ? 12 : 12 - pos;
 
@@ -244,10 +235,11 @@ export function CardSlider({
                       className="h-full w-full"
                     >
                       <CardWrapper
-                        showPin={isActive || pos === 1}
-                        showBorder={pos <= 1}
+                        showPin={isActive}
+                        showBorder={isActive}
+                        isActive={isActive}
                       >
-                        {pos <= 2 ? section.content : null}
+                        {isActive ? section.content : null}
                       </CardWrapper>
                     </div>
                   </motion.div>

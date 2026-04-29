@@ -44,8 +44,8 @@ export function WorkSection() {
             {[...Array(4)].map((_, i) => (
               <span
                 key={i}
-                className="mx-4 font-oswald text-[clamp(28px,4vw,56px)] font-semibold uppercase text-white"
-                style={{ WebkitTextStroke: "1px white", color: "transparent" }}
+                className="mx-4 font-gasoek text-[clamp(28px,4vw,56px)] uppercase text-white tracking-widest"
+                style={{ WebkitTextStroke: "0.5px white", color: "transparent" }}
               >
                 true design is never finished; &nbsp;
               </span>
