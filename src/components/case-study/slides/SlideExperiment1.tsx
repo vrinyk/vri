@@ -32,11 +32,11 @@ const SlideExperiment1 = () => {
       <div className="container max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-10 text-center">
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-4">
+          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-4">
             Improving First Impressions<br />with Guided Landing
           </h2>
           <span 
-            className="inline-block px-8 py-2.5 bg-foreground text-background font-semibold rounded-lg text-sm"
+            className="inline-block px-8 py-2.5 bg-[#1f232d] text-[#f7f3ec] font-semibold rounded-lg text-sm"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Experiment 1
@@ -49,7 +49,7 @@ const SlideExperiment1 = () => {
             <div className="flex gap-6">
               {/* Phone Mockup */}
               <div className="flex flex-col items-center flex-shrink-0">
-                <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 overflow-hidden">
+                <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 overflow-hidden">
                   <div className="w-full h-full rounded-[2rem] overflow-hidden">
                     <img 
                       src={mockupOld} 
@@ -58,16 +58,16 @@ const SlideExperiment1 = () => {
                     />
                   </div>
                 </div>
-                <span className="text-muted-foreground font-medium mt-3">Old</span>
+                <span className="text-[#6b6f7a] font-medium mt-3">Old</span>
               </div>
               
               {/* Issues Content */}
               <div className="space-y-3 flex-1">
                 {issues.map((issue) => (
-                  <div key={issue.id} className="bg-background/50 rounded-xl p-3">
-                    <span className="text-xs font-semibold text-primary">Issue {issue.id}</span>
+                  <div key={issue.id} className="bg-[#f7f3ec]/50 rounded-xl p-3">
+                    <span className="text-xs font-semibold text-[#1f232d]">Issue {issue.id}</span>
                     <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>{issue.title} →</h4>
-                    <p className="text-xs text-muted-foreground">{issue.description}</p>
+                    <p className="text-xs text-[#6b6f7a]">{issue.description}</p>
                   </div>
                 ))}
               </div>
@@ -75,15 +75,15 @@ const SlideExperiment1 = () => {
             
             {/* VS Divider */}
             <div className="hidden lg:flex flex-col items-center self-stretch">
-              <div className="w-px h-full bg-border relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-card border border-border rounded-full flex items-center justify-center">
-                  <span className="text-muted-foreground text-xs font-semibold">VS</span>
+              <div className="w-px h-full bg-[#e6e0d5] relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#fbfaf7] border border-[#e6e0d5] rounded-full flex items-center justify-center">
+                  <span className="text-[#6b6f7a] text-xs font-semibold">VS</span>
                 </div>
               </div>
             </div>
             
             {/* Mobile Divider */}
-            <div className="lg:hidden w-full h-px bg-border my-4" />
+            <div className="lg:hidden w-full h-px bg-[#e6e0d5] my-4" />
             
             {/* Right Side - New Phone + Solutions */}
             <div className="flex gap-6">
@@ -91,16 +91,16 @@ const SlideExperiment1 = () => {
               <div className="space-y-3 flex-1 order-2 lg:order-1">
                 {issues.map((issue) => (
                   <div key={issue.id} className="rounded-xl p-3">
-                    <span className="text-xs font-semibold text-accent-green-foreground">Solved</span>
+                    <span className="text-xs font-semibold text-[#294b3a]">Solved</span>
                     <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>{issue.solved} →</h4>
-                    <p className="text-xs text-muted-foreground">{issue.solvedDesc}</p>
+                    <p className="text-xs text-[#6b6f7a]">{issue.solvedDesc}</p>
                   </div>
                 ))}
               </div>
               
               {/* Phone Mockup */}
               <div className="flex flex-col items-center flex-shrink-0 order-1 lg:order-2">
-                <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
+                <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
                   <div className="w-full h-full rounded-[2rem] overflow-hidden">
                     <img 
                       src={mockupNew} 
@@ -109,7 +109,7 @@ const SlideExperiment1 = () => {
                     />
                   </div>
                 </div>
-                <span className="text-foreground font-medium mt-3">New</span>
+                <span className="text-[#1f232d] font-medium mt-3">New</span>
               </div>
             </div>
           </div>
@@ -137,12 +137,12 @@ const SlideExperiment1 = () => {
           >
             A-B Testing UI Ideation
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-[#6b6f7a] max-w-2xl mx-auto mb-6">
             Exploring different design variations and testing them with real users to validate our hypotheses and optimize the user experience.
           </p>
           {/* Experiment 2 Box */}
           <span 
-            className="inline-block px-8 py-2.5 bg-foreground text-background font-semibold rounded-lg text-sm"
+            className="inline-block px-8 py-2.5 bg-[#1f232d] text-[#f7f3ec] font-semibold rounded-lg text-sm"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Experiment 2
@@ -156,7 +156,7 @@ const SlideExperiment1 = () => {
             <div className="flex gap-6">
               {/* Phone Mockup */}
               <div className="flex flex-col items-center flex-shrink-0">
-                <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 overflow-hidden">
+                <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 overflow-hidden">
                   <div className="w-full h-full rounded-[2rem] overflow-hidden bg-white flex items-center justify-center">
                     <img 
                       src={uiMotionMockup} 
@@ -169,28 +169,28 @@ const SlideExperiment1 = () => {
               
               {/* Pointers Content */}
               <div className="space-y-3 flex-1">
-                <div className="bg-background/50 rounded-xl p-3">
+                <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Visual-First Communication →</h4>
-                  <p className="text-xs text-muted-foreground">Used illustrations and motion to convey the message instantly, ensuring users understand the context even without reading the text.</p>
+                  <p className="text-xs text-[#6b6f7a]">Used illustrations and motion to convey the message instantly, ensuring users understand the context even without reading the text.</p>
                 </div>
-                <div className="bg-background/50 rounded-xl p-3">
+                <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Motion-Led Attention Flow →</h4>
-                  <p className="text-xs text-muted-foreground">Subtle animations and eye-direction cues guide user focus naturally across the screen, increasing engagement and comprehension.</p>
+                  <p className="text-xs text-[#6b6f7a]">Subtle animations and eye-direction cues guide user focus naturally across the screen, increasing engagement and comprehension.</p>
                 </div>
-                <div className="bg-background/50 rounded-xl p-3">
+                <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Progressive Value Clarity →</h4>
-                  <p className="text-xs text-muted-foreground">Clearly communicates what FREED does and how it helps users get out of debt through a simple, step-by-step visual narrative.</p>
+                  <p className="text-xs text-[#6b6f7a]">Clearly communicates what FREED does and how it helps users get out of debt through a simple, step-by-step visual narrative.</p>
                 </div>
               </div>
             </div>
             
             {/* Divider */}
             <div className="hidden lg:flex flex-col items-center self-stretch">
-              <div className="w-px h-full bg-border" />
+              <div className="w-px h-full bg-[#e6e0d5]" />
             </div>
             
             {/* Mobile Divider */}
-            <div className="lg:hidden w-full h-px bg-border my-4" />
+            <div className="lg:hidden w-full h-px bg-[#e6e0d5] my-4" />
             
             {/* Right Side - Heading + Image */}
             <div className="flex flex-col items-center">

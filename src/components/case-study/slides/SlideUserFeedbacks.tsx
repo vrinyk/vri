@@ -40,14 +40,14 @@ const SlideUserFeedbacks = () => {
         {/* Top Section */}
         <div className="flex justify-between items-start mb-8">
           {/* Page Title - Top Left */}
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground">
+          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d]">
             User Feedbacks
           </h2>
           
           {/* UX Tools - Top Right */}
           <div className="text-right">
-            <p className="text-sm font-semibold text-muted-foreground mb-2">UX Tools used</p>
-            <ul className="text-xs text-muted-foreground space-y-0.5">
+            <p className="text-sm font-semibold text-[#6b6f7a] mb-2">UX Tools used</p>
+            <ul className="text-xs text-[#6b6f7a] space-y-0.5">
               <li>User interviews</li>
               <li>Heuristic evaluation</li>
               <li>Sales rep analysis</li>
@@ -64,7 +64,7 @@ const SlideUserFeedbacks = () => {
           >
             Insights of Primary & Secondary Research
           </h3>
-          <p className="text-muted-foreground max-w-2xl">
+          <p className="text-[#6b6f7a] max-w-2xl">
             I synthesized research findings to frame a clear and focused problem, define users and establish goals.
           </p>
         </div>
@@ -72,20 +72,20 @@ const SlideUserFeedbacks = () => {
         {/* 3-Column Structure */}
         <div className="grid lg:grid-cols-3 gap-6 mb-10">
           {/* Column 1: User Interviews */}
-          <div className="bg-accent-blue/20 rounded-2xl p-6 border border-accent-blue/30">
+          <div className="bg-[#dbeef8]/20 rounded-2xl p-6 border border-[#dbeef8]/30">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-accent-blue rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#dbeef8] rounded-full flex items-center justify-center">
                 <span className="text-xl">👥</span>
               </div>
               <div>
-                <h4 className="font-bold text-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>User Interviews</h4>
-                <p className="text-xs text-muted-foreground">5 users (M+F)</p>
+                <h4 className="font-bold text-[#1f232d]" style={{ fontFamily: "'DM Sans', sans-serif" }}>User Interviews</h4>
+                <p className="text-xs text-[#6b6f7a]">5 users (M+F)</p>
               </div>
             </div>
             
             <div className="space-y-3">
               {userInterviews.map((quote, index) => (
-                <p key={index} className="text-sm text-foreground italic bg-accent-blue/30 rounded-lg p-3">
+                <p key={index} className="text-sm text-[#1f232d] italic bg-[#dbeef8]/30 rounded-lg p-3">
                   "{quote}"
                 </p>
               ))}
@@ -94,23 +94,23 @@ const SlideUserFeedbacks = () => {
           
           {/* Plus Separator */}
           <div className="hidden lg:flex items-center justify-center absolute left-1/3 top-1/2 -translate-y-1/2 -translate-x-1/2">
-            <span className="text-2xl text-muted-foreground font-bold">+</span>
+            <span className="text-2xl text-[#6b6f7a] font-bold">+</span>
           </div>
           
           {/* Column 2: Sales Reps Feedbacks */}
-          <div className="bg-accent-green/20 rounded-2xl p-6 border border-accent-green/30">
+          <div className="bg-[#dce8e1]/20 rounded-2xl p-6 border border-[#dce8e1]/30">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-accent-green rounded-full flex items-center justify-center">
-                <MessageSquare className="w-5 h-5 text-accent-green-foreground" />
+              <div className="w-10 h-10 bg-[#dce8e1] rounded-full flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-[#294b3a]" />
               </div>
               <div>
-                <h4 className="font-bold text-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>Sales Reps Feedbacks</h4>
+                <h4 className="font-bold text-[#1f232d]" style={{ fontFamily: "'DM Sans', sans-serif" }}>Sales Reps Feedbacks</h4>
               </div>
             </div>
             
             <div className="space-y-3">
               {salesRepsFeedbacks.map((quote, index) => (
-                <p key={index} className="text-sm text-foreground italic bg-accent-green/30 rounded-lg p-3">
+                <p key={index} className="text-sm text-[#1f232d] italic bg-[#dce8e1]/30 rounded-lg p-3">
                   "{quote}"
                 </p>
               ))}
@@ -118,19 +118,19 @@ const SlideUserFeedbacks = () => {
           </div>
           
           {/* Column 3: App Reviews & Forums */}
-          <div className="bg-accent-coral/20 rounded-2xl p-6 border border-accent-coral/30">
+          <div className="bg-[#f9ddd4]/20 rounded-2xl p-6 border border-[#f9ddd4]/30">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-accent-coral rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#f9ddd4] rounded-full flex items-center justify-center">
                 <span className="text-xl">🧐</span>
               </div>
               <div>
-                <h4 className="font-bold text-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>App Reviews & Forums</h4>
+                <h4 className="font-bold text-[#1f232d]" style={{ fontFamily: "'DM Sans', sans-serif" }}>App Reviews & Forums</h4>
               </div>
             </div>
             
             <div className="space-y-3">
               {appReviews.map((quote, index) => (
-                <p key={index} className="text-sm text-foreground italic bg-accent-coral/30 rounded-lg p-3">
+                <p key={index} className="text-sm text-[#1f232d] italic bg-[#f9ddd4]/30 rounded-lg p-3">
                   "{quote}"
                 </p>
               ))}
@@ -141,30 +141,30 @@ const SlideUserFeedbacks = () => {
         {/* Sales-Led User Research Section */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-primary" />
+            <div className="w-10 h-10 bg-[#1f232d]/20 rounded-full flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-[#1f232d]" />
             </div>
             <h3 
-              className="text-xl md:text-2xl font-bold text-foreground"
+              className="text-xl md:text-2xl font-bold text-[#1f232d]"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               Insights from Sales-Led User Research
             </h3>
           </div>
-          <p className="text-muted-foreground max-w-3xl mb-6">
+          <p className="text-[#6b6f7a] max-w-3xl mb-6">
             I conducted a structured survey with sales representatives to understand recurring user confusions, objections, and mental models observed during real customer conversations. These insights directly informed the DRP onboarding redesign.
           </p>
           
           {/* Survey Images */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-card rounded-[16px] p-4 border border-border overflow-hidden">
+            <div className="bg-[#fbfaf7] rounded-[16px] p-4 border border-[#e6e0d5] overflow-hidden">
               <img 
                 src="/placeholder.svg" 
                 alt="Sales survey results - Payment beliefs and DRP understanding" 
                 className="w-full h-auto rounded-[16px]"
               />
             </div>
-            <div className="bg-card rounded-[16px] p-4 border border-border overflow-hidden">
+            <div className="bg-[#fbfaf7] rounded-[16px] p-4 border border-[#e6e0d5] overflow-hidden">
               <img 
                 src="/placeholder.svg" 
                 alt="Sales survey results - Drop-offs and EMI beliefs" 
@@ -175,9 +175,9 @@ const SlideUserFeedbacks = () => {
         </div>
 
         {/* Bottom Section - Common Problems */}
-        <div className="bg-card rounded-2xl p-6 border border-border">
+        <div className="bg-[#fbfaf7] rounded-2xl p-6 border border-[#e6e0d5]">
           <span 
-            className="inline-block text-lg mb-4 text-foreground"
+            className="inline-block text-lg mb-4 text-[#1f232d]"
             style={{ fontFamily: "'Caveat', cursive" }}
           >
             Common Problem
@@ -187,7 +187,7 @@ const SlideUserFeedbacks = () => {
             {commonProblems.map((problem, index) => (
               <div key={index} className="flex items-start gap-2">
                 <span className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0" />
-                <p className="text-sm text-foreground">{problem}</p>
+                <p className="text-sm text-[#1f232d]">{problem}</p>
               </div>
             ))}
           </div>

@@ -28,7 +28,7 @@ const SlideShowcase = () => {
           Screens That Speak
         </h2>
         <p
-          className="text-lg md:text-xl text-muted-foreground italic"
+          className="text-lg md:text-xl text-[#6b6f7a] italic"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
           A collection of high-impact UI experiments crafted for FREED

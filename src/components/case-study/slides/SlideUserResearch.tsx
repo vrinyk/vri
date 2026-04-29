@@ -15,29 +15,29 @@ const SlideUserResearch = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
       <div className="container max-w-6xl mx-auto">
-        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-10">
+        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-10">
           User Research —
         </h2>
         <h3 className="font-sans text-2xl font-bold mb-4 mt-8" style={{ color: '#2e2e2e' }}>
           Understanding our users
         </h3>
-        <p className="text-foreground leading-relaxed text-lg mb-10 max-w-4xl">
+        <p className="text-[#1f232d] leading-relaxed text-lg mb-10 max-w-4xl">
           The user category and primary user persona for Freed represent a focused segment of individuals who are managing multiple high-interest loans with limited financial literacy and little access to formal guidance from Tier 2 and Tier 3 cities.
         </p>
         
-        <div className="bg-accent-blue/20 rounded-2xl p-8 border border-accent-blue/30">
-          <span className="inline-block px-4 py-1.5 bg-accent-blue text-accent-blue-foreground text-sm font-semibold rounded-full mb-6">
+        <div className="bg-[#dbeef8]/20 rounded-2xl p-8 border border-[#dbeef8]/30">
+          <span className="inline-block px-4 py-1.5 bg-[#dbeef8] text-[#265d73] text-sm font-semibold rounded-full mb-6">
             User Segments
           </span>
           
-          <h4 className="font-sans text-xl font-semibold text-foreground mb-6">
+          <h4 className="font-sans text-xl font-semibold text-[#1f232d] mb-6">
             User Personas by Tier
           </h4>
           
           <div className="overflow-x-auto mb-8">
             <table className="w-full">
               <thead>
-                <tr className="bg-primary text-primary-foreground">
+                <tr className="bg-[#1f232d] text-[#f7f3ec]">
                   <th className="text-left py-4 px-6 font-semibold">Tier</th>
                   <th className="text-left py-4 px-6 font-semibold">Outstanding Debt</th>
                   <th className="text-left py-4 px-6 font-semibold">Monthly Income</th>
@@ -46,25 +46,25 @@ const SlideUserResearch = () => {
               </thead>
               <tbody>
                 {userPersonas.map((persona, index) => (
-                  <tr key={persona.tier} className={index % 2 === 0 ? "bg-card" : "bg-card/50"}>
-                    <td className="py-4 px-6 text-foreground font-medium">{persona.tier}</td>
-                    <td className="py-4 px-6 text-foreground">{persona.debt}</td>
-                    <td className="py-4 px-6 text-foreground">{persona.income}</td>
-                    <td className="py-4 px-6 text-foreground">{persona.mindset}</td>
+                  <tr key={persona.tier} className={index % 2 === 0 ? "bg-[#fbfaf7]" : "bg-[#fbfaf7]/50"}>
+                    <td className="py-4 px-6 text-[#1f232d] font-medium">{persona.tier}</td>
+                    <td className="py-4 px-6 text-[#1f232d]">{persona.debt}</td>
+                    <td className="py-4 px-6 text-[#1f232d]">{persona.income}</td>
+                    <td className="py-4 px-6 text-[#1f232d]">{persona.mindset}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           
-          <div className="bg-accent-blue/30 rounded-xl p-6">
-            <h5 className="text-xl font-bold text-foreground mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+          <div className="bg-[#dbeef8]/30 rounded-xl p-6">
+            <h5 className="text-xl font-bold text-[#1f232d] mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Key hardship drivers
             </h5>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {hardshipDrivers.map((driver) => (
-                <div key={driver} className="flex items-center gap-2 text-foreground bg-card/50 rounded-lg px-4 py-2">
-                  <span className="w-2 h-2 bg-primary rounded-full" />
+                <div key={driver} className="flex items-center gap-2 text-[#1f232d] bg-[#fbfaf7]/50 rounded-lg px-4 py-2">
+                  <span className="w-2 h-2 bg-[#1f232d] rounded-full" />
                   {driver}
                 </div>
               ))}

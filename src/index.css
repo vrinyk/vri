@@ -87,6 +87,37 @@
   --font-sans: 'DM Sans', system-ui, sans-serif;
 }
 
+.case-study.dark,
+.dark .case-study {
+  --background: 220 20% 10%;
+  --foreground: 40 20% 95%;
+  --card: 220 20% 12%;
+  --card-foreground: 40 20% 95%;
+  --popover: 220 20% 12%;
+  --popover-foreground: 40 20% 95%;
+  --primary: 40 20% 95%;
+  --primary-foreground: 220 20% 10%;
+  --secondary: 220 15% 18%;
+  --secondary-foreground: 40 20% 95%;
+  --muted: 220 15% 20%;
+  --muted-foreground: 40 10% 60%;
+  --accent: 150 20% 18%;
+  --accent-foreground: 150 30% 70%;
+  --accent-coral: 10 30% 18%;
+  --accent-coral-foreground: 10 50% 70%;
+  --accent-blue: 200 30% 18%;
+  --accent-blue-foreground: 200 50% 70%;
+  --accent-green: 150 20% 18%;
+  --accent-green-foreground: 150 35% 70%;
+  --accent-pink: 350 25% 18%;
+  --accent-pink-foreground: 350 40% 70%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 220 15% 20%;
+  --input: 220 15% 20%;
+  --ring: 40 20% 80%;
+}
+
 .case-study h1,
 .case-study h2,
 .case-study h3,

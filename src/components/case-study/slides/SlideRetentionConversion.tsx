@@ -50,7 +50,7 @@ const PhoneCarousel = ({
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="flex flex-col items-center flex-shrink-0">
-        <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 shadow-2xl overflow-hidden relative">
+        <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 shadow-2xl overflow-hidden relative">
           <div className="w-full h-full rounded-[2rem] overflow-hidden bg-white relative">
             {images.map((img, index) => (
               <div
@@ -80,7 +80,7 @@ const PhoneCarousel = ({
       <div className="flex items-center gap-3">
         <button
           onClick={prevSlide}
-          className="w-7 h-7 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors text-xs"
+          className="w-7 h-7 rounded-full border border-[#e6e0d5] flex items-center justify-center text-[#6b6f7a] hover:text-[#1f232d] hover:border-[#1f232d] transition-colors text-xs"
         >
           ←
         </button>
@@ -90,19 +90,19 @@ const PhoneCarousel = ({
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                currentSlide === index ? "bg-foreground w-5" : "bg-muted-foreground/30"
+                currentSlide === index ? "bg-[#1f232d] w-5" : "bg-[#6b6f7a]/30"
               }`}
             />
           ))}
         </div>
         <button
           onClick={nextSlide}
-          className="w-7 h-7 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors text-xs"
+          className="w-7 h-7 rounded-full border border-[#e6e0d5] flex items-center justify-center text-[#6b6f7a] hover:text-[#1f232d] hover:border-[#1f232d] transition-colors text-xs"
         >
           →
         </button>
       </div>
-      <p className="text-xs text-muted-foreground">{images[currentSlide].label}</p>
+      <p className="text-xs text-[#6b6f7a]">{images[currentSlide].label}</p>
     </div>
   );
 };
@@ -113,16 +113,16 @@ const SlideRetentionConversion = () => {
       <div className="container max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-10 text-center">
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-4">
+          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-4">
             User Retention &amp; Conversion Initiatives
           </h2>
           <span
-            className="inline-block px-8 py-2.5 bg-foreground text-background font-semibold rounded-lg text-sm"
+            className="inline-block px-8 py-2.5 bg-[#1f232d] text-[#f7f3ec] font-semibold rounded-lg text-sm"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Conversion Boost Initiatives
           </span>
-          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mt-6 leading-relaxed">
+          <p className="text-base md:text-lg text-[#6b6f7a] max-w-3xl mx-auto mt-6 leading-relaxed">
             Designing focused interventions to improve commitment, clarity, and revenue conversion across post-onboarding journeys.
           </p>
         </div>
@@ -138,20 +138,20 @@ const SlideRetentionConversion = () => {
               >
                 Fast Track Settlement
               </h3>
-              <div className="bg-background/50 rounded-xl p-3">
+              <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Problem →</h4>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-[#6b6f7a]">
                   After onboarding, we observed that users clearly understood their debt position but were still delaying commitment. The journey between seeing potential savings and making a payment decision was too long, creating hesitation and drop-offs.
                 </p>
               </div>
-              <div className="bg-background/50 rounded-xl p-3">
+              <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Solution →</h4>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-[#6b6f7a]">
                   We simplify the commitment path and highlighting immediate financial benefit, the feature nudges users toward faster action.
                 </p>
               </div>
-              <div className="bg-accent-green/20 rounded-xl p-3 border border-accent-green/30">
-                <p className="text-sm font-bold text-accent-green-foreground">
+              <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30">
+                <p className="text-sm font-bold text-[#294b3a]">
                   20% increase in SPA collection rate
                 </p>
               </div>
@@ -159,11 +159,11 @@ const SlideRetentionConversion = () => {
 
             {/* Divider */}
             <div className="hidden lg:flex flex-col items-center self-stretch">
-              <div className="w-px h-full bg-border" />
+              <div className="w-px h-full bg-[#e6e0d5]" />
             </div>
 
             {/* Mobile Divider */}
-            <div className="lg:hidden w-full h-px bg-border my-4" />
+            <div className="lg:hidden w-full h-px bg-[#e6e0d5] my-4" />
 
             {/* Right Side - Phone Carousel */}
             <PhoneCarousel images={carouselImages} />
@@ -187,34 +187,34 @@ const SlideRetentionConversion = () => {
               >
                 Addressing the Emotional Barrier
               </p>
-              <div className="bg-background/50 rounded-xl p-3">
+              <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Problem →</h4>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-[#6b6f7a]">
                   Users frequently expressed concerns about recovery calls, legal notices, and home visits. Even after onboarding, fear of harassment reduced commitment confidence.
                 </p>
               </div>
-              <div className="bg-background/50 rounded-xl p-3">
+              <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Solution →</h4>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-[#6b6f7a]">
                   To directly address this emotional barrier, we introduced FREED Shield — a clearly communicated protection layer within the product journey to upload harassment reports and legal guidance, providing structured support and guidance.
                 </p>
               </div>
-              <div className="bg-accent-green/20 rounded-xl p-3 border border-accent-green/30 space-y-1.5">
-                <p className="text-xs font-bold text-accent-green-foreground">Reduced anxiety-driven drop-offs</p>
-                <p className="text-xs font-bold text-accent-green-foreground">Increase in plan continuation rate</p>
-                <p className="text-xs font-bold text-accent-green-foreground">Improved user trust perception</p>
-                <p className="text-xs font-bold text-accent-green-foreground">Lower support queries related to creditor harassment</p>
-                <p className="text-xs font-bold text-accent-green-foreground">Higher consistency in monthly savings adherence</p>
+              <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30 space-y-1.5">
+                <p className="text-xs font-bold text-[#294b3a]">Reduced anxiety-driven drop-offs</p>
+                <p className="text-xs font-bold text-[#294b3a]">Increase in plan continuation rate</p>
+                <p className="text-xs font-bold text-[#294b3a]">Improved user trust perception</p>
+                <p className="text-xs font-bold text-[#294b3a]">Lower support queries related to creditor harassment</p>
+                <p className="text-xs font-bold text-[#294b3a]">Higher consistency in monthly savings adherence</p>
               </div>
             </div>
 
             {/* Divider */}
             <div className="hidden lg:flex flex-col items-center self-stretch">
-              <div className="w-px h-full bg-border" />
+              <div className="w-px h-full bg-[#e6e0d5]" />
             </div>
 
             {/* Mobile Divider */}
-            <div className="lg:hidden w-full h-px bg-border my-4" />
+            <div className="lg:hidden w-full h-px bg-[#e6e0d5] my-4" />
 
             {/* Right Side - Phone Carousel */}
             <PhoneCarousel images={shieldCarouselImages} autoPlayInterval={3500} />

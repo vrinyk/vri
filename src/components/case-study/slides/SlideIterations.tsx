@@ -18,13 +18,13 @@ const SlideIterations = () => {
           Iterationsssss........
         </h1>
         <p 
-          className="text-lg mt-4 text-muted-foreground max-w-2xl"
+          className="text-lg mt-4 text-[#6b6f7a] max-w-2xl"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
           Until I reach that perfect spot
         </p>
         <p
-          className="text-sm mt-6 text-muted-foreground/80 max-w-xl leading-relaxed italic"
+          className="text-sm mt-6 text-[#6b6f7a]/80 max-w-xl leading-relaxed italic"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
           Endless debates with PMs, late-night pivots fueled by AI insights, marketing pushing for "just one more tweak" — every version got closer to something that finally clicked.

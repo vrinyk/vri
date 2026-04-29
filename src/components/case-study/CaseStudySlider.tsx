@@ -43,22 +43,51 @@ const CaseStudySlider = () => {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
-
-  const onSelect = useCallback(() => {
+  const syncSliderState = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
     setCanScrollPrev(emblaApi.canScrollPrev());
     setCanScrollNext(emblaApi.canScrollNext());
   }, [emblaApi]);
 
+  const scrollPrev = useCallback(() => {
+    if (!emblaApi) return;
+
+    emblaApi.scrollPrev();
+    requestAnimationFrame(syncSliderState);
+  }, [emblaApi, syncSliderState]);
+
+  const scrollNext = useCallback(() => {
+    if (!emblaApi) return;
+
+    emblaApi.scrollNext();
+    requestAnimationFrame(syncSliderState);
+  }, [emblaApi, syncSliderState]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (!emblaApi) return;
+
+    emblaApi.scrollTo(index);
+    setSelectedIndex(index);
+    requestAnimationFrame(syncSliderState);
+  }, [emblaApi, syncSliderState]);
+
   useEffect(() => {
     if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    onSelect();
-  }, [emblaApi, onSelect]);
+
+    syncSliderState();
+    emblaApi.on("select", syncSliderState);
+    emblaApi.on("scroll", syncSliderState);
+    emblaApi.on("settle", syncSliderState);
+    emblaApi.on("reInit", syncSliderState);
+
+    return () => {
+      emblaApi.off("select", syncSliderState);
+      emblaApi.off("scroll", syncSliderState);
+      emblaApi.off("settle", syncSliderState);
+      emblaApi.off("reInit", syncSliderState);
+    };
+  }, [emblaApi, syncSliderState]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -71,9 +100,9 @@ const CaseStudySlider = () => {
   }, [scrollPrev, scrollNext]);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-[#f7f3ec] flex flex-col">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border/50">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#f7f3ec]/80 backdrop-blur-sm border-b border-[#e6e0d5]/50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={freedLogo} alt="FREED" className="h-8 w-auto" />
@@ -83,17 +112,17 @@ const CaseStudySlider = () => {
               <button
                 key={slide.id}
                 onClick={() => scrollTo(index)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-[background-color,color,box-shadow,transform] duration-200 ease-out motion-safe:active:scale-95 ${
                   selectedIndex === index
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    ? "bg-[#262833] text-[#f7f1e8] shadow-sm motion-safe:scale-105"
+                    : "text-[#6b6f7a] motion-safe:scale-100 hover:text-[#1f232d] hover:bg-[#eee8dd]"
                 }`}
               >
                 {slide.label}
               </button>
             ))}
           </div>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-[#6b6f7a]">
             {selectedIndex + 1} / {slides.length}
           </div>
         </div>
@@ -115,7 +144,7 @@ const CaseStudySlider = () => {
         <button
           onClick={scrollPrev}
           disabled={!canScrollPrev}
-          className="w-12 h-12 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-12 h-12 rounded-full bg-[#fbfaf7] border border-[#e6e0d5] shadow-lg flex items-center justify-center text-[#1f232d] hover:bg-[#eee8dd] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -127,8 +156,8 @@ const CaseStudySlider = () => {
               onClick={() => scrollTo(index)}
               className={`h-2 rounded-full transition-all ${
                 selectedIndex === index 
-                  ? "w-8 bg-primary" 
-                  : "w-2 bg-border hover:bg-muted-foreground"
+                  ? "w-8 bg-[#262833]" 
+                  : "w-2 bg-[#e6e0d5] hover:bg-[#6b6f7a]"
               }`}
             />
           ))}
@@ -137,7 +166,7 @@ const CaseStudySlider = () => {
         <button
           onClick={scrollNext}
           disabled={!canScrollNext}
-          className="w-12 h-12 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-12 h-12 rounded-full bg-[#fbfaf7] border border-[#e6e0d5] shadow-lg flex items-center justify-center text-[#1f232d] hover:bg-[#eee8dd] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>

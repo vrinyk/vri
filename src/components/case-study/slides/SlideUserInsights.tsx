@@ -18,7 +18,7 @@ const SlideUserInsights = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
       <div className="container max-w-6xl mx-auto">
-        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-10">
+        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-10">
           User Insights
         </h2>
         <h3 className="font-sans text-2xl font-bold mb-4" style={{ color: '#2e2e2e' }}>
@@ -27,53 +27,53 @@ const SlideUserInsights = () => {
         
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Drop-off Analysis */}
-          <div className="bg-accent-green/20 rounded-2xl p-6 border border-accent-green/30">
-            <span className="inline-block px-4 py-1.5 bg-accent-green text-accent-green-foreground text-sm font-semibold rounded-full mb-6">
+          <div className="bg-[#dce8e1]/20 rounded-2xl p-6 border border-[#dce8e1]/30">
+            <span className="inline-block px-4 py-1.5 bg-[#dce8e1] text-[#294b3a] text-sm font-semibold rounded-full mb-6">
               Drop-off Analysis
             </span>
             
-            <h4 className="text-xl font-bold text-primary mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <h4 className="text-xl font-bold text-[#1f232d] mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               User Journey Drop-offs
             </h4>
             
             <div className="grid grid-cols-2 gap-4 mb-6">
               {dropoffStages.map((stage) => (
-                <div key={stage.title} className="bg-accent-green/30 rounded-lg p-4">
-                  <h5 className="font-bold text-sm text-foreground mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>{stage.title}</h5>
+                <div key={stage.title} className="bg-[#dce8e1]/30 rounded-lg p-4">
+                  <h5 className="font-bold text-sm text-[#1f232d] mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>{stage.title}</h5>
                   <ul className="space-y-1">
                     {stage.items.map((item) => (
-                      <li key={item} className="text-xs text-muted-foreground">• {item}</li>
+                      <li key={item} className="text-xs text-[#6b6f7a]">• {item}</li>
                     ))}
                   </ul>
                 </div>
               ))}
             </div>
             
-            <div className="bg-accent-green/40 rounded-xl p-4 border-2 border-accent-green/50">
-              <h5 className="text-lg font-bold text-primary mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <div className="bg-[#dce8e1]/40 rounded-xl p-4 border-2 border-[#dce8e1]/50">
+              <h5 className="text-lg font-bold text-[#1f232d] mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 Primary drop-off reasons
               </h5>
-              <p className="text-sm text-foreground">
+              <p className="text-sm text-[#1f232d]">
                 Users consistently drop off due to misaligned expectations between consolidation and settlement programs
               </p>
             </div>
           </div>
           
           {/* Comprehension Issues */}
-          <div className="bg-accent-coral/20 rounded-2xl p-6 border border-accent-coral/30">
-            <span className="inline-block px-4 py-1.5 bg-accent-coral text-accent-coral-foreground text-sm font-semibold rounded-full mb-6">
+          <div className="bg-[#f9ddd4]/20 rounded-2xl p-6 border border-[#f9ddd4]/30">
+            <span className="inline-block px-4 py-1.5 bg-[#f9ddd4] text-[#864432] text-sm font-semibold rounded-full mb-6">
               Understanding Gaps
             </span>
             
-            <h4 className="text-xl font-bold text-primary mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <h4 className="text-xl font-bold text-[#1f232d] mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Program Comprehension Issues
             </h4>
             
             <div className="grid grid-cols-2 gap-3">
               {comprehensionIssues.map((issue) => (
-                <div key={issue.title} className="bg-accent-coral/30 rounded-lg p-4">
-                  <h5 className="font-bold text-sm text-foreground mb-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>{issue.title}</h5>
-                  <p className="text-xs text-muted-foreground italic">{issue.quote}</p>
+                <div key={issue.title} className="bg-[#f9ddd4]/30 rounded-lg p-4">
+                  <h5 className="font-bold text-sm text-[#1f232d] mb-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>{issue.title}</h5>
+                  <p className="text-xs text-[#6b6f7a] italic">{issue.quote}</p>
                 </div>
               ))}
             </div>

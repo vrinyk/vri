@@ -12,7 +12,7 @@ const SlideRole = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
       <div className="container max-w-5xl mx-auto">
-        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-10">
+        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-10">
           Project Overview
         </h2>
         
@@ -21,7 +21,7 @@ const SlideRole = () => {
             <h3 className="font-sans text-2xl font-bold" style={{ color: '#2e2e2e' }}>
               My Role :
             </h3>
-            <span className="text-xl text-foreground">
+            <span className="text-xl text-[#1f232d]">
               Product Designer (End-to-End)
             </span>
           </div>
@@ -32,8 +32,8 @@ const SlideRole = () => {
           
           <ol className="space-y-4 max-w-3xl">
             {responsibilities.map((item, index) => (
-              <li key={index} className="flex gap-4 text-lg text-foreground">
-                <span className="font-semibold text-muted-foreground min-w-[2rem]">
+              <li key={index} className="flex gap-4 text-lg text-[#1f232d]">
+                <span className="font-semibold text-[#6b6f7a] min-w-[2rem]">
                   {index + 1}.
                 </span>
                 <span className="leading-relaxed">{item}</span>

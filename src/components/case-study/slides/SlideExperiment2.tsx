@@ -41,9 +41,9 @@ const SlideExperiment2 = () => {
       <div className="container max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-4">Signup-OTP</h2>
+          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-4">Signup-OTP</h2>
           <span 
-            className="inline-block px-8 py-2.5 bg-foreground text-background font-semibold rounded-lg text-sm"
+            className="inline-block px-8 py-2.5 bg-[#1f232d] text-[#f7f3ec] font-semibold rounded-lg text-sm"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Experiment 2
@@ -57,7 +57,7 @@ const SlideExperiment2 = () => {
               {/* Phone Mockup with Carousel */}
               <div className="flex flex-col items-center flex-shrink-0">
                 <div>
-                  <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 overflow-hidden">
+                  <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 overflow-hidden">
                     <div className="w-full h-full rounded-[2rem] overflow-hidden">
                       <img 
                         src={oldImages[oldIndex].src} 
@@ -74,28 +74,28 @@ const SlideExperiment2 = () => {
                       onClick={() => setOldIndex(index)}
                       className={`h-2 rounded-full transition-all ${
                         oldIndex === index 
-                          ? "w-6 bg-primary" 
-                          : "w-2 bg-border hover:bg-muted-foreground"
+                          ? "w-6 bg-[#1f232d]" 
+                          : "w-2 bg-[#e6e0d5] hover:bg-[#6b6f7a]"
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-muted-foreground font-medium mt-2">Old</span>
+                <span className="text-[#6b6f7a] font-medium mt-2">Old</span>
               </div>
               
               {/* Issues Content */}
               <div className="space-y-3 flex-1">
-                <div className="bg-background/50 rounded-xl p-3">
-                  <span className="text-xs font-semibold text-primary">Issue 1</span>
+                <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
+                  <span className="text-xs font-semibold text-[#1f232d]">Issue 1</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Signup felt heavy and overwhelming →</h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-[#6b6f7a]">
                     The old design used a strong orange background with dense form fields and long consent text, making the first interaction feel stressful and effort-heavy.
                   </p>
                 </div>
-                <div className="bg-background/50 rounded-xl p-3">
-                  <span className="text-xs font-semibold text-primary">Issue 2</span>
+                <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
+                  <span className="text-xs font-semibold text-[#1f232d]">Issue 2</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Single long form caused drop-offs →</h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-[#6b6f7a]">
                     All input fields were crammed into a single screen, making the signup process feel lengthy and discouraging users from completing it.
                   </p>
                 </div>
@@ -104,36 +104,36 @@ const SlideExperiment2 = () => {
             
             {/* VS Divider */}
             <div className="hidden lg:flex flex-col items-center self-stretch">
-              <div className="w-px h-full bg-border relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-card border border-border rounded-full flex items-center justify-center">
-                  <span className="text-muted-foreground text-xs font-semibold">VS</span>
+              <div className="w-px h-full bg-[#e6e0d5] relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#fbfaf7] border border-[#e6e0d5] rounded-full flex items-center justify-center">
+                  <span className="text-[#6b6f7a] text-xs font-semibold">VS</span>
                 </div>
               </div>
             </div>
             
             {/* Mobile Divider */}
-            <div className="lg:hidden w-full h-px bg-border my-4" />
+            <div className="lg:hidden w-full h-px bg-[#e6e0d5] my-4" />
             
             {/* Right Side - New Phone + Solutions */}
             <div className="flex gap-6">
               {/* Solutions Content */}
               <div className="space-y-3 flex-1 order-2 lg:order-1">
                 <div className="rounded-xl p-3">
-                  <span className="text-xs font-semibold text-accent-green-foreground">Solved</span>
+                  <span className="text-xs font-semibold text-[#294b3a]">Solved</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Calmer and simpler signup experience →</h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-[#6b6f7a]">
                     Redesigned the screen with a white background, better spacing, and clearer visual hierarchy to make the form feel lighter, easier, and less intimidating to complete.
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
-                  <span className="text-xs font-semibold text-accent-green-foreground">Solved</span>
+                  <span className="text-xs font-semibold text-[#294b3a]">Solved</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Multi-step form with progressive disclosure →</h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-[#6b6f7a]">
                     Split the long form into multiple focused steps, reducing cognitive load and improving completion rates by showing one task at a time with clear progress indication.
                   </p>
                 </div>
-                <div className="bg-accent-green/20 rounded-xl p-3 border border-accent-green/30">
-                  <p className="text-sm font-bold text-accent-green-foreground">
+                <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30">
+                  <p className="text-sm font-bold text-[#294b3a]">
                     This experiment aimed to reduce signup anxiety and improve form completion by focusing on visual calmness and trust reinforcement.
                   </p>
                 </div>
@@ -142,7 +142,7 @@ const SlideExperiment2 = () => {
               {/* Phone Mockup with Carousel */}
               <div className="flex flex-col items-center flex-shrink-0 order-1 lg:order-2">
                 <div>
-                  <div className="w-56 h-[480px] bg-foreground rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
+                  <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
                     <div className="w-full h-full rounded-[2rem] overflow-hidden">
                       <img 
                         src={newImages[newIndex].src} 
@@ -159,13 +159,13 @@ const SlideExperiment2 = () => {
                       onClick={() => setNewIndex(index)}
                       className={`h-2 rounded-full transition-all ${
                         newIndex === index 
-                          ? "w-6 bg-primary" 
-                          : "w-2 bg-border hover:bg-muted-foreground"
+                          ? "w-6 bg-[#1f232d]" 
+                          : "w-2 bg-[#e6e0d5] hover:bg-[#6b6f7a]"
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-foreground font-medium mt-2">New</span>
+                <span className="text-[#1f232d] font-medium mt-2">New</span>
               </div>
             </div>
           </div>
