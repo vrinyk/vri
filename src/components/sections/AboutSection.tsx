@@ -1,4 +1,6 @@
 import { motion } from "motion/react";
+import aboutArrow from "../../assets/images/about-arrow.svg";
+import vrinAboutImage from "../../assets/images/vrin-about.png";
 
 export function AboutSection() {
   return (
@@ -19,95 +21,111 @@ export function AboutSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.5 }}
-          className="absolute top-[18%] right-[40%]"
+          className="absolute top-[22%] right-[32%]"
         >
-          <svg width="60" height="40" viewBox="0 0 60 40" fill="none" className="inline-block mr-2">
-            <path d="M5 5 C 20 2, 40 8, 50 20 C 55 28, 48 35, 40 30" stroke="white" strokeWidth="2" strokeDasharray="4 3" fill="none" strokeLinecap="round" />
-            <path d="M38 25 L40 32 L45 27" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <img src={aboutArrow} alt="" aria-hidden="true" className="w-[84px] h-auto" />
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.5 }}
-          className="absolute top-[20%] right-[22%] font-caveat text-[clamp(18px,2vw,28px)] font-bold text-white italic"
+          className="absolute top-[30%] right-[22%] font-caveat text-[clamp(20px,2vw,28px)] font-bold text-white italic"
         >
           duhh! an icon
         </motion.p>
 
-        {/* ─── Left: Polaroid Photos ─── */}
-        <div className="absolute left-[4%] top-[28%] w-[38%] h-[55%]">
-          {/* Photo 1: Escape */}
-          <motion.div
-            initial={{ opacity: 0, rotate: -5 }}
-            animate={{ opacity: 1, rotate: -8 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="absolute left-[0%] top-[0%] w-[55%]"
-          >
-            {/* Tape pieces */}
-            <div className="absolute -top-3 left-[20%] h-6 w-10 bg-amber-300/70 rotate-[-15deg] z-10" />
-            <div className="absolute -top-2 right-[10%] h-6 w-10 bg-amber-300/70 rotate-20 z-10" />
-            {/* Polaroid frame */}
-            <div className="bg-white p-[6%] pb-[20%] shadow-md">
-              <div className="w-full aspect-square bg-[#D1D3D4] rounded-sm" />
-            </div>
-            <p className="absolute bottom-[4%] left-0 w-full text-center font-caveat text-[clamp(12px,1.2vw,20px)] font-bold text-blue-card">
-              Escape
-            </p>
-          </motion.div>
+        {/* ─── Left: Combined Polaroid Image ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="absolute left-[4%] top-[22%] w-[42%]"
+        >
+          <img
+            src={vrinAboutImage}
+            alt="Polaroid snapshots with tape effect"
+            className="h-auto w-full"
+          />
+        </motion.div>
 
-          {/* Photo 2: Fin-Gourmet */}
-          <motion.div
-            initial={{ opacity: 0, rotate: 5 }}
-            animate={{ opacity: 1, rotate: 5 }}
-            transition={{ duration: 0.5, delay: 0.55 }}
-            className="absolute left-[35%] top-[10%] w-[55%]"
-          >
-            {/* Tape pieces */}
-            <div className="absolute -top-3 left-[15%] h-6 w-10 bg-amber-300/70 rotate-10 z-10" />
-            <div className="absolute -top-2 right-[15%] h-6 w-10 bg-amber-300/70 -rotate-12 z-10" />
-            {/* Polaroid frame */}
-            <div className="bg-white p-[6%] pb-[20%] shadow-md">
-              <div className="w-full aspect-square bg-[#D1D3D4] rounded-sm" />
-            </div>
-            <p className="absolute bottom-[4%] left-0 w-full text-center font-caveat text-[clamp(12px,1.2vw,20px)] font-bold text-blue-card">
-              Fin-Gourmet
-            </p>
-          </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.62 }}
+          className="absolute left-[13.5%] top-[56.5%] font-oswald text-2xl font-bold text-blue-900 -rotate-11"
+        >
+          Escape
+        </motion.p>
 
-          {/* Star doodles */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.8 }}
-            className="absolute bottom-[12%] left-[5%]"
-          >
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M10 5 L12 15 L5 10 L15 10 L8 15 Z" stroke="white" strokeWidth="1.5" fill="none" />
-              <path d="M22 12 L24 20 L18 16 L26 16 L20 20 Z" stroke="white" strokeWidth="1.5" fill="none" />
-              <path d="M14 22 L16 30 L10 26 L18 26 L12 30 Z" stroke="white" strokeWidth="1.5" fill="none" />
-            </svg>
-          </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.7 }}
+          className="absolute left-[25%] top-[64%] font-oswald text-2xl font-bold text-[#e8a23a] rotate-12"
+        >
+          Fin-Gourmet
+        </motion.p>
 
-          {/* Handwritten text */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.9 }}
-            className="absolute -bottom-[2%] left-[2%] font-caveat text-[clamp(12px,1.2vw,18px)] font-bold text-[#c4e44e] -rotate-3"
-          >
-            currently chasing after<br />my dreams always!
-          </motion.p>
-        </div>
+        {/* Star doodles */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 0.6, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.8 }}
+          className="absolute left-[6%] top-[72%]"
+        >
+          <svg width="50" height="50" viewBox="0 0 40 40" fill="none">
+            <path d="M10 5 L12 15 L5 10 L15 10 L8 15 Z" stroke="currentColor" strokeWidth="1.5" fill="none" className="text-blue-900" />
+            <path d="M22 12 L24 20 L18 16 L26 16 L20 20 Z" stroke="currentColor" strokeWidth="1.5" fill="none" className="text-blue-900" />
+            <path d="M14 22 L16 30 L10 26 L18 26 L12 30 Z" stroke="currentColor" strokeWidth="1.5" fill="none" className="text-blue-900" />
+          </svg>
+        </motion.div>
+
+        {/* Handwritten text */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.9 }}
+          className="absolute left-[6%] top-[75%] font-caveat text-[clamp(12px,1.2vw,18px)] font-bold text-white -rotate-16"
+        >
+          currently chasing after
+          <br />
+          my dreams always!
+        </motion.p>
+
+        {/* Green squiggle underline */}
+        <motion.svg
+          initial={{ opacity: 0, pathLength: 0 }}
+          animate={{ opacity: 1, pathLength: 1 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="absolute left-[5%] top-[85%] w-[18%] h-[10px] -rotate-16"
+          viewBox="0 0 200 10"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M2 6 Q 50 1, 100 5 T 198 4"
+            stroke="#c4e44e"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <path
+            d="M2 10 Q 50 5, 100 9 T 198 8"
+            stroke="#c4e44e"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </motion.svg>
 
         {/* ─── Right: Bio text ─── */}
-        <div className="absolute right-[4%] top-[28%] w-[48%]">
+        <div className="absolute right-[5%] top-[38%] w-[48%]">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="font-dm-sans text-[clamp(12px,1.1vw,17px)] leading-[1.7] text-white/90"
+            className="font-dm-sans text-[clamp(12px,1vw,17px)] leading-[1.7] text-white/90"
           >
             In 2022, a former economics student took an unexpected yet
             transformative turn toward design. What began as a love for art
