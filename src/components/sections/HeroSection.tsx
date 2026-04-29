@@ -51,7 +51,7 @@ export function HeroSection() {
       </div>
 
       {/* ─── Right: Text Content ─── */}
-      <div className="absolute left-[46%] top-[8%] w-[48%]">
+      <div className="absolute left-[46%] top-[8%] w-[46%]">
         {/* Name badge — dashed frame + crop marks (screenshot) */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
@@ -97,7 +97,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
-          className="max-w-[52ch] font-dm-sans text-[clamp(13px,1.15vw,17px)] leading-[1.55] text-white/90"
+          className="max-w-[52ch] font-dm-sans text-[clamp(17px,1.15vw,17px)] leading-[1.55] text-white/90"
         >
           I'm a designer who listens beyond words and designs solutions that
           respond to unspoken needs. I'm obsessed with the layers of human

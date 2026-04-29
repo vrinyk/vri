@@ -272,7 +272,7 @@ export function CardSlider({
         {isFullscreenActive && (
           <motion.div
             key="work-fullscreen"
-            className="fixed inset-0 z-20 overflow-hidden bg-blue-card grid-plus pt-[88px]"
+            className="fixed inset-0 z-20 overflow-hidden bg-[#47578d] grid-plus pt-[88px]"
             initial={{
               transform: "scale(0.85)",
               opacity: 0.8,
@@ -306,29 +306,27 @@ export function CardSlider({
         )}
       </AnimatePresence>
 
-      {/* Navigation Arrows */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-60 flex gap-5">
-        <button
-          onClick={navigatePrev}
-          disabled={currentIndex === 0}
-          aria-label="Previous"
-          className="flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#333] active:translate-y-0.5 active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-        >
-          <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-          </svg>
-        </button>
-        <button
-          onClick={navigateNext}
-          disabled={currentIndex === SECTION_ORDER.length - 1}
-          aria-label="Next"
-          className="flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#333] active:translate-y-0.5 active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-        >
-          <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
-          </svg>
-        </button>
-      </div>
+      {/* Navigation Arrows — split to left/right edges so they don't overlap card content */}
+      <button
+        onClick={navigatePrev}
+        disabled={currentIndex === 0}
+        aria-label="Previous"
+        className="fixed left-6 top-1/2 -translate-y-1/2 z-60 flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-[calc(50%+2px)] hover:shadow-[6px_6px_0px_#333] active:-translate-y-[calc(50%-2px)] active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+      >
+        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+      </button>
+      <button
+        onClick={navigateNext}
+        disabled={currentIndex === SECTION_ORDER.length - 1}
+        aria-label="Next"
+        className="fixed right-6 top-1/2 -translate-y-1/2 z-60 flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-[calc(50%+2px)] hover:shadow-[6px_6px_0px_#333] active:-translate-y-[calc(50%-2px)] active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+      >
+        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-[#333]">
+          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+        </svg>
+      </button>
     </>
   );
 }

@@ -51,7 +51,7 @@ export function CardWrapper({
         <img
           src={pinTop}
           alt=""
-          className="pointer-events-none absolute left-1/2 top-0 z-30 h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-[42%] drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]"
+          className="pointer-events-none absolute left-1/2 top-0 z-30 h-18 w-18 -translate-x-1/2 -translate-y-[4%] drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]"
         />
       )}
     </div>
