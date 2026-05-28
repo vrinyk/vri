@@ -186,7 +186,6 @@ export function HeroDecorations() {
         initial={{ opacity: 0, y: 20, rotate: -22 }}
         animate={{ opacity: 1, y: 0, rotate: -20 }}
         transition={{ duration: 0.5, delay: 0.8 }}
-        whileHover={{ rotate: 0 }}
         className="absolute -bottom-[12%] right-[3%] z-20 w-52 cursor-default pointer-events-auto"
       >
         <div className="relative">

@@ -13,6 +13,7 @@ import { WorkSection } from "./sections/WorkSection";
 import { AboutSection } from "./sections/AboutSection";
 import { ArtCornerSection } from "./sections/ArtCornerSection";
 import { ConnectSection } from "./sections/ConnectSection";
+import { EmptySection } from "./sections/EmptySection";
 import type { ReactNode } from "react";
 
 const SECTION_ORDER: SectionName[] = [
@@ -21,6 +22,7 @@ const SECTION_ORDER: SectionName[] = [
   "About Me",
   "Art Corner",
   "Connect",
+  "Blank",
 ];
 
 interface SectionData {
@@ -40,6 +42,7 @@ const SECTIONS: SectionData[] = [
   { name: "About Me", content: <AboutSection /> },
   { name: "Art Corner", content: <ArtCornerSection /> },
   { name: "Connect", content: <ConnectSection /> },
+  { name: "Blank", content: <EmptySection /> },
 ];
 
 interface CardSliderProps {
