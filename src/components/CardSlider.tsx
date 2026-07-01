@@ -25,6 +25,9 @@ const SECTION_ORDER: SectionName[] = [
   "Blank",
 ];
 
+/** Last section users can navigate to (Blank is deck padding only). */
+const LAST_NAVIGABLE_INDEX = SECTION_ORDER.indexOf("Connect");
+
 interface SectionData {
   name: SectionName;
   content: ReactNode;
@@ -40,10 +43,14 @@ const SECTIONS: SectionData[] = [
   },
   { name: "Work", content: <WorkSection />, isFullscreen: true },
   { name: "About Me", content: <AboutSection /> },
-  { name: "Art Corner", content: <ArtCornerSection /> },
+  { name: "Art Corner", content: <ArtCornerSection />, isFullscreen: true },
   { name: "Connect", content: <ConnectSection /> },
   { name: "Blank", content: <EmptySection /> },
 ];
+
+export function isFullscreenSection(section: SectionName): boolean {
+  return SECTIONS.some((s) => s.name === section && s.isFullscreen);
+}
 
 interface CardSliderProps {
   activeSection: SectionName;
@@ -129,7 +136,7 @@ export function CardSlider({
   );
 
   const navigateNext = useCallback(() => {
-    if (currentIndex < SECTION_ORDER.length - 1) {
+    if (currentIndex < LAST_NAVIGABLE_INDEX) {
       navigateTo(currentIndex + 1);
     }
   }, [currentIndex, navigateTo]);
@@ -151,7 +158,7 @@ export function CardSlider({
       Math.abs(info.offset.x) > swipeThreshold ||
       Math.abs(info.velocity.x) > velocityThreshold
     ) {
-      if (info.offset.x < 0 && currentIndex < SECTION_ORDER.length - 1) {
+      if (info.offset.x < 0 && currentIndex < LAST_NAVIGABLE_INDEX) {
         navigateNext();
       } else if (info.offset.x > 0 && currentIndex > 0) {
         navigatePrev();
@@ -274,7 +281,7 @@ export function CardSlider({
       <AnimatePresence>
         {isFullscreenActive && (
           <motion.div
-            key="work-fullscreen"
+            key={`${activeSection2.name}-fullscreen`}
             className="fixed inset-0 z-20 overflow-hidden bg-[#47578d] grid-plus pt-[88px]"
             initial={{
               transform: "scale(0.85)",
@@ -322,7 +329,7 @@ export function CardSlider({
       </button>
       <button
         onClick={navigateNext}
-        disabled={currentIndex === SECTION_ORDER.length - 1}
+        disabled={currentIndex >= LAST_NAVIGABLE_INDEX}
         aria-label="Next"
         className="fixed right-6 top-1/2 -translate-y-1/2 z-60 flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[4px_4px_0px_#333] transition-all hover:-translate-y-[calc(50%+2px)] hover:shadow-[6px_6px_0px_#333] active:-translate-y-[calc(50%-2px)] active:shadow-[0px_0px_0px_#333] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
       >

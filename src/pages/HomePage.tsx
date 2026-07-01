@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Navbar } from "../components/Navbar";
-import { CardSlider } from "../components/CardSlider";
+import { CardSlider, isFullscreenSection } from "../components/CardSlider";
 import type { SectionName } from "../components/Navbar";
 import stampBadge from "../assets/images/stamp-badge.svg";
 
 export function HomePage() {
   const [activeSection, setActiveSection] = useState<SectionName>("Home");
 
-  const isWorkActive = activeSection === "Work";
+  const isFullscreenActive = isFullscreenSection(activeSection);
 
   return (
     <div className="grid-paper relative min-h-screen w-full overflow-x-clip">
       {/* ─── Download Resume Stamp (fixed top-right) ─── */}
       <AnimatePresence>
-        {!isWorkActive && (
+        {!isFullscreenActive && (
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotate: -2 }}
             animate={{ opacity: 1, scale: 1, rotate: 27.35 }}
@@ -32,7 +32,7 @@ export function HomePage() {
       </AnimatePresence>
 
       {/* ─── Navbar ─── */}
-      <Navbar activeSection={activeSection} onNavigate={setActiveSection} isOverBlue={isWorkActive} />
+      <Navbar activeSection={activeSection} onNavigate={setActiveSection} isOverBlue={isFullscreenActive} />
 
       {/* ─── Card Stack ─── */}
       <CardSlider
@@ -42,7 +42,7 @@ export function HomePage() {
 
       {/* ─── Bottom Text ─── */}
       <AnimatePresence>
-        {!isWorkActive && (
+        {!isFullscreenActive && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
