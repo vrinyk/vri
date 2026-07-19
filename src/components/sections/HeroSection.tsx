@@ -8,6 +8,7 @@ import stickyNote from "../../assets/images/sticky-note.svg";
 import toolsBag from "../../assets/images/tools-bag.png";
 import vinylRecord from "../../assets/images/vinyl-record.png";
 import vrindaPhoto from "../../assets/images/vrinda-photo.png";
+import vrindaHoliPhoto from "../../assets/images/vrinda-holi-photo.jpeg";
 import speechBubble from "../../assets/images/speech-bubble.svg";
 import pinTop from "../../assets/images/pin-top.png";
 
@@ -35,8 +36,14 @@ export function HeroSection() {
           style={{ boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset" }}
           className="absolute left-[2%] top-[3%] h-[85%] w-[75%] origin-center -rotate-[7.5deg] bg-[#F1F2F2]"
         >
-          {/* Gray inner frame (Polaroid window) */}
-          <div className="absolute inset-[6%] bg-[#C8CACB]" />
+          {/* Polaroid window — actual photo */}
+          <div className="absolute inset-[6%] overflow-hidden bg-[#C8CACB]">
+            <img
+              src={vrindaHoliPhoto}
+              alt="Vrinda Khandelwal"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </motion.div>
 
         {/* Vrinda's photo */}
@@ -89,7 +96,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="mb-5 font-oswald text-[clamp(26px,2.9vw,40px)] font-semibold leading-[1.12] tracking-tight text-white"
         >
-          Empathetic designer designing for humans before interfaces.
+          Empathy designer designing for humans before interfaces.
         </motion.h1>
 
         {/* Body text */}

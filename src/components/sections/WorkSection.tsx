@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import stampBadge from "../../assets/images/stamp-badge.svg";
+import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-preview.png";
 
 const MotionLink = motion(Link);
 
@@ -8,6 +9,7 @@ const PROJECTS = [
   {
     year: "2025-FREED",
     title: "Redesigning onboarding journey for FREED DRP Product",
+    image: freedWorkCardPreview,
     stats: [
       { value: "40%", label: "Increase in Engagement" },
       { value: "32%", label: "Increase in Conversion" },
@@ -16,6 +18,7 @@ const PROJECTS = [
   {
     year: "2025-FREED",
     title: "Redesigning onboarding journey for FREED DRP Product",
+    image: undefined as string | undefined,
     stats: [
       { value: "40%", label: "Increase in Activation" },
       { value: "32%", label: "Increase in Activation" },
@@ -24,6 +27,7 @@ const PROJECTS = [
   {
     year: "2025-FREED",
     title: "Redesigning onboarding journey for FREED DRP Product",
+    image: undefined as string | undefined,
     stats: [
       { value: "40%", label: "Increase in Activation" },
       { value: "32%", label: "Increase in Activation" },
@@ -68,8 +72,16 @@ export function WorkSection() {
                 {project.year}
               </p>
 
-              {/* Image placeholder */}
-              <div className="w-full flex-1 min-h-24 rounded bg-[#D1D3D4] mb-[6%]" />
+              {/* Project preview image */}
+              <div className="w-full flex-1 min-h-24 rounded bg-[#D1D3D4] mb-[6%] overflow-hidden">
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover object-top"
+                  />
+                )}
+              </div>
 
               <p className="font-dm-sans text-[clamp(13px,1.3vw,18px)] font-medium text-black leading-snug mb-[6%]">
                 {project.title}
