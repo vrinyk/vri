@@ -19,10 +19,10 @@ const SlideUserResearch = () => {
           User Research —
         </h2>
         <h3 className="font-sans text-2xl font-bold mb-4 mt-8" style={{ color: '#2e2e2e' }}>
-          Understanding our users
+          Starting with questions, not solutions
         </h3>
         <p className="text-[#1f232d] leading-relaxed text-lg mb-10 max-w-4xl">
-          The user category and primary user persona for Freed represent a focused segment of individuals who are managing multiple high-interest loans with limited financial literacy and little access to formal guidance from Tier 2 and Tier 3 cities.
+          Before sketching a single screen, I spent time understanding who these users really were — their fears, their language, their doubts. Freed's users aren't just debt-burdened; they're anxious, often financially undereducated, and skeptical of any platform that asks for their data. To design for them, I had to understand them first.
         </p>
         
         <div className="bg-[#dbeef8]/20 rounded-2xl p-8 border border-[#dbeef8]/30">

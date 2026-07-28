@@ -85,10 +85,10 @@ const SlideResults = () => {
               </h2>
               <div className="space-y-4 text-base text-[#6b6f7a] leading-relaxed">
                 <p>
-                  This project taught me that great design isn't about adding more — it's about knowing what to hold back. Users weren't asking for flashy features or clever interactions. They needed clarity in a moment of financial stress, and trust before they could commit.
+                  The biggest shift was recognizing that <strong className="text-[#1f232d]">the obvious problem wasn't the real problem.</strong> A low completion rate looks like a UI problem — fix the flow, shorten the steps. But when I talked to users, I realized they weren't dropping off because the design was hard to use. They were dropping off because they didn't trust what was happening.
                 </p>
                 <p>
-                  Through deep user research, I discovered that the real barriers weren't functional — they were emotional. People wanted to feel in control, not overwhelmed. They needed reassurance, not persuasion. That insight shifted everything about how I approached the redesign.
+                  That realization changed everything about how I approached the redesign. Instead of asking "how do we make this cleaner?", I started asking "what does the user need to feel safe enough to proceed?" Their fears, their goals, their questions — those became the brief. Figma came later.
                 </p>
                 <p>
                   I learned to translate feelings like anxiety and hesitation into tangible UX decisions — simplifying copy, reducing cognitive load, and designing moments of confidence rather than conversion pressure. It sharpened my ability to design for <strong className="text-[#1f232d]">behavior and emotion</strong>, not just usability.

@@ -58,14 +58,14 @@ const SlideUserFeedbacks = () => {
         
         {/* Center Heading */}
         <div className="mb-10">
-          <h3 
+          <h3
             className="text-2xl md:text-3xl font-bold mb-3"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            Insights of Primary & Secondary Research
+            What users actually said
           </h3>
           <p className="text-[#6b6f7a] max-w-2xl">
-            I synthesized research findings to frame a clear and focused problem, define users and establish goals.
+            I started with questions, not hypotheses. Talking to real users — and listening to the language they used — revealed the problem wasn't about UI. Words like <em>"fraud"</em>, <em>"confused"</em>, <em>"who do I even pay?"</em> weren't describing a navigation issue. They were describing a trust crisis.
           </p>
         </div>
         
@@ -176,11 +176,11 @@ const SlideUserFeedbacks = () => {
 
         {/* Bottom Section - Common Problems */}
         <div className="bg-[#fbfaf7] rounded-2xl p-6 border border-[#e6e0d5]">
-          <span 
+          <span
             className="inline-block text-lg mb-4 text-[#1f232d]"
             style={{ fontFamily: "'Caveat', cursive" }}
           >
-            Common Problem
+            The real problems users had — not the ones we assumed
           </span>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">

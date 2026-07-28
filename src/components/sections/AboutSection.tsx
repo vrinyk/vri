@@ -120,50 +120,37 @@ export function AboutSection() {
         </motion.svg>
 
         {/* ─── Right: Bio text ─── */}
-        <div className="absolute right-[5%] top-[38%] w-[48%]">
+        <div className="absolute right-[5%] top-[36%] w-[48%]">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="font-dm-sans text-[clamp(12px,1vw,17px)] leading-[1.7] text-white/90"
+            className="font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            I believe in ideas over opinions, prototypes as the best form of
-            collaboration, and exploring a hundred possibilities to find the
-            one that truly fits.
+            I believe in ideas over opinions and prototypes as the best way to
+            explore possibilities before finding what truly fits.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.65 }}
-            className="mt-4 font-dm-sans text-[clamp(12px,1.1vw,17px)] leading-[1.7] text-white/90"
+            className="mt-2.5 font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            Guided by curiosity and a high standard for craft, I aim to design
-            with empathy, clarity, and quiet confidence — where every detail
-            serves meaning and simplicity.
+            Curious by nature, I design with empathy and craft — asking the
+            right questions, iterating fast, and shipping steady, meaningful
+            solutions.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.85 }}
-            className="mt-4 font-dm-sans text-[clamp(12px,1.1vw,17px)] leading-[1.7] text-white/90"
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="mt-2.5 font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            I ask lots of questions to dig into real needs, then iterate fast
-            — delivering solid solutions on time through a steady process.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.95 }}
-            className="mt-4 font-dm-sans text-[clamp(12px,1.1vw,17px)] leading-[1.7] text-white/90"
-          >
-            I transitioned from economics to design, fascinated by how color
-            and motion bring ideas to life. Outside of product work, I'm
-            happiest painting with different mediums, trying a new ink, and
-            chasing good sunsets. I also enjoy playing badminton, decorating
-            my home, and hearing people's stories.
+            From economics to design, I found my calling in colour and
+            motion. Off the clock: painting, badminton, decorating my space,
+            and chasing good sunsets.
           </motion.p>
         </div>
       </div>
