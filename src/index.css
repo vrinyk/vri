@@ -8,6 +8,9 @@
   --font-gasoek: 'Gasoek One', serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'DM Sans', system-ui, sans-serif;
+  /* Aliases the case study layouts reference */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
 
   --color-blue-card: #677DC6;
   --color-blue-card-back: #47578D;
@@ -130,6 +133,15 @@
 
 .case-study * {
   border-color: hsl(var(--border));
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes fade-in {

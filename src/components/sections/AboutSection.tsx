@@ -127,8 +127,10 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            I believe in ideas over opinions and prototypes as the best way to
-            explore possibilities before finding what truly fits.
+            I take complicated things and make them feel obvious — turning
+            messy, overwhelming problems into experiences people simply get.
+            I believe ideas matter more than opinions, and prototypes are the
+            fastest way to discover what truly works.
           </motion.p>
 
           <motion.p
@@ -137,9 +139,9 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.65 }}
             className="mt-2.5 font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            Curious by nature, I design with empathy and craft — asking the
-            right questions, iterating fast, and shipping steady, meaningful
-            solutions.
+            Curious by nature, I design with empathy, iterate quickly, and
+            enjoy simplifying products that need to feel effortless and
+            trustworthy.
           </motion.p>
 
           <motion.p
@@ -148,9 +150,19 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.8 }}
             className="mt-2.5 font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90"
           >
-            From economics to design, I found my calling in colour and
-            motion. Off the clock: painting, badminton, decorating my space,
-            and chasing good sunsets.
+            From economics to design, I found my calling in colour, motion,
+            and thoughtful systems. Outside work, I'm usually creating
+            something new or escaping to the mountains, where fresh air and
+            good sunsets do the best thinking.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.95 }}
+            className="mt-2.5 font-dm-sans text-[clamp(10px,0.95vw,15px)] leading-[1.45] text-white/90 italic"
+          >
+            Let's make something complicated look easy.
           </motion.p>
         </div>
       </div>

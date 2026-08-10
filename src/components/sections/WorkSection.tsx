@@ -5,11 +5,20 @@ import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-
 
 const MotionLink = motion(Link);
 
-const PROJECTS = [
+type Project = {
+  year: string;
+  title: string;
+  image?: string;
+  href?: string;
+  stats: { value: string; label: string }[];
+};
+
+const PROJECTS: Project[] = [
   {
     year: "2025-FREED",
     title: "Redesigning onboarding journey for FREED DRP Product",
     image: freedWorkCardPreview,
+    href: "/case-studies/freed-drp",
     stats: [
       { value: "40%", label: "Increase in Engagement" },
       { value: "32%", label: "Increase in Conversion" },
@@ -17,17 +26,16 @@ const PROJECTS = [
   },
   {
     year: "2025-FREED",
-    title: "Redesigning onboarding journey for FREED DRP Product",
-    image: undefined as string | undefined,
+    title: "Decluttering the Agent Flow for Spine, FREED's internal CRM",
+    href: "/case-studies/agent-flow",
     stats: [
-      { value: "40%", label: "Increase in Activation" },
-      { value: "32%", label: "Increase in Activation" },
+      { value: "40 min", label: "Saved per scrub cycle" },
+      { value: "2 tabs", label: "Down from 6+ scattered" },
     ],
   },
   {
     year: "2025-FREED",
     title: "Redesigning onboarding journey for FREED DRP Product",
-    image: undefined as string | undefined,
     stats: [
       { value: "40%", label: "Increase in Activation" },
       { value: "32%", label: "Increase in Activation" },
@@ -100,14 +108,23 @@ export function WorkSection() {
                     </div>
                   ))}
                 </div>
-                <MotionLink
-                  to="/case-studies/freed-drp"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="whitespace-nowrap rounded-[0.5rem] bg-[#272e46] px-5 py-4 font-dm-sans text-[clamp(11px,1vw,15px)] font-medium text-white"
-                >
-                  View Case Study
-                </MotionLink>
+                {project.href ? (
+                  <MotionLink
+                    to={project.href}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="whitespace-nowrap rounded-[0.5rem] bg-[#272e46] px-5 py-4 font-dm-sans text-[clamp(11px,1vw,15px)] font-medium text-white"
+                  >
+                    View Case Study
+                  </MotionLink>
+                ) : (
+                  <span
+                    className="whitespace-nowrap rounded-[0.5rem] bg-[#272e46]/40 px-5 py-4 font-dm-sans text-[clamp(11px,1vw,15px)] font-medium text-white/70"
+                    aria-disabled
+                  >
+                    Coming Soon
+                  </span>
+                )}
               </div>
             </motion.div>
           ))}
