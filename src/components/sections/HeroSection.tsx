@@ -96,7 +96,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="mb-5 font-oswald text-[clamp(26px,2.9vw,40px)] font-semibold leading-[1.12] tracking-tight text-white"
         >
-          Empathy designer designing for humans before interfaces.
+          Every screen holds a feeling. I design for that, not the pixels.
         </motion.h1>
 
         {/* Body text */}
@@ -106,11 +106,14 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.45 }}
           className="max-w-[52ch] font-dm-sans text-[clamp(17px,1.15vw,17px)] leading-[1.55] text-white/90"
         >
-          I'm a designer who listens beyond words and designs solutions that
-          respond to unspoken needs. I'm obsessed with the layers of human
-          behaviour tucked inside every product problem — the tension between
-          what people say and what they feel. That said, I still love to
-          design for delight, for the small unexpected smile.
+          I'm a Product Designer who likes asking “why?” a little too much.
+          Why does this need to exist? Why is this confusing? Why are users
+          dropping off here? I enjoy getting into the messy part of product
+          problems, connecting the dots between people, business, and
+          technology, and turning that complexity into experiences that feel
+          obvious. I'm less interested in designing screens for the sake of
+          screens, and more interested in understanding the problem deeply
+          enough that the right experience almost designs itself.
         </motion.p>
       </div>
 

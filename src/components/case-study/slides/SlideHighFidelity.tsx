@@ -125,9 +125,12 @@ const SlideHighFidelity = () => {
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
-                  <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Improved account transparency →</h4>
+                  <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Surfaced the accounts we were hiding →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    Added Eligible vs Not Eligible tabs so "missing accounts" confusion is removed.
+                    We only ever showed eligible accounts, so users assumed the rest were
+                    forgotten and lost trust in the plan. Added Eligible vs Not Eligible
+                    tabs with a reason against each — nothing goes missing, and users
+                    learn why an account can't be settled.
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
