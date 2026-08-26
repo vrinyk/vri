@@ -106,14 +106,10 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.45 }}
           className="max-w-[52ch] font-dm-sans text-[clamp(17px,1.15vw,17px)] leading-[1.55] text-white/90"
         >
-          I'm a Product Designer who likes asking “why?” a little too much.
-          Why does this need to exist? Why is this confusing? Why are users
-          dropping off here? I enjoy getting into the messy part of product
-          problems, connecting the dots between people, business, and
-          technology, and turning that complexity into experiences that feel
-          obvious. I'm less interested in designing screens for the sake of
-          screens, and more interested in understanding the problem deeply
-          enough that the right experience almost designs itself.
+          I'm a Product Designer who asks “why?” a little too much. Why does
+          this exist? Why is this confusing? Why are people dropping off here?
+          I like the messy part of product problems — and turning that
+          complexity into something that feels obvious.
         </motion.p>
       </div>
 

@@ -2,6 +2,16 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ImagePlaceholder from "./ImagePlaceholder";
+import Shot from "./Shot";
+import imgQualification from "@/assets/case-study-agent-flow/qualification.png";
+import imgCreditors from "@/assets/case-study-agent-flow/creditors.png";
+import imgSummaryFoir from "@/assets/case-study-agent-flow/summary_foir.png";
+import imgPreferredLenders from "@/assets/case-study-agent-flow/preferred_lenders.png";
+import imgPreLogin from "@/assets/case-study-agent-flow/pre_login.png";
+import imgDocuments from "@/assets/case-study-agent-flow/documents_tab1.png";
+import imgScrubFlow from "@/assets/case-study-agent-flow/scrub_flow.png";
+import imgRequestInfo from "@/assets/case-study-agent-flow/request_information.png";
+import imgRequestDetails from "@/assets/case-study-agent-flow/request_details.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -145,7 +155,7 @@ const AgentFlowSlider = () => {
                 </div>
               </motion.div>
               <motion.div variants={fadeUp}>
-                <ImagePlaceholder label="Spine DCP Flow Overview" className="w-full max-w-3xl" aspectRatio="16/9" />
+                <Shot src={imgSummaryFoir} label="Spine DCP flow overview" className="w-full max-w-3xl" />
               </motion.div>
             </motion.div>
           </div>
@@ -297,7 +307,7 @@ const AgentFlowSlider = () => {
               </motion.div>
               <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <ImagePlaceholder label="Before: Old Spine Layout" aspectRatio="16/10" />
-                <ImagePlaceholder label="After: Redesigned Tab Structure" aspectRatio="16/10" />
+                <Shot src={imgQualification} label="After: Redesigned Tab Structure" />
               </motion.div>
             </motion.div>
           </div>
@@ -322,6 +332,7 @@ const AgentFlowSlider = () => {
                   problem: "Qualifying questions were scattered across sections. Advisors had to jump around while the client was still on the call.",
                   solution: "Grouped net salary, city, housing, employer, bounces and CIBIL at the top of tab 1 in the exact order advisors ask on the call.",
                   label: "Qualification Details",
+                  afterImg: imgQualification,
                 },
                 {
                   tag: "Creditors",
@@ -329,6 +340,7 @@ const AgentFlowSlider = () => {
                   problem: "Advisors cross-referenced Experian data with separate Excel sheets to decide which creditors to include.",
                   solution: "Included / Excluded lists auto-populate from Experian. Toggling a creditor instantly recalculates totals inside Spine.",
                   label: "Creditor Overview",
+                  afterImg: imgCreditors,
                 },
                 {
                   tag: "Summary & FOIR",
@@ -336,6 +348,7 @@ const AgentFlowSlider = () => {
                   problem: "FOIR was calculated manually in Excel, causing errors and slow pitching on the call.",
                   solution: "Automated 'Without FREED vs With FREED' comparison shows FOIR, new EMI, reduction % and monthly savings in real time.",
                   label: "Summary with FOIR",
+                  afterImg: imgSummaryFoir,
                 },
                 {
                   tag: "Preferred Lenders",
@@ -343,6 +356,7 @@ const AgentFlowSlider = () => {
                   problem: "Lender fitment lived in spreadsheets. Recommending the right lender was slow and inconsistent.",
                   solution: "All preferred lenders shown with tenure, rate, EMI, reduction, top-up. Best option auto-tagged based on the client profile.",
                   label: "Preferred Lenders",
+                  afterImg: imgPreferredLenders,
                 },
                 {
                   tag: "Pre Login",
@@ -350,6 +364,7 @@ const AgentFlowSlider = () => {
                   problem: "Qualification and login fields were mixed into one long form, cluttering the call flow.",
                   solution: "Separated into tab 2 — PAN, Aadhaar, DOB, addresses, employment, family — used only after the client is qualified.",
                   label: "Pre Login Details",
+                  afterImg: imgPreLogin,
                 },
                 {
                   tag: "Documents",
@@ -357,6 +372,7 @@ const AgentFlowSlider = () => {
                   problem: "Files were renamed and re-uploaded manually. No structure for type, period, or login usage.",
                   solution: "Type tagging, date ranges, comments and a 'Used for Login' toggle in a single organised view.",
                   label: "Document Manager",
+                  afterImg: imgDocuments,
                 },
                 {
                   tag: "Scrub Flow",
@@ -364,6 +380,7 @@ const AgentFlowSlider = () => {
                   problem: "Scrub approvals happened over Excel and email. TLs and ops had no live view of file status.",
                   solution: "Advisors request scrub checks in-app, tasks auto-assign to TLs, and status changes notify advisor, TL, ops and credit officer.",
                   label: "In-app Scrub Flow",
+                  afterImg: imgScrubFlow,
                 },
               ].map((item, i) => (
                 <motion.div key={item.title} variants={fadeUp} className="mb-14 pb-14 border-b border-border/50 last:border-0 last:pb-0 last:mb-0">
@@ -384,7 +401,7 @@ const AgentFlowSlider = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <ImagePlaceholder label={`Before: ${item.label}`} aspectRatio="16/10" />
-                    <ImagePlaceholder label={`After: ${item.label}`} aspectRatio="16/10" />
+                    <Shot src={item.afterImg} label={`After: ${item.label}`} />
                   </div>
                 </motion.div>
               ))}
@@ -435,8 +452,8 @@ const AgentFlowSlider = () => {
               </motion.div>
 
               <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImagePlaceholder label="Request Details panel" aspectRatio="16/10" />
-                <ImagePlaceholder label="Request Information dialog" aspectRatio="16/10" />
+                <Shot src={imgRequestDetails} label="Request Details panel" />
+                <Shot src={imgRequestInfo} label="Request Information dialog" />
               </motion.div>
             </motion.div>
           </div>

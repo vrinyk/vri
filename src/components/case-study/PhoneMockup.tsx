@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 
 export type Screen = {
@@ -26,6 +26,8 @@ export default function PhoneMockup({
 }: PhoneMockupProps) {
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const scrollRef = useRef<HTMLSpanElement | null>(null);
 
   const count = screens.length;
   const go = useCallback(
@@ -48,21 +50,72 @@ export default function PhoneMockup({
   const current = screens[index];
   const height = Math.round((width * 875) / 414);
 
+  // Drive the long-page scroll in JS: the travel distance depends on the
+  // image's real height, which CSS can't know ahead of time.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !current.tall || paused || open) return;
+
+    let raf = 0;
+    let direction = 1;
+    let last = performance.now();
+    const SPEED = 34; // px per second — slow enough to read
+
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      const max = el.scrollHeight - el.clientHeight;
+      if (max > 0) {
+        let next = el.scrollTop + direction * SPEED * dt;
+        if (next >= max) {
+          next = max;
+          direction = -1;
+        } else if (next <= 0) {
+          next = 0;
+          direction = 1;
+        }
+        el.scrollTop = next;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [current.tall, current.src, paused, open]);
+
+  // Reset to the top whenever the screen changes.
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [index]);
+
   return (
     <div className={`flex flex-col items-center ${className}`}>
       <button
         type="button"
         onClick={() => setOpen(true)}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
         aria-label={`Open ${current.label} full size`}
         className="group relative rounded-[2.2rem] bg-[#1f232d] p-2 shadow-[0_18px_40px_rgba(31,35,45,0.28)] transition-transform duration-300 hover:-translate-y-1.5"
         style={{ width, height }}
       >
         <span className="block h-full w-full overflow-hidden rounded-[1.8rem] bg-white">
-          <img
-            src={current.src}
-            alt={current.label}
-            className={`w-full ${current.tall ? "h-auto" : "h-full object-cover object-top"}`}
-          />
+          {current.tall ? (
+            /* Long pages travel top-to-bottom on a loop so the whole page is
+               readable without a 1200px-tall frame. Hovering hands control
+               back to the reader's wheel. */
+            <span
+              ref={scrollRef}
+              className="block h-full w-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <img src={current.src} alt={current.label} className="w-full" />
+            </span>
+          ) : (
+            <img
+              src={current.src}
+              alt={current.label}
+              className="h-full w-full object-cover object-top"
+            />
+          )}
         </span>
         {/* Expand affordance */}
         <span className="pointer-events-none absolute bottom-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#1f232d]/85 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
