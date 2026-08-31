@@ -16,7 +16,7 @@ const comprehensionIssues = [
 
 const SlideUserInsights = () => {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start md:items-center px-4 py-8 md:px-6 md:py-12">
       <div className="container max-w-6xl mx-auto">
         <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-10">
           User Insights

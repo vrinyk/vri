@@ -70,7 +70,7 @@ const AgentFlowSlider = () => {
   return (
     <div className="h-screen overflow-hidden bg-background flex flex-col">
       {/* Top Navigation */}
-      <nav className="flex-shrink-0 z-50 px-6 lg:px-10 py-3 flex items-center justify-between border-b border-border/60">
+      <nav className="flex-shrink-0 z-50 px-3 md:px-6 lg:px-10 py-2.5 md:py-3 flex items-center justify-between border-b border-border/60">
         <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar">
           {sections.map((section, i) => (
             <button
@@ -97,7 +97,7 @@ const AgentFlowSlider = () => {
         className="flex flex-1 overflow-x-auto snap-x snap-mandatory hide-scrollbar"
       >
         {/* SLIDE 1: Hero */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.h1 variants={fadeUp} className="font-heading text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] tracking-tight mb-8">
@@ -122,7 +122,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 2: Summary */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.h2 variants={fadeUp} className="font-heading text-4xl md:text-6xl leading-[0.95] tracking-tight mb-10">
@@ -162,7 +162,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 3: Problem */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">The Problem</motion.p>
@@ -188,7 +188,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 4: Layout Research (merged with Visual Considerations) */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">The Audit</motion.p>
@@ -226,7 +226,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 5: Context Loss */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">The Audit</motion.p>
@@ -270,7 +270,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 6: Field Hunting */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">The Audit</motion.p>
@@ -288,7 +288,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 7: Solution */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">The Solution</motion.p>
@@ -314,7 +314,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 8: Solution Deep Dive (combined) */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-5xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">Solution Deep Dive</motion.p>
@@ -410,7 +410,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 15: Request Information */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">Feature Deep Dive</motion.p>
@@ -460,7 +460,7 @@ const AgentFlowSlider = () => {
         </section>
 
         {/* SLIDE 16: Impact */}
-        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-8 md:px-16 lg:px-24 pt-10 md:pt-12 pb-12 md:pb-16 flex flex-col justify-start">
+        <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.p variants={fadeUp} className="font-body text-[13px] tracking-widest uppercase text-muted-foreground mb-6">My Role & Impact</motion.p>

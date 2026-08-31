@@ -109,7 +109,7 @@ const PhoneCarousel = ({
 
 const SlideRetentionConversion = () => {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start md:items-center px-4 py-8 md:px-6 md:py-12">
       <div className="container max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-10 text-center">

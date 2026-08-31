@@ -15,13 +15,13 @@ export function Navbar({ activeSection, onNavigate, isOverBlue = false }: Navbar
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative z-30 grid grid-cols-[auto_1fr_auto] items-center px-10 py-8"
+      className="relative z-30 flex flex-col items-center gap-3 px-5 py-5 md:grid md:grid-cols-[auto_1fr_auto] md:gap-0 md:px-10 md:py-8"
     >
       {/* Logo — clicking goes Home */}
       <motion.span
         whileHover={{ scale: 1.03 }}
         onClick={() => onNavigate("Home")}
-        className={`cursor-pointer font-oswald text-[34px] font-semibold select-none transition-colors duration-300 ${
+        className={`cursor-pointer font-oswald text-[24px] font-semibold select-none transition-colors duration-300 md:text-[34px] ${
           isOverBlue ? "text-white" : "text-blue-logo"
         }`}
       >
@@ -29,7 +29,7 @@ export function Navbar({ activeSection, onNavigate, isOverBlue = false }: Navbar
       </motion.span>
 
       {/* Centered nav links */}
-      <ul className={`flex items-center justify-center gap-10 font-dm-sans text-[24px] capitalize transition-colors duration-300 ${
+      <ul className={`flex w-full items-center justify-center gap-4 overflow-x-auto whitespace-nowrap font-dm-sans text-[15px] capitalize transition-colors duration-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:text-[17px] md:w-auto md:gap-10 md:overflow-visible md:text-[24px] ${
         isOverBlue ? "text-white/80" : "text-black"
       }`}>
         {SECTIONS.map((link) => (

@@ -8,6 +8,7 @@ import {
 } from "motion/react";
 import type { SectionName } from "./Navbar";
 import { CardWrapper } from "./CardWrapper";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { HeroSection, HeroDecorations } from "./sections/HeroSection";
 import { WorkSection } from "./sections/WorkSection";
 import { AboutSection } from "./sections/AboutSection";
@@ -48,9 +49,7 @@ const SECTIONS: SectionData[] = [
   { name: "Blank", content: <EmptySection /> },
 ];
 
-export function isFullscreenSection(section: SectionName): boolean {
-  return SECTIONS.some((s) => s.name === section && s.isFullscreen);
-}
+
 
 interface CardSliderProps {
   activeSection: SectionName;
@@ -94,10 +93,44 @@ function getDeckTransform(pos: number) {
   };
 }
 
+/** Prev/next control for mobile, replacing the swipeable deck. */
+function MobileNav({
+  currentIndex,
+  lastIndex,
+  onPrev,
+  onNext,
+}: {
+  currentIndex: number;
+  lastIndex: number;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const btn =
+    "flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#333] bg-white shadow-[3px_3px_0px_#333] transition-transform active:translate-y-0.5 disabled:opacity-30 disabled:pointer-events-none";
+  return (
+    <div className="mt-5 flex items-center justify-center gap-4">
+      <button onClick={onPrev} disabled={currentIndex === 0} aria-label="Previous section" className={btn}>
+        <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#333]">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+      </button>
+      <span className="font-dm-sans text-[13px] tabular-nums text-black/60">
+        {currentIndex + 1} / {lastIndex + 1}
+      </span>
+      <button onClick={onNext} disabled={currentIndex >= lastIndex} aria-label="Next section" className={btn}>
+        <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#333]">
+          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export function CardSlider({
   activeSection,
   onSectionChange,
 }: CardSliderProps) {
+  const isMobile = useIsMobile();
   const [currentIndex, setCurrentIndex] = useState(
     SECTION_ORDER.indexOf(activeSection)
   );
@@ -173,6 +206,28 @@ export function CardSlider({
   // Find if Work (fullscreen) section is active
   const activeSection2 = SECTIONS[currentIndex];
   const isFullscreenActive = activeSection2?.isFullscreen && true;
+
+  // On a phone the deck metaphor does not work: siblings are stacked with
+  // absolute positioning and rotated, and a 16:9 card is ~210px tall. Mobile
+  // renders the active section on its own, in normal flow, and navigates with
+  // the navbar and arrows instead of the stack.
+  if (isMobile) {
+    return (
+      <>
+        <div className="mx-auto mt-2 w-full max-w-[1100px] px-4">
+          <CardWrapper showPin showBorder isActive>
+            {activeSection2.content}
+          </CardWrapper>
+        </div>
+        <MobileNav
+          currentIndex={currentIndex}
+          lastIndex={LAST_NAVIGABLE_INDEX}
+          onPrev={navigatePrev}
+          onNext={navigateNext}
+        />
+      </>
+    );
+  }
 
   return (
     <>

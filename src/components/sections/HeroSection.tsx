@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 // Assets
 import pinkStar from "../../assets/images/pink-star.svg";
@@ -24,10 +25,12 @@ const SKILL_TAGS = [
  * Inner card content for the Hero/Home section.
  */
 export function HeroSection() {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="relative h-full w-full p-[6%]">
+    <div className="relative flex h-full w-full flex-col p-6 md:block md:p-[6%]">
       {/* ─── Left: Polaroid + Photo ─── */}
-      <div className="absolute left-[4%] top-[8%] h-[65%] w-[38%]">
+      <div className="relative mx-auto h-52 w-full max-w-[240px] shrink-0 md:absolute md:left-[4%] md:top-[8%] md:mx-0 md:h-[65%] md:w-[38%] md:max-w-none">
         {/* White polaroid background */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -58,16 +61,16 @@ export function HeroSection() {
       </div>
 
       {/* ─── Right: Text Content ─── */}
-      <div className="absolute left-[46%] top-[8%] w-[46%]">
+      <div className="relative mt-6 w-full md:absolute md:left-[46%] md:top-[8%] md:mt-0 md:w-[46%]">
         {/* Name badge — dashed frame + crop marks (screenshot) */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="relative mb-5 mt-2 inline-block"
+          className="relative mb-4 mt-0 inline-block md:mb-5 md:mt-2"
         >
           <div className="relative border-2 border-dashed border-white px-4 py-2.5">
-            <span className="font-caveat text-[clamp(20px,2vw,32px)] font-bold text-white">
+            <span className="font-caveat text-[17px] font-bold text-white md:text-[clamp(20px,2vw,32px)]">
               Hi I'm vrinda Khandelwal
             </span>
           </div>
@@ -94,7 +97,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="mb-5 font-oswald text-[clamp(26px,2.9vw,40px)] font-semibold leading-[1.12] tracking-tight text-white"
+          className="mb-4 font-oswald text-[24px] font-semibold leading-[1.14] tracking-tight text-white md:mb-5 md:text-[clamp(26px,2.9vw,40px)]"
         >
           Every screen holds a feeling. I design for that, not the pixels.
         </motion.h1>
@@ -104,7 +107,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
-          className="max-w-[52ch] font-dm-sans text-[clamp(17px,1.15vw,17px)] leading-[1.55] text-white/90"
+          className="max-w-[52ch] font-dm-sans text-[14.5px] leading-[1.55] text-white/90 md:text-[17px]"
         >
           I'm a Product Designer who asks “why?” a little too much. Why does
           this exist? Why is this confusing? Why are people dropping off here?
@@ -113,47 +116,48 @@ export function HeroSection() {
         </motion.p>
       </div>
 
-      {/* ─── Skill Tags (dashed pills) ─── */}
-      {SKILL_TAGS.map((tag, i) => (
-        <motion.div
-          key={tag.label}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.5 + i * 0.08 }}
-          whileHover={{ scale: 1.1, rotate: 0 }}
-          className="absolute cursor-default"
-          style={{
-            left: tag.left,
-            top: tag.top,
-            rotate: `${tag.rotate}deg`,
-          }}
-        >
-          <div className="rounded-full border-2 border-dashed border-white/95 px-4 py-[3px] backdrop-blur-[1px]">
-            <span className="font-oswald text-[clamp(15px,1.65vw,24px)] font-semibold tracking-wide text-white drop-shadow-[0_1px_0_rgba(0,0,0,0.15)]">
-              {tag.label}
-            </span>
-          </div>
-        </motion.div>
-      ))}
+      {/* ─── Skill Tags ─── scattered on desktop, a wrapped row on mobile */}
+      <div className="mt-7 flex flex-wrap justify-center gap-2 md:mt-0 md:block">
+        {SKILL_TAGS.map((tag, i) => (
+          <motion.div
+            key={tag.label}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.5 + i * 0.08 }}
+            whileHover={{ scale: 1.1, rotate: 0 }}
+            className="cursor-default md:absolute"
+            style={
+              isMobile
+                ? undefined
+                : { left: tag.left, top: tag.top, rotate: `${tag.rotate}deg` }
+            }
+          >
+            <div className="rounded-full border-2 border-dashed border-white/95 px-3 py-[2px] backdrop-blur-[1px] md:px-4 md:py-[3px]">
+              <span className="font-oswald text-[14px] font-semibold tracking-wide text-white drop-shadow-[0_1px_0_rgba(0,0,0,0.15)] md:text-[clamp(15px,1.65vw,24px)]">
+                {tag.label}
+              </span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
-      {/* Pink star */}
+      {/* Loose decorations only make sense in the desktop collage */}
       <motion.img
         src={pinkStar}
         alt=""
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.7, type: "spring" }}
-        className="absolute left-[8%] top-[72%] h-10 w-10"
+        className="absolute left-[8%] top-[72%] hidden h-10 w-10 md:block"
       />
 
-      {/* Green dot */}
       <motion.img
         src={greenDot}
         alt=""
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, delay: 0.8, type: "spring" }}
-        className="absolute left-[38%] top-[76%] h-5 w-5"
+        className="absolute left-[38%] top-[76%] hidden h-5 w-5 md:block"
       />
     </div>
   );

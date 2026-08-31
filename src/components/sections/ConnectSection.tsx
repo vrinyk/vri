@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import chat0 from "../../assets/images/testimonials/chat-0.png";
 import chat1 from "../../assets/images/testimonials/chat-1.png";
 import chat2 from "../../assets/images/testimonials/chat-2.png";
@@ -67,7 +68,106 @@ function PushPin() {
   );
 }
 
+/**
+ * Mobile layout. The desktop version overlaps three rotated pills and four
+ * screenshots at fixed percentages, which cannot survive a narrow column, so
+ * small screens get a straight vertical stack instead of a scaled collage.
+ */
+function ConnectMobile() {
+  const pill =
+    "flex w-full items-center justify-center rounded-2xl px-5 py-3.5 font-oswald text-[19px] font-semibold uppercase tracking-wide shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-colors duration-300 active:scale-[0.98]";
+
+  return (
+    <div className="flex h-full w-full flex-col items-center px-6 py-8">
+      <motion.h2
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-center font-oswald text-[30px] font-semibold uppercase leading-none text-white"
+      >
+        Get in touch
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+        className="mt-2 text-center font-dm-sans text-[13.5px] leading-snug text-white/85"
+      >
+        Open for new opportunites , Startups can count on!
+      </motion.p>
+
+      <div className="mt-7 flex w-full flex-col gap-3">
+        <motion.a
+          href="mailto:vrinyk@gmail.com"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+          className={`${pill} bg-[#E1C3FF] font-dm-sans text-[16px] normal-case tracking-normal text-white active:bg-white active:text-[#C5221F]`}
+        >
+          vrinyk@gmail.com
+        </motion.a>
+        <motion.a
+          href="https://www.linkedin.com/in/vrinda-khandelwal-60bab8243/"
+          target="_blank"
+          rel="noreferrer"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.48 }}
+          className={`${pill} bg-[#FFFEF9] text-[#0B66C3] active:bg-[#0A66C2] active:text-white`}
+        >
+          Linkdin
+        </motion.a>
+        <motion.a
+          href="https://www.instagram.com/blithe_colors"
+          target="_blank"
+          rel="noreferrer"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.56 }}
+          className={`${pill} group relative overflow-hidden bg-black text-white`}
+        >
+          {/* group-active, not active: the span is pointer-events-none so it
+              never becomes the :active target itself. */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-active:opacity-100"
+            style={{ background: INSTAGRAM_GRADIENT }}
+          />
+          <span className="relative z-10">Instagram</span>
+        </motion.a>
+      </div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.66 }}
+        className="mt-7 text-center font-caveat text-[17px] font-medium italic text-white"
+      >
+        some kind words which keeps me pushing
+      </motion.p>
+
+      <div className="mt-4 flex w-full flex-col gap-3 pb-2">
+        {SHOTS.map((s, i) => (
+          <motion.img
+            key={i}
+            src={s.src}
+            alt={s.alt}
+            draggable={false}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.72 + i * 0.07 }}
+            className="w-full rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ConnectSection() {
+  const isMobile = useIsMobile();
+  if (isMobile) return <ConnectMobile />;
+
   return (
     // `container-type: size` makes this the sizing reference for every child.
     // Font sizes below use cqw/cqh (percent of THIS box) instead of vw, so text

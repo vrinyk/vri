@@ -65,7 +65,7 @@ const fadeUp = {
 
 const SlideUserResearch = () => {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start md:items-center px-4 py-8 md:px-6 md:py-12">
       <motion.div
         initial="hidden"
         whileInView="visible"

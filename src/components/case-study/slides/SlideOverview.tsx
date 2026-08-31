@@ -3,7 +3,7 @@ import mockupNew from "@/assets/case-study-freed/mockup-new.png";
 
 const SlideOverview = () => {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center px-6 py-12">
+    <div className="min-h-[calc(100vh-4rem)] flex items-start md:items-center px-4 py-8 md:px-6 md:py-12">
       <div className="container max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}

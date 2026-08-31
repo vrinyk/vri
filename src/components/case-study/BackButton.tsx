@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 
 export default function BackButton() {
   return (
-    <div className="fixed top-24 left-6 z-[60]">
+    <div className="fixed left-3 top-16 z-[60] md:left-6 md:top-24">
       <Link
         to="/"
         className="flex h-10 w-10 items-center justify-center rounded-full border border-[#e6e0d5] bg-[#fbfaf7] shadow-sm transition-colors hover:bg-[#eee8dd]"

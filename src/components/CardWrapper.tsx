@@ -18,9 +18,11 @@ export function CardWrapper({
   style,
 }: CardWrapperProps) {
   return (
+    // The 16:9 aspect ratio only applies from md up. On a phone a 16:9 card is
+    // about 210px tall, so mobile uses a min height and grows with content.
     <div
-      className={`relative mx-auto w-full max-w-[1100px] ${className}`}
-      style={{ aspectRatio: "16 / 9", ...style }}
+      className={`relative mx-auto w-full max-w-[1100px] min-h-[560px] md:min-h-0 md:[aspect-ratio:16/9] ${className}`}
+      style={style}
     >
       {/* Stacked back card — offset blueprint layer (scrapbook mockup)
       <div
@@ -51,7 +53,7 @@ export function CardWrapper({
         <img
           src={pinTop}
           alt=""
-          className="pointer-events-none absolute left-1/2 top-0 z-30 h-18 w-18 -translate-x-1/2 -translate-y-[4%] drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]"
+          className="pointer-events-none absolute left-1/2 top-0 z-30 h-12 w-12 -translate-x-1/2 -translate-y-[30%] drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)] md:h-18 md:w-18 md:-translate-y-[4%]"
         />
       )}
     </div>
