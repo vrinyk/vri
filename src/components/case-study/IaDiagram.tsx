@@ -1,222 +1,295 @@
 const INK = "#1f232d";
 const MUTED = "#6b6f7a";
-const LINE = "#d9d2c4";
-const PAPER = "#fbfaf7";
+const WIRE = "#9d968a";
 const ACCENT = "#265d73";
+
+const CREAM = "#f3ede1";
+const CREAM_LINE = "#d9cfba";
+const CARD_LINE = "#ddd6c8";
 const ACCENT_BG = "#dbeef8";
+const END_BG = "#fbe3dc";
+const END_LINE = "#e2b8a9";
+const DEC_BG = "#efebe2";
+const DEC_LINE = "#cbc2b0";
 
-/** Funnel steps, left to right across the top band. */
-const FUNNEL = [
-  { t: "Landing page", s: "Check your score, free" },
-  { t: "Sign up · OTP", s: "Name and mobile, as per PAN" },
-  { t: "Pull credit report", s: "Consent, then bureau fetch" },
-  { t: "Onboarding", s: "4 questions, one per screen" },
-  { t: "Welcome aboard", s: "Confirmation, then reveal" },
-];
+const VW = 1040;
+const VH = 1160;
 
-/** The five places the score can send someone. */
-const ROUTES = [
-  { code: "DRP", name: "Debt Relief", who: "Already defaulted", tint: "#fdece5" },
-  { code: "DCP", name: "Consolidation", who: "Paying, but stretched", tint: "#e6f0f6" },
-  { code: "DEP", name: "Elimination", who: "Wants to clear it alone", tint: "#f2fbdc" },
-  { code: "NTC", name: "New to credit", who: "No history yet", tint: "#f4f1ea" },
-  { code: "Others", name: "Monitor only", who: "Healthy, just watching", tint: "#f4f1ea" },
-];
+/* Main spine */
+const SX = 56; // spine left edge
+const SW = 250; // spine node width
+const SC = SX + SW / 2; // spine centre x
+const NH = 64; // process node height
+const PH = 54; // pill height
+const R = 48; // decision radius
 
-const SHARED = [
-  "Credit report",
-  "5 score factors",
-  "Account detail",
-  "Raise a dispute",
-  "Goal tracker",
-  "Monthly snapshot",
-];
+/* ── little building blocks ───────────────────────────────────────────── */
 
-/* ── geometry ─────────────────────────────────────────────── */
-const W = 1120;
-const H = 668;
-const COL_W = 192;
-const COL_X = [16, 238, 460, 682, 904];
-const CARD_W = 200;
+type BoxProps = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  rx?: number;
+  fill: string;
+  stroke: string;
+  title: string;
+  sub?: string;
+  titleSize?: number;
+  center?: boolean;
+  titleFont?: string;
+};
 
 const Box = ({
-  x, y, w, h, fill = PAPER, stroke = LINE, dash,
-}: { x: number; y: number; w: number; h: number; fill?: string; stroke?: string; dash?: string }) => (
-  <rect
-    x={x} y={y} width={w} height={h} rx={10}
-    fill={fill} stroke={stroke} strokeWidth={1.25}
-    strokeDasharray={dash}
-  />
-);
-
-/** Straight connector with a small solid arrowhead at the far end. */
-const Arrow = ({
-  x1, y1, x2, y2, dash,
-}: { x1: number; y1: number; x2: number; y2: number; dash?: string }) => {
-  const down = y2 !== y1;
-  const head = down
-    ? `${x2 - 4},${y2 - 6} ${x2 + 4},${y2 - 6} ${x2},${y2}`
-    : `${x2 - 6},${y2 - 4} ${x2 - 6},${y2 + 4} ${x2},${y2}`;
+  x, y, w, h, rx = 12, fill, stroke, title, sub, titleSize = 15,
+  center = false, titleFont = "sans-serif",
+}: BoxProps) => {
+  const tx = center ? x + w / 2 : x + 18;
+  const anchor = center ? "middle" : "start";
   return (
     <g>
-      <line
-        x1={x1} y1={y1} x2={down ? x2 : x2 - 5} y2={down ? y2 - 5 : y2}
-        stroke={`${ACCENT}80`} strokeWidth={1.4} strokeDasharray={dash}
-      />
-      <polygon points={head} fill={`${ACCENT}b3`} />
+      <rect x={x} y={y} width={w} height={h} rx={rx} fill={fill} stroke={stroke} strokeWidth={1.3} />
+      <text
+        x={tx} y={sub ? y + 27 : y + h / 2 + 5.5} textAnchor={anchor}
+        fontSize={titleSize} fontWeight={700} fill={INK} fontFamily={titleFont}
+      >
+        {title}
+      </text>
+      {sub && (
+        <text x={tx} y={y + 47} textAnchor={anchor} fontSize={12} fill={MUTED} fontFamily="sans-serif">
+          {sub}
+        </text>
+      )}
     </g>
   );
 };
 
+/** Round decision node with up to two lines of label. */
+const Decision = ({ cx, cy, lines }: { cx: number; cy: number; lines: string[] }) => (
+  <g>
+    <circle cx={cx} cy={cy} r={R} fill={DEC_BG} stroke={DEC_LINE} strokeWidth={1.3} />
+    {lines.map((l, i) => (
+      <text
+        key={l}
+        x={cx}
+        y={cy + 4 - (lines.length - 1) * 7 + i * 14}
+        textAnchor="middle"
+        fontSize={12}
+        fill={INK}
+        fontFamily="sans-serif"
+      >
+        {l}
+      </text>
+    ))}
+  </g>
+);
+
+/** Small label that sits on a branch, like the reference flow charts. */
+const Chip = ({ x, y, text }: { x: number; y: number; text: string }) => {
+  const w = text.length * 6.4 + 16;
+  return (
+    <g>
+      <rect x={x} y={y - 11} width={w} height={22} rx={4} fill={ACCENT_BG} />
+      <text x={x + 8} y={y + 4} fontSize={11.5} fill={ACCENT} fontFamily="sans-serif">
+        {text}
+      </text>
+    </g>
+  );
+};
+
+const wire = {
+  stroke: WIRE,
+  strokeWidth: 1.4,
+  fill: "none",
+  markerEnd: "url(#ia-tip)",
+} as const;
+
+const Line = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => (
+  <path {...wire} d={`M ${x1} ${y1} L ${x2} ${y2}`} />
+);
+
+/* ── spine geometry, top to bottom ────────────────────────────────────── */
+const Y = {
+  landing: 34,
+  signup: 128,
+  pull: 222,
+  decReport: 362, // circle centre
+  onboarding: 448,
+  welcome: 542,
+  locked: 636,
+  paywall: 730,
+  decPaid: 870, // circle centre
+  unlocked: 956,
+  bus: 1046, // horizontal bus feeding the three routes
+  routes: 1082,
+};
+
+/** The three products the score can hand someone off to. */
+const ROUTES = [
+  { code: "DRP", name: "Debt Relief", chip: "already defaulted", fill: "#fdece5", line: "#ecc9bb", x: 56 },
+  { code: "DCP", name: "Consolidation", chip: "paying, stretched", fill: "#e6f0f6", line: "#c3d7e2", x: 336 },
+  { code: "DEP", name: "Elimination", chip: "wants to clear it", fill: "#f2fbdc", line: "#d3e5a8", x: 616 },
+];
+const ROUTE_W = 250;
+
 /**
- * The information architecture as an actual diagram rather than a list: one
- * acquisition funnel across the top, the locked-to-unlocked spine down the
- * middle, and the five routes the credit score can hand someone off to.
+ * The information architecture as a user flow: one spine down the middle,
+ * decision points where the product genuinely forks, and labelled branches
+ * for the paths people actually take — including the ones that end early.
  */
 export default function IaDiagram({ className = "" }: { className?: string }) {
   return (
     <div className={className}>
       <svg
-        viewBox={`0 0 ${W} ${H}`}
+        viewBox={`0 0 ${VW} ${VH}`}
         className="h-auto w-full"
         role="img"
-        aria-label="Credit Insights information architecture: landing, sign up, credit report pull, onboarding, locked home, context led paywall, unlocked home, then routing to DRP, DCP, DEP, new to credit or monitor only."
+        aria-label="Credit Insights user flow: landing, sign up and OTP, credit report pull, a decision on whether a report exists, onboarding, welcome, locked home, context led paywall, a decision on paying, unlocked home, then routing to DRP, DCP or DEP."
       >
-        {/* ─── Band 1: acquisition funnel ─── */}
-        <text x={16} y={22} fontSize={11} letterSpacing={2} fill={MUTED} fontFamily="sans-serif">
-          ACQUISITION
-        </text>
-        {FUNNEL.map((n, i) => (
-          <g key={n.t}>
-            <Box x={COL_X[i]} y={32} w={COL_W} h={56} />
-            <text x={COL_X[i] + 14} y={54} fontSize={14} fontWeight={700} fill={INK} fontFamily="sans-serif">
-              {n.t}
-            </text>
-            <text x={COL_X[i] + 14} y={72} fontSize={11.5} fill={MUTED} fontFamily="sans-serif">
-              {n.s}
-            </text>
-            {i < FUNNEL.length - 1 && (
-              <Arrow
-                x1={COL_X[i] + COL_W} y1={60}
-                x2={COL_X[i + 1]} y2={60}
-              />
-            )}
-          </g>
+        <defs>
+          <marker
+            id="ia-tip" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse"
+          >
+            <path d="M 0 1 L 9 5 L 0 9 z" fill={WIRE} />
+          </marker>
+        </defs>
+
+        {/* ─── band labels, kept off the wires ─── */}
+        {[
+          ["ACQUISITION", SX, 18],
+          ["ON THE LOCKED HOME", 410, 620],
+          ["ROUTED BY THE REPORT", 768, 1042],
+        ].map(([t, x, y]) => (
+          <text
+            key={t as string}
+            x={x as number}
+            y={y as number}
+            fontSize={10.5}
+            letterSpacing={2}
+            fill={MUTED}
+            fontFamily="sans-serif"
+          >
+            {t}
+          </text>
         ))}
 
-        {/* dead-end branch: no bureau record */}
-        <Arrow x1={556} y1={88} x2={556} y2={116} dash="4 4" />
-        <Box x={460} y={116} w={COL_W} h={44} fill="#fff" dash="4 4" />
-        <text x={474} y={135} fontSize={12.5} fontWeight={700} fill={INK} fontFamily="sans-serif">
-          No report found
-        </text>
-        <text x={474} y={150} fontSize={11} fill={MUTED} fontFamily="sans-serif">
-          Education path, not a score
-        </text>
-        <Arrow x1={556} y1={160} x2={556} y2={196} dash="4 4" />
+        {/* ─── the spine ─── */}
+        <Box
+          x={SX} y={Y.landing} w={SW} h={PH} rx={PH / 2}
+          fill={CREAM} stroke={CREAM_LINE} title="Landing page" center
+        />
+        <Line x1={SC} y1={Y.landing + PH} x2={SC} y2={Y.signup} />
 
-        {/* ─── Band 2: locked home ─── */}
-        <Arrow x1={1000} y1={88} x2={1000} y2={196} />
-        <text x={16} y={186} fontSize={11} letterSpacing={2} fill={MUTED} fontFamily="sans-serif">
-          FIRST SESSION
-        </text>
-        <Box x={16} y={196} w={1088} h={78} fill="#fff" stroke={ACCENT + "40"} />
-        <text x={38} y={224} fontSize={16} fontWeight={700} fill={INK} fontFamily="sans-serif">
-          Home — locked
-        </text>
-        <text x={38} y={244} fontSize={11.5} fill={MUTED} fontFamily="sans-serif">
-          Score is free. The reason behind it is not.
-        </text>
-        <line x1={330} y1={210} x2={330} y2={260} stroke={LINE} strokeWidth={1} />
-        <text x={356} y={220} fontSize={11} letterSpacing={1.4} fill={ACCENT} fontFamily="sans-serif">
-          VISIBLE
-        </text>
-        <text x={356} y={240} fontSize={12.5} fill={INK} fontFamily="sans-serif">
-          Score and band · savings estimate · one flagged account
-        </text>
-        <text x={356} y={258} fontSize={11.5} fill={MUTED} fontFamily="sans-serif">
-          Enough to prove we have actually read their report
-        </text>
-        <line x1={760} y1={210} x2={760} y2={260} stroke={LINE} strokeWidth={1} />
-        <text x={786} y={220} fontSize={11} letterSpacing={1.4} fill={ACCENT} fontFamily="sans-serif">
-          LOCKED
-        </text>
-        <text x={786} y={240} fontSize={12.5} fill={INK} fontFamily="sans-serif">
-          Full report · 5 factors
-        </text>
-        <text x={786} y={258} fontSize={12.5} fill={INK} fontFamily="sans-serif">
-          Boost plan · goal tracker
-        </text>
+        <Box
+          x={SX} y={Y.signup} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
+          title="Sign up · OTP" sub="Name and mobile, as per PAN"
+        />
+        <Line x1={SC} y1={Y.signup + NH} x2={SC} y2={Y.pull} />
 
-        {/* ─── Band 3: paywall ─── */}
-        <Arrow x1={560} y1={274} x2={560} y2={306} />
-        <Box x={316} y={306} w={488} h={58} fill={ACCENT_BG} stroke={ACCENT + "55"} />
-        <text x={340} y={332} fontSize={15} fontWeight={700} fill={ACCENT} fontFamily="sans-serif">
-          Context-led paywall
-        </text>
-        <text x={340} y={350} fontSize={11.5} fill={ACCENT} fontFamily="sans-serif">
-          Priced against the saving it unlocks · coupon · retry
-        </text>
+        <Box
+          x={SX} y={Y.pull} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
+          title="Pull credit report" sub="Consent, then bureau fetch"
+        />
+        <Line x1={SC} y1={Y.pull + NH} x2={SC} y2={Y.decReport - R} />
 
-        {/* ─── Band 4: unlocked home ─── */}
-        <Arrow x1={560} y1={364} x2={560} y2={396} />
-        <Box x={16} y={396} w={1088} h={72} fill="#fff" stroke={ACCENT + "40"} />
-        <text x={38} y={424} fontSize={16} fontWeight={700} fill={INK} fontFamily="sans-serif">
-          Home — unlocked
-        </text>
-        <text x={38} y={444} fontSize={11.5} fill={MUTED} fontFamily="sans-serif">
-          Same skeleton, everything filled in
-        </text>
-        <line x1={330} y1={410} x2={330} y2={456} stroke={LINE} strokeWidth={1} />
-        <text x={356} y={428} fontSize={12.5} fill={INK} fontFamily="sans-serif">
-          Full report · score factors · boost plan · goal tracker · payment reminders
-        </text>
-        <text x={356} y={447} fontSize={11.5} fill={MUTED} fontFamily="sans-serif">
-          Plus one recommendation, chosen by what the report says — never a menu of three
-        </text>
+        <Decision cx={SC} cy={Y.decReport} lines={["Report", "found?"]} />
 
-        {/* ─── Band 5: routing ─── */}
-        <Arrow x1={560} y1={468} x2={560} y2={492} />
-        <line x1={116} y1={492} x2={1004} y2={492} stroke={`${ACCENT}80`} strokeWidth={1.4} />
-        <text x={16} y={486} fontSize={11} letterSpacing={2} fill={MUTED} fontFamily="sans-serif">
-          ROUTED BY SCORE
-        </text>
-        {ROUTES.map((r, i) => {
-          const cx = COL_X[i] + CARD_W / 2 - 4;
+        {/* no-record branch */}
+        <Chip x={SC + R + 16} y={Y.decReport} text="no record" />
+        <Line x1={SC + R} y1={Y.decReport} x2={396} y2={Y.decReport} />
+        <Box
+          x={396} y={Y.decReport - NH / 2} w={230} h={NH} fill="#fff" stroke={CARD_LINE}
+          title="New to credit path" sub="Education, not a score"
+        />
+        <Line x1={626} y1={Y.decReport} x2={706} y2={Y.decReport} />
+        <Box
+          x={706} y={Y.decReport - PH / 2} w={276} h={PH} rx={PH / 2}
+          fill={END_BG} stroke={END_LINE} title="How to build a score" center titleSize={14}
+        />
+
+        {/* yes branch continues down the spine */}
+        <Chip x={SC + 14} y={Y.decReport + R + 26} text="report found" />
+        <Line x1={SC} y1={Y.decReport + R} x2={SC} y2={Y.onboarding} />
+
+        <Box
+          x={SX} y={Y.onboarding} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
+          title="Onboarding" sub="4 questions, one per screen"
+        />
+        <Line x1={SC} y1={Y.onboarding + NH} x2={SC} y2={Y.welcome} />
+
+        <Box
+          x={SX} y={Y.welcome} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
+          title="Welcome aboard" sub="Confirmation, then the reveal"
+        />
+        <Line x1={SC} y1={Y.welcome + NH} x2={SC} y2={Y.locked} />
+
+        <Box
+          x={SX} y={Y.locked} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
+          title="Home — locked" sub="Score free, the reason is not"
+        />
+        {/* what is on the locked home */}
+        <Line x1={SX + SW} y1={Y.locked + NH / 2} x2={410} y2={Y.locked + NH / 2} />
+        <Box
+          x={410} y={Y.locked - 4} w={572} h={40} rx={8} fill="#fff" stroke={CARD_LINE}
+          title="Visible: score and band · savings estimate · one flagged account"
+          titleSize={12.5}
+        />
+        <Box
+          x={410} y={Y.locked + 44} w={572} h={40} rx={8} fill={CREAM} stroke={CREAM_LINE}
+          title="Locked: full report · 5 score factors · boost plan · goal tracker"
+          titleSize={12.5}
+        />
+
+        <Line x1={SC} y1={Y.locked + NH} x2={SC} y2={Y.paywall} />
+
+        <Box
+          x={SX} y={Y.paywall} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
+          title="Context-led paywall" sub="Priced against the saving it unlocks"
+        />
+        <Line x1={SC} y1={Y.paywall + NH} x2={SC} y2={Y.decPaid - R} />
+
+        <Decision cx={SC} cy={Y.decPaid} lines={["Paid?"]} />
+
+        {/* not now */}
+        <Chip x={SC + R + 16} y={Y.decPaid} text="not now" />
+        <Line x1={SC + R} y1={Y.decPaid} x2={396} y2={Y.decPaid} />
+        <Box
+          x={396} y={Y.decPaid - PH / 2} w={230} h={PH} rx={PH / 2}
+          fill={END_BG} stroke={END_LINE} title="Free score, kept" center titleSize={14}
+        />
+
+        <Chip x={SC + 14} y={Y.decPaid + R + 26} text="paid" />
+        <Line x1={SC} y1={Y.decPaid + R} x2={SC} y2={Y.unlocked} />
+
+        <Box
+          x={SX} y={Y.unlocked} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
+          title="Home — unlocked" sub="Same skeleton, everything filled in"
+        />
+
+        {/* ─── routing fan: one bus, three drops ─── */}
+        <path
+          d={`M ${SC} ${Y.unlocked + NH} L ${SC} ${Y.bus} M ${ROUTES[0].x + ROUTE_W / 2} ${Y.bus} L ${
+            ROUTES[2].x + ROUTE_W / 2
+          } ${Y.bus}`}
+          stroke={WIRE}
+          strokeWidth={1.4}
+          fill="none"
+        />
+        {ROUTES.map((r) => {
+          const cx = r.x + ROUTE_W / 2;
           return (
             <g key={r.code}>
-              <Arrow x1={cx} y1={492} x2={cx} y2={516} />
-              <Box x={COL_X[i]} y={516} w={CARD_W} h={74} fill={r.tint} stroke={`${INK}1f`} />
-              <text x={COL_X[i] + 14} y={542} fontSize={17} fontWeight={700} fill={INK} fontFamily="serif">
-                {r.code}
-              </text>
-              <text x={COL_X[i] + 14} y={560} fontSize={12} fill={INK} fontFamily="sans-serif">
-                {r.name}
-              </text>
-              <text x={COL_X[i] + 14} y={578} fontSize={11} fill={MUTED} fontFamily="sans-serif">
-                {r.who}
-              </text>
+              <Line x1={cx} y1={Y.bus} x2={cx} y2={Y.routes} />
+              <Chip x={cx + 10} y={Y.bus + 18} text={r.chip} />
+              <Box
+                x={r.x} y={Y.routes} w={ROUTE_W} h={56} rx={10}
+                fill={r.fill} stroke={r.line} title={r.code} sub={r.name}
+                titleSize={17} titleFont="serif"
+              />
             </g>
           );
         })}
-
-        {/* ─── Band 6: shared surfaces ─── */}
-        <line x1={116} y1={608} x2={1004} y2={608} stroke={LINE} strokeWidth={1} strokeDasharray="4 4" />
-        {ROUTES.map((r, i) => (
-          <line
-            key={r.code}
-            x1={COL_X[i] + CARD_W / 2 - 4} y1={590}
-            x2={COL_X[i] + CARD_W / 2 - 4} y2={608}
-            stroke={LINE} strokeWidth={1} strokeDasharray="4 4"
-          />
-        ))}
-        <Box x={16} y={616} w={1088} h={44} fill={PAPER} stroke={LINE} dash="4 4" />
-        <text x={38} y={636} fontSize={11} letterSpacing={1.4} fill={MUTED} fontFamily="sans-serif">
-          SHARED ACROSS EVERY ROUTE
-        </text>
-        <text x={38} y={652} fontSize={12.5} fill={INK} fontFamily="sans-serif">
-          {SHARED.join("   ·   ")}
-        </text>
       </svg>
     </div>
   );

@@ -815,26 +815,28 @@ const CreditInsightsSlider = () => {
             does the home screen look like before someone has paid, and after?
           </P>
           <P>
-            This is the map we settled on. One funnel in, one spine through
-            locked to unlocked, then five routes out — and a shared layer every
-            route can reach.
+            This is the flow we settled on. One path in, two real decision
+            points, and named endings for the people who stop early — because
+            no report found and not paying are both journeys somebody takes.
           </P>
           <motion.div
             variants={fadeUp}
             className="mt-4 overflow-x-auto rounded-2xl p-4 md:p-6"
             style={{ background: "#fff", border: `1px solid ${INK}14` }}
           >
-            <IaDiagram className="min-w-[720px]" />
+            <IaDiagram className="min-w-[640px]" />
           </motion.div>
           <motion.p
             variants={fadeUp}
-            className="mt-4 font-sans text-[13.5px]"
+            className="mt-4 max-w-3xl font-sans text-[13.5px] leading-relaxed"
             style={{ color: MUTED }}
           >
-            The two decisions that took longest: putting the score before any
-            debt talk, and keeping the locked and unlocked homes on the same
-            skeleton so unlocking felt like the page filling in rather than a
-            different app.
+            The two calls that took longest: putting the score before any debt
+            talk, and keeping the locked and unlocked homes on the same skeleton
+            so unlocking felt like the page filling in rather than a different
+            app. Underneath all three routes sits one shared layer — credit
+            report, the five score factors, account detail, disputes and the
+            goal tracker.
           </motion.p>
         </Slide>
 
