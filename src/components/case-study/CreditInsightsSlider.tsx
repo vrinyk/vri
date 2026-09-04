@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ImagePlaceholder from "./ImagePlaceholder";
 import PhoneWall from "./PhoneWall";
+import PhoneFan from "./PhoneFan";
 import type { Screen } from "./PhoneWall";
 import AnnotatedScreen from "./AnnotatedScreen";
 import IaDiagram from "./IaDiagram";
@@ -19,7 +20,6 @@ import onbGoal from "@/assets/case-study-credit-insights/onboarding-goal.png";
 import onbLoan from "@/assets/case-study-credit-insights/onboarding-loan-type.png";
 import onbIncome from "@/assets/case-study-credit-insights/onboarding-income.png";
 import welcomeAboard from "@/assets/case-study-credit-insights/welcome-aboard.png";
-import welcomeAboardDcp from "@/assets/case-study-credit-insights/welcome-aboard-dcp.png";
 
 import lockedDrp from "@/assets/case-study-credit-insights/home-locked-drp.png";
 import lockedDcp from "@/assets/case-study-credit-insights/home-locked-dcp.png";
@@ -56,7 +56,6 @@ import depCreditors from "@/assets/case-study-credit-insights/dep-creditors.png"
 import depGoals from "@/assets/case-study-credit-insights/dep-goals.png";
 import goalScore from "@/assets/case-study-credit-insights/goal-score.png";
 import goalLoan from "@/assets/case-study-credit-insights/goal-loan.png";
-import ntcHome from "@/assets/case-study-credit-insights/ntc-home.png";
 import othersHome from "@/assets/case-study-credit-insights/others-home.png";
 import ineligible from "@/assets/case-study-credit-insights/ineligible-drp.png";
 
@@ -219,11 +218,15 @@ const FINDINGS = [
   },
 ];
 
-/** Palettes read off the shipped screens, not chosen from a swatch library. */
+/**
+ * Palettes read off the shipped screens, not chosen from a swatch library.
+ * One block per segment, because all three were sold to different people.
+ */
 const SYSTEMS = [
   {
     code: "DRP",
     name: "Debt Relief",
+    tint: "#fdf3ee",
     who: "Already defaulted. Getting recovery calls.",
     feel: "Serious, then protective",
     colours: ["#02416E", "#DE544A", "#E17F39"],
@@ -234,10 +237,18 @@ const SYSTEMS = [
     cta: "See Your Settlement Plan",
     line: "Krishna, your debt needs attention",
     why: "This person opens the app at night after a threatening call. Softening it reads as dishonest. What they want is for someone to take over.",
+    // Centre phone is the identity screen for each system, so that is the one
+    // the eye lands on first.
+    screens: [
+      { src: paywallDrp, label: "Paywall" },
+      { src: lockedDrp, label: "Locked home" },
+      { src: drpMandate, label: "Unlocked" },
+    ] as Screen[],
   },
   {
     code: "DCP",
     name: "Consolidation",
+    tint: "#eef4f9",
     who: "Paying on time, but stretched thin.",
     feel: "Calm, factual, no red",
     colours: ["#02416E", "#D8F0F0", "#EEF3F7"],
@@ -247,11 +258,17 @@ const SYSTEMS = [
       "Insight, not rescue. Never the word settlement. Talk about interest and consistency.",
     cta: "Unlock to see plan",
     line: "Delayed payments hurt your credit score",
-    why: "This person is proud of not being in trouble. Treat them like a defaulter once and they leave. So the whole system had to be quieter than DRP.",
+    why: "This person is proud of not being in trouble. Treat them like a defaulter once and they leave, so the whole system had to be quieter than DRP.",
+    screens: [
+      { src: lockedDcp, label: "Locked home" },
+      { src: unlockedDcp, label: "Unlocked" },
+      { src: goalLoan, label: "Goal tracker" },
+    ] as Screen[],
   },
   {
     code: "DEP",
     name: "Elimination",
+    tint: "#f5fbe8",
     who: "Wants to clear it themselves, no third party.",
     feel: "Optimistic, gain framed",
     colours: ["#D8FC72", "#90D890", "#02416E"],
@@ -261,8 +278,22 @@ const SYSTEMS = [
       "Every screen answers how much do I save and by when. Sliders and calculators, never a promise.",
     cta: "Unlock premium to save ₹24,000",
     line: "Crush your debt and save big",
-    why: "This person will actually do the maths, and they want to stay in control. So they get the calculator, the planner and a projection with the caveat attached, rather than a plan handed to them.",
+    why: "This person will actually do the maths and wants to stay in control. So they get the calculator, the planner and a projection with the caveat attached, rather than a plan handed to them.",
+    screens: [
+      { src: lockedDep, label: "Locked home" },
+      { src: depCalc, label: "Savings calculator" },
+      { src: depPlanner, label: "Monthly planner" },
+    ] as Screen[],
   },
+];
+
+/** The DEP journey, in order — the primary path through the product. */
+const DEP_JOURNEY: Screen[] = [
+  { src: welcome2, label: "Welcome" },
+  { src: landing, label: "Landing page" },
+  { src: lockedDep, label: "Home, locked" },
+  { src: celebrationDep, label: "Congratulations" },
+  { src: unlockedDep, label: "Home, unlocked" },
 ];
 
 const CreditInsightsSlider = () => {
@@ -387,17 +418,7 @@ const CreditInsightsSlider = () => {
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-10">
-            <PhoneWall
-              screens={[
-                { src: landing, label: "Landing" },
-                { src: welcomeAboard, label: "Welcome aboard" },
-                { src: lockedDep, label: "Home, locked", tall: true },
-                { src: celebrationDep, label: "Unlocked", tall: true },
-                { src: reportFull, label: "Credit report", tall: true },
-              ]}
-              featured={5}
-              width={124}
-            />
+            <PhoneFan screens={DEP_JOURNEY} />
           </motion.div>
         </Slide>
 
@@ -709,9 +730,9 @@ const CreditInsightsSlider = () => {
               title="One structure, five different first screens"
               note="Ineligible and no-history users get a real path too, not a dead end"
               screens={[
-                { src: ntcHome, label: "New to credit" },
                 { src: othersHome, label: "Healthy, monitoring" },
                 { src: lockedDcp, label: "Managing, stretched", tall: true },
+                { src: lockedDep, label: "Wants to clear it", tall: true },
                 { src: lockedDrp, label: "Falling behind", tall: true },
                 { src: ineligible, label: "Ineligible, still helped", tall: true },
               ]}
@@ -872,122 +893,124 @@ const CreditInsightsSlider = () => {
             behaviour, illustration style and voice.
           </P>
 
-          <motion.div variants={fadeUp} className="mt-6 grid gap-5 lg:grid-cols-3">
-            {SYSTEMS.map((s, i) => (
-              <div
+          <div className="mt-8 space-y-6">
+            {SYSTEMS.map((s) => (
+              <motion.div
                 key={s.code}
-                className="flex flex-col rounded-2xl p-6"
-                style={{
-                  background: i === 2 ? "#fcfff2" : PAPER,
-                  border: `1px solid ${INK}14`,
-                }}
+                variants={fadeUp}
+                className="grid items-center gap-6 rounded-[1.75rem] p-6 md:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10"
+                style={{ background: s.tint, border: `1px solid ${INK}0f` }}
               >
-                <div className="mb-4 flex items-baseline justify-between gap-3">
-                  <div>
-                    <p
-                      className="font-serif text-3xl font-semibold leading-none"
-                      style={{ color: INK }}
-                    >
-                      {s.code}
-                    </p>
-                    <p
-                      className="mt-1.5 font-sans text-[12px] tracking-[0.12em] uppercase"
-                      style={{ color: MUTED }}
-                    >
-                      {s.name}
-                    </p>
-                  </div>
-                  <div className="flex gap-1.5">
-                    {s.colours.map((c) => (
-                      <span
-                        key={c}
-                        title={c}
-                        className="h-7 w-7 rounded-full"
-                        style={{ background: c, border: `1px solid ${INK}1a` }}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <p
-                  className="mb-4 font-sans text-[13px] leading-snug"
-                  style={{ color: MUTED }}
-                >
-                  {s.swatchNote}
-                </p>
-
-                <dl className="mb-4 space-y-3">
-                  {[
-                    ["Who it is for", s.who],
-                    ["Look and feel", s.feel],
-                    ["Type", s.type],
-                    ["Voice", s.language],
-                  ].map(([k, v]) => (
-                    <div key={k}>
-                      <dt
-                        className="mb-0.5 font-sans text-[10.5px] tracking-[0.14em] uppercase"
-                        style={{ color: ACCENT, opacity: 0.8 }}
-                      >
-                        {k}
-                      </dt>
-                      <dd
-                        className="font-sans text-[13.6px] leading-snug"
+                {/* ── the system ── */}
+                <div className="min-w-0">
+                  <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-baseline gap-3">
+                      <p
+                        className="font-serif text-[2.6rem] font-semibold leading-none"
                         style={{ color: INK }}
                       >
-                        {v}
-                      </dd>
+                        {s.code}
+                      </p>
+                      <p
+                        className="font-sans text-[12.5px] tracking-[0.14em] uppercase"
+                        style={{ color: MUTED }}
+                      >
+                        {s.name}
+                      </p>
                     </div>
-                  ))}
-                </dl>
+                    <div className="flex items-center gap-2">
+                      {s.colours.map((c) => (
+                        <span key={c} className="flex flex-col items-center gap-1">
+                          <span
+                            className="h-9 w-9 rounded-full"
+                            style={{ background: c, border: `1px solid ${INK}1f` }}
+                          />
+                          <span
+                            className="font-mono text-[9.5px] tracking-tight"
+                            style={{ color: MUTED }}
+                          >
+                            {c}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-                <div
-                  className="mt-auto rounded-xl px-4 py-3"
-                  style={{ background: "#fff", border: `1px solid ${INK}14` }}
-                >
                   <p
-                    className="mb-1 font-sans text-[10.5px] tracking-[0.14em] uppercase"
+                    className="mb-5 font-sans text-[13.5px]"
                     style={{ color: MUTED }}
                   >
-                    Same job, three ways
+                    {s.swatchNote}
                   </p>
-                  <p
-                    className="font-sans text-[13.5px] font-semibold"
-                    style={{ color: INK }}
+
+                  <dl className="mb-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                    {[
+                      ["Who it is for", s.who],
+                      ["Look and feel", s.feel],
+                      ["Type", s.type],
+                      ["Voice", s.language],
+                    ].map(([k, v]) => (
+                      <div key={k}>
+                        <dt
+                          className="mb-1 font-sans text-[10.5px] tracking-[0.14em] uppercase"
+                          style={{ color: ACCENT, opacity: 0.85 }}
+                        >
+                          {k}
+                        </dt>
+                        <dd
+                          className="font-sans text-[13.6px] leading-snug"
+                          style={{ color: INK }}
+                        >
+                          {v}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div
+                    className="mb-4 rounded-xl px-5 py-4"
+                    style={{ background: "#fff", border: `1px solid ${INK}12` }}
                   >
-                    “{s.cta}”
-                  </p>
-                  <p className="font-sans text-[13px]" style={{ color: MUTED }}>
-                    “{s.line}”
+                    <p
+                      className="mb-1.5 font-sans text-[10.5px] tracking-[0.14em] uppercase"
+                      style={{ color: MUTED }}
+                    >
+                      Same job, written for this person
+                    </p>
+                    <p
+                      className="font-sans text-[14px] font-semibold"
+                      style={{ color: INK }}
+                    >
+                      “{s.cta}”
+                    </p>
+                    <p className="font-sans text-[13.5px]" style={{ color: MUTED }}>
+                      “{s.line}”
+                    </p>
+                  </div>
+
+                  <p
+                    className="font-sans text-[13.4px] leading-relaxed"
+                    style={{ color: MUTED }}
+                  >
+                    {s.why}
                   </p>
                 </div>
 
-                <p
-                  className="mt-4 font-sans text-[13.2px] leading-relaxed"
-                  style={{ color: MUTED }}
-                >
-                  {s.why}
-                </p>
-              </div>
+                {/* ── the screens ── */}
+                <PhoneFan
+                  screens={s.screens}
+                  width={158}
+                  step={0.58}
+                  tint={null}
+                  className="lg:w-[420px]"
+                />
+              </motion.div>
             ))}
-          </motion.div>
-
-          <motion.div variants={fadeUp} className="mt-9">
-            <Row
-              title="The same screen in all three systems"
-              note="Identical structure. Different colour, weight, illustration and words."
-              screens={[
-                { src: lockedDrp, label: "DRP · locked home", tall: true },
-                { src: lockedDcp, label: "DCP · locked home", tall: true },
-                { src: lockedDep, label: "DEP · locked home", tall: true },
-                { src: lockedOthers, label: "Web app · monitoring only", tall: true },
-              ]}
-              width={140}
-            />
-          </motion.div>
+          </div>
 
           <motion.p
             variants={fadeUp}
-            className="max-w-3xl font-sans text-[15px] leading-relaxed"
+            className="mt-8 max-w-3xl font-sans text-[15px] leading-relaxed"
             style={{ color: MUTED }}
           >
             DEP was brand new, so I built its system from nothing: palette, type
@@ -996,17 +1019,35 @@ const CreditInsightsSlider = () => {
             consistent while making the jump between products feel deliberate
             rather than broken.
           </motion.p>
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <Row
+              title="Same skeleton, three different feelings"
+              note="Identical structure. Different colour, weight, illustration and words."
+              screens={[
+                { src: lockedDrp, label: "DRP", tall: true },
+                { src: lockedDcp, label: "DCP", tall: true },
+                { src: lockedDep, label: "DEP", tall: true },
+                { src: lockedOthers, label: "Web app · monitoring", tall: true },
+              ]}
+              width={140}
+            />
+          </motion.div>
         </Slide>
 
         {/* ═══ 11 — JOURNEY ═══ */}
         <Slide>
-          <Eyebrow>The journey</Eyebrow>
-          <H>Landing to unlocked, in the order it happens</H>
+          <Eyebrow>The journey · DEP</Eyebrow>
+          <H>Welcome to unlocked, in the order it happens</H>
           <P>
-            Every screen below is the shipped design. Read it left to right and
-            you are walking the flow exactly as a user does. Tap any screen to
-            open it full size.
+            This is the DEP path, the primary journey through the product.
+            Everything below is the shipped design. Tap any screen to open it
+            full size.
           </P>
+
+          <motion.div variants={fadeUp} className="mb-10 mt-6">
+            <PhoneFan screens={DEP_JOURNEY} />
+          </motion.div>
 
           <Row
             title="01 · Arrive"
@@ -1037,9 +1078,8 @@ const CreditInsightsSlider = () => {
               { src: onbLoan, label: "What kind of loan" },
               { src: onbIncome, label: "Monthly income" },
               { src: welcomeAboard, label: "Welcome aboard" },
-              { src: welcomeAboardDcp, label: "Welcome aboard · DCP" },
             ]}
-            width={118}
+            width={124}
           />
 
           <Row
@@ -1047,9 +1087,9 @@ const CreditInsightsSlider = () => {
             note="Score free, reasons paid. The celebration screen exists because paying for a debt product should not feel like a receipt."
             screens={[
               { src: lockedDep, label: "Home, locked", tall: true },
-              { src: paywall199, label: "Paywall in context" },
+              { src: paywallDep, label: "Paywall in context" },
               { src: coupon, label: "Coupon", tall: true },
-              { src: celebrationDrp, label: "Congratulations", tall: true },
+              { src: celebrationDep, label: "Congratulations", tall: true },
               { src: unlockedDep, label: "Home, unlocked", tall: true },
             ]}
             width={118}
@@ -1374,13 +1414,13 @@ const CreditInsightsSlider = () => {
 
           <Row
             title="Edges nobody asks for and everybody hits"
-            note="No bureau record, not eligible, monitoring only, and the web app"
+            note="Not eligible, monitoring only, the web app, and life after enrolment"
             screens={[
-              { src: ntcHome, label: "No credit history" },
               { src: ineligible, label: "Not eligible", tall: true },
               { src: othersHome, label: "Monitoring only" },
               { src: lockedOthers, label: "Web app", tall: true },
               { src: drpProgram, label: "After enrolment", tall: true },
+              { src: depSchedule, label: "Payoff schedule", tall: true },
             ]}
             width={124}
           />
