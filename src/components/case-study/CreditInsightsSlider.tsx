@@ -27,6 +27,8 @@ import lockedDep from "@/assets/case-study-credit-insights/home-locked-dep.png";
 import lockedOthers from "@/assets/case-study-credit-insights/home-locked-others.png";
 import unlockedDcp from "@/assets/case-study-credit-insights/home-unlocked-dcp.png";
 import unlockedDep from "@/assets/case-study-credit-insights/home-unlocked-dep.png";
+import depSpider from "@/assets/case-study-credit-insights/dep-unlocked-spider.png";
+import spiderDetail from "@/assets/case-study-credit-insights/spider-detail.png";
 import drpMandate from "@/assets/case-study-credit-insights/drp-mandate-home.png";
 import drpProgram from "@/assets/case-study-credit-insights/drp-program-home.png";
 import celebrationDrp from "@/assets/case-study-credit-insights/unlock-celebration-drp.png";
@@ -296,6 +298,18 @@ const DEP_JOURNEY: Screen[] = [
   { src: unlockedDep, label: "Home, unlocked" },
 ];
 
+/**
+ * Hero fan — deliberately cross-segment, and no screen shared with the journey
+ * fan, so the two hero shots in the deck never show the same thing twice.
+ */
+const RANGE_FAN: Screen[] = [
+  { src: drpMandate, label: "DRP home" },
+  { src: paywallDrp, label: "DRP paywall" },
+  { src: depSpider, label: "DEP · score as a shape" },
+  { src: paywallOthers, label: "DCP paywall" },
+  { src: unlockedDcp, label: "DCP home" },
+];
+
 const CreditInsightsSlider = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
@@ -418,7 +432,7 @@ const CreditInsightsSlider = () => {
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-10">
-            <PhoneFan screens={DEP_JOURNEY} />
+            <PhoneFan screens={RANGE_FAN} />
           </motion.div>
         </Slide>
 
@@ -1020,19 +1034,6 @@ const CreditInsightsSlider = () => {
             rather than broken.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-8">
-            <Row
-              title="Same skeleton, three different feelings"
-              note="Identical structure. Different colour, weight, illustration and words."
-              screens={[
-                { src: lockedDrp, label: "DRP", tall: true },
-                { src: lockedDcp, label: "DCP", tall: true },
-                { src: lockedDep, label: "DEP", tall: true },
-                { src: lockedOthers, label: "Web app · monitoring", tall: true },
-              ]}
-              width={140}
-            />
-          </motion.div>
         </Slide>
 
         {/* ═══ 11 — JOURNEY ═══ */}
@@ -1145,61 +1146,87 @@ const CreditInsightsSlider = () => {
         {/* ═══ 13 — SCORE FACTORS / SPIDER ═══ */}
         <Slide>
           <Eyebrow>The part I am proudest of</Eyebrow>
-          <H>Turning one number into five things you can act on</H>
+          <H>Turning one number into a shape you can read</H>
           <P>
             A score is a single number, so people treat it like a verdict. But it
             is made of five things, and usually only one or two of them are the
-            problem. I wanted someone to be able to look once and know which side
-            of their credit life was dragging the rest down.
+            problem. I wanted someone to look once and know which side of their
+            credit life was dragging the rest down.
           </P>
           <P>
-            So instead of one gauge, the score is drawn as five arcs sitting
-            together, each with its own reading and its own impact weight. Seen
-            side by side, the weak ones stand out immediately — and every arc is
-            tappable, opening its own screen with the accounts behind it.
+            So the score got drawn as a pentagon across the five factors, with
+            the number still in the middle and every corner rated in plain words.
+            A lopsided shape says <em>this is the bit to fix</em> in a way that
+            765 never can.
           </P>
 
-          <motion.div variants={fadeUp} className="mt-8">
-            <AnnotatedScreen
-              src={reportScore}
-              alt="Credit report screen with the five score factors, annotated"
-              width={248}
-              notes={[
-                {
-                  at: 0.075,
-                  title: "The number, on a scale",
-                  body: "300 to 900 underneath it, so the score has something to mean. A bare number is just a verdict.",
-                },
-                {
-                  at: 0.22,
-                  title: "What's shaping your score",
-                  body: "The five factors as five arcs in one block. This is the part I am proudest of — you can see the shape of your credit life without reading anything.",
-                },
-                {
-                  at: 0.40,
-                  title: "Accounts, worst first",
-                  body: "After testing I flipped the order so the accounts hurting the score sit above the healthy ones, with the reason printed on the row.",
-                },
-                {
-                  at: 0.74,
-                  title: "Payments due, in the same place",
-                  body: "The one thing that changes the biggest factor is not missing the next payment. So it lives on this screen, not in a settings menu.",
-                },
-                {
-                  at: 0.9,
-                  title: "Disputes, next to the error",
-                  body: "Bureau records are often wrong. Raising a dispute used to be buried, so it moved to sit beside the account it is about.",
-                },
-              ]}
-            />
+          <motion.div
+            variants={fadeUp}
+            className="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-10"
+          >
+            <div
+              className="overflow-hidden rounded-[1.75rem] p-4 md:p-6"
+              style={{ background: "#f7fce9", border: `1px solid ${INK}0f` }}
+            >
+              <img
+                src={spiderDetail}
+                alt="The credit score drawn as a pentagon across five factors, with 765 in the middle"
+                className="mx-auto block w-full max-w-[560px]"
+              />
+            </div>
+
+            <div className="space-y-5">
+              {[
+                [
+                  "Five corners, five factors",
+                  "Payment history, utilisation, age, mix, enquiries. Nothing else, because nothing else moves a bureau score.",
+                ],
+                [
+                  "Rated in words, not percentages",
+                  "Excellent, Good, Average. Nobody knows whether 9.4% utilisation is good, but everybody knows what Average means.",
+                ],
+                [
+                  "The number stays in the middle",
+                  "It is still the thing they came for. The shape explains it rather than replacing it.",
+                ],
+                [
+                  "Every corner is a door",
+                  "Tap a label and you get that factor's own screen, with the accounts responsible for it.",
+                ],
+              ].map(([t, d], i) => (
+                <div key={t}>
+                  <div className="mb-1 flex items-baseline gap-2">
+                    <span
+                      className="font-serif text-[15px]"
+                      style={{ color: ACCENT, opacity: 0.6 }}
+                    >
+                      0{i + 1}
+                    </span>
+                    <p
+                      className="font-sans text-[14.5px] font-bold"
+                      style={{ color: INK }}
+                    >
+                      {t}
+                    </p>
+                  </div>
+                  <p
+                    className="font-sans text-[13.4px] leading-relaxed"
+                    style={{ color: MUTED }}
+                  >
+                    {d}
+                  </p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-10">
             <Row
-              title="One screen per factor"
-              note="Rating, why it matters, the impact weight, and the accounts responsible."
+              title="Where it sits, and where each corner goes"
+              note="The spider opens the DEP home. Every factor then has its own screen with the accounts behind it."
               screens={[
-                { src: factorOntime, label: "On-time payments", tall: true },
+                { src: depSpider, label: "DEP home, spider on top", tall: true },
+                { src: factorOntime, label: "Payment history", tall: true },
                 { src: factorUtil, label: "Credit utilisation", tall: true },
                 { src: factorAge, label: "Credit age", tall: true },
                 { src: factorMix, label: "Credit mix", tall: true },
@@ -1213,12 +1240,13 @@ const CreditInsightsSlider = () => {
           <motion.div variants={fadeUp} className="mt-4">
             <Row
               title="DEP · locked state"
-              note="The score and the factors are free. The reason behind them is what you pay for."
+              note="The score is free. The reasons behind it are what you pay for."
               screens={[
                 { src: lockedDep, label: "Score visible, reasons locked", tall: true },
-                { src: reportFull, label: "Full report, factors at the bottom", tall: true },
+                { src: reportScore, label: "Five factors in the report", tall: true },
+                { src: reportFull, label: "Full report", tall: true },
               ]}
-              width={150}
+              width={144}
             />
           </motion.div>
         </Slide>
