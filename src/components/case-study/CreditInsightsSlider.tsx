@@ -2,7 +2,63 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ImagePlaceholder from "./ImagePlaceholder";
-import PhonePlaceholder from "./PhonePlaceholder";
+import PhoneWall from "./PhoneWall";
+import type { Screen } from "./PhoneWall";
+import AnnotatedScreen from "./AnnotatedScreen";
+import IaDiagram from "./IaDiagram";
+
+/* ── screens, straight out of the FREED CI Journey Figma file ─────────── */
+import splash from "@/assets/case-study-credit-insights/splash.png";
+import welcome1 from "@/assets/case-study-credit-insights/welcome-1.png";
+import welcome2 from "@/assets/case-study-credit-insights/welcome-2.png";
+import landing from "@/assets/case-study-credit-insights/landing.png";
+import signup from "@/assets/case-study-credit-insights/signup.png";
+import otp from "@/assets/case-study-credit-insights/otp.png";
+import fetching from "@/assets/case-study-credit-insights/fetching-report.png";
+import onbGoal from "@/assets/case-study-credit-insights/onboarding-goal.png";
+import onbLoan from "@/assets/case-study-credit-insights/onboarding-loan-type.png";
+import onbIncome from "@/assets/case-study-credit-insights/onboarding-income.png";
+import welcomeAboard from "@/assets/case-study-credit-insights/welcome-aboard.png";
+import welcomeAboardDcp from "@/assets/case-study-credit-insights/welcome-aboard-dcp.png";
+
+import lockedDrp from "@/assets/case-study-credit-insights/home-locked-drp.png";
+import lockedDcp from "@/assets/case-study-credit-insights/home-locked-dcp.png";
+import lockedDep from "@/assets/case-study-credit-insights/home-locked-dep.png";
+import lockedOthers from "@/assets/case-study-credit-insights/home-locked-others.png";
+import unlockedDcp from "@/assets/case-study-credit-insights/home-unlocked-dcp.png";
+import unlockedDep from "@/assets/case-study-credit-insights/home-unlocked-dep.png";
+import drpMandate from "@/assets/case-study-credit-insights/drp-mandate-home.png";
+import drpProgram from "@/assets/case-study-credit-insights/drp-program-home.png";
+import celebrationDrp from "@/assets/case-study-credit-insights/unlock-celebration-drp.png";
+import celebrationDep from "@/assets/case-study-credit-insights/unlock-celebration-dep.png";
+
+import paywall199 from "@/assets/case-study-credit-insights/paywall-199.png";
+import paywallDrp from "@/assets/case-study-credit-insights/paywall-drp.png";
+import paywallDep from "@/assets/case-study-credit-insights/paywall-dep.png";
+import paywallOthers from "@/assets/case-study-credit-insights/paywall-others.png";
+import coupon from "@/assets/case-study-credit-insights/paywall-coupon.png";
+
+import reportFull from "@/assets/case-study-credit-insights/report-full.png";
+import reportScore from "@/assets/case-study-credit-insights/report-score.png";
+import scoreDetail from "@/assets/case-study-credit-insights/score-detail.png";
+import factorOntime from "@/assets/case-study-credit-insights/factor-ontime.png";
+import factorUtil from "@/assets/case-study-credit-insights/factor-utilisation.png";
+import factorAge from "@/assets/case-study-credit-insights/factor-age.png";
+import factorMix from "@/assets/case-study-credit-insights/factor-mix.png";
+import factorEnq from "@/assets/case-study-credit-insights/factor-enquiries.png";
+import accounts from "@/assets/case-study-credit-insights/accounts-loans.png";
+import dispute from "@/assets/case-study-credit-insights/dispute.png";
+
+import depCalc from "@/assets/case-study-credit-insights/dep-calculator.png";
+import depPlanner from "@/assets/case-study-credit-insights/dep-planner.png";
+import depSchedule from "@/assets/case-study-credit-insights/dep-schedule.png";
+import depCreditors from "@/assets/case-study-credit-insights/dep-creditors.png";
+import depGoals from "@/assets/case-study-credit-insights/dep-goals.png";
+import goalScore from "@/assets/case-study-credit-insights/goal-score.png";
+import goalLoan from "@/assets/case-study-credit-insights/goal-loan.png";
+import ntcHome from "@/assets/case-study-credit-insights/ntc-home.png";
+import othersHome from "@/assets/case-study-credit-insights/others-home.png";
+import ineligible from "@/assets/case-study-credit-insights/ineligible-drp.png";
 
 const INK = "#1f232d";
 const MUTED = "#6b6f7a";
@@ -15,19 +71,23 @@ const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
-const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+const stagger = { visible: { transition: { staggerChildren: 0.09 } } };
 
 const SECTIONS = [
   "Hero",
   "Overview",
   "Problem",
   "Objective",
-  "Who these users are",
-  "The linking idea",
+  "Market",
+  "Users",
+  "Routing",
   "Structure",
   "Sketches",
   "Design systems",
-  "Locked to unlocked",
+  "Journey",
+  "Anatomy",
+  "Score factors",
+  "Locked → unlocked",
   "Copy",
   "Testing",
   "Screens",
@@ -37,7 +97,7 @@ const SECTIONS = [
 /** Shared slide shell. Every slide is one viewport wide. */
 function Slide({ children }: { children: React.ReactNode }) {
   return (
-    <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 pt-8 pb-10 md:px-16 md:pt-12 md:pb-16 lg:px-24">
+    <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 pt-8 pb-12 md:px-16 md:pt-12 md:pb-16 lg:px-24">
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -80,6 +140,130 @@ const P = ({ children }: { children: React.ReactNode }) => (
     {children}
   </motion.p>
 );
+
+/** A labelled row of phones. Used wherever a group of screens tells one story. */
+const Row = ({
+  title,
+  note,
+  screens,
+  width = 128,
+}: {
+  title: string;
+  note?: string;
+  screens: Screen[];
+  width?: number;
+}) => (
+  <motion.div variants={fadeUp} className="mb-8">
+    <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <p
+        className="font-sans text-[11.5px] tracking-[0.18em] uppercase"
+        style={{ color: ACCENT }}
+      >
+        {title}
+      </p>
+      {note && (
+        <p className="font-sans text-[13.5px]" style={{ color: MUTED }}>
+          {note}
+        </p>
+      )}
+    </div>
+    <PhoneWall screens={screens} featured={screens.length} width={width} />
+  </motion.div>
+);
+
+/* ── data for the longer slides ───────────────────────────────────────── */
+
+const COMPETITORS = [
+  {
+    app: "OneScore",
+    does: "Free score, monthly refresh, clean and fast",
+    gap: "Shows the number, then sells a credit card",
+  },
+  {
+    app: "CRED",
+    does: "Beautiful. Rewards you for paying bills on time",
+    gap: "Built for people who already pay on time. Miss one and it has nothing for you",
+  },
+  {
+    app: "Paisabazaar",
+    does: "Score plus a marketplace of loans and cards",
+    gap: "The score is really a lead form",
+  },
+  {
+    app: "Lender apps",
+    does: "Score sitting inside an app that gives loans",
+    gap: "Every recommendation ends in more borrowing",
+  },
+  {
+    app: "Bureau apps",
+    does: "The raw report. Accurate and complete",
+    gap: "Written for lenders, not for the person it is about",
+  },
+];
+
+const FINDINGS = [
+  {
+    n: "01",
+    t: "Everyone shows the number. Nobody explains it.",
+    b: "Every app had a gauge. Not one of them told me which of my own accounts was doing the damage, or what to do about it this month.",
+  },
+  {
+    n: "02",
+    t: "They all make money by selling you more credit.",
+    b: "Which means none of them can honestly tell you to stop borrowing. FREED earns when your debt goes down. That is the only reason we could say the true thing.",
+  },
+  {
+    n: "03",
+    t: "The score is why people open the app. It is not what they need.",
+    b: "So lead with the score, prove you have read their report, and earn the right to talk about debt after that. Not before.",
+  },
+];
+
+/** Palettes read off the shipped screens, not chosen from a swatch library. */
+const SYSTEMS = [
+  {
+    code: "DRP",
+    name: "Debt Relief",
+    who: "Already defaulted. Getting recovery calls.",
+    feel: "Serious, then protective",
+    colours: ["#02416E", "#DE544A", "#E17F39"],
+    swatchNote: "Navy base, red for the diagnosis, amber for the stress meter",
+    type: "Heavy weights, oversized numbers. The score is the headline.",
+    language:
+      "Name the problem out loud, then take it off their hands. Alarm first, protection immediately after.",
+    cta: "See Your Settlement Plan",
+    line: "Krishna, your debt needs attention",
+    why: "This person opens the app at night after a threatening call. Softening it reads as dishonest. What they want is for someone to take over.",
+  },
+  {
+    code: "DCP",
+    name: "Consolidation",
+    who: "Paying on time, but stretched thin.",
+    feel: "Calm, factual, no red",
+    colours: ["#02416E", "#D8F0F0", "#EEF3F7"],
+    swatchNote: "Navy on cool tints. Deliberately no red anywhere",
+    type: "Lighter weights, more air, trend lines over big numbers.",
+    language:
+      "Insight, not rescue. Never the word settlement. Talk about interest and consistency.",
+    cta: "Unlock to see plan",
+    line: "Delayed payments hurt your credit score",
+    why: "This person is proud of not being in trouble. Treat them like a defaulter once and they leave. So the whole system had to be quieter than DRP.",
+  },
+  {
+    code: "DEP",
+    name: "Elimination",
+    who: "Wants to clear it themselves, no third party.",
+    feel: "Optimistic, gain framed",
+    colours: ["#D8FC72", "#90D890", "#02416E"],
+    swatchNote: "Lime as the action colour, green for progress, navy holding it",
+    type: "Display numbers on the savings figure. Everything else recedes.",
+    language:
+      "Every screen answers how much do I save and by when. Sliders and calculators, never a promise.",
+    cta: "Unlock premium to save ₹24,000",
+    line: "Crush your debt and save big",
+    why: "This person will actually do the maths, and they want to stay in control. So they get the calculator, the planner and a projection with the caveat attached, rather than a plan handed to them.",
+  },
+];
 
 const CreditInsightsSlider = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -155,7 +339,7 @@ const CreditInsightsSlider = () => {
         ref={scrollRef}
         className="hide-scrollbar flex flex-1 snap-x snap-mandatory overflow-x-auto"
       >
-        {/* 1 — HERO */}
+        {/* ═══ 1 — HERO ═══ */}
         <Slide>
           <Eyebrow>Credit Insights · New product, 0 to 1</Eyebrow>
           <motion.h1
@@ -180,7 +364,7 @@ const CreditInsightsSlider = () => {
               ["My role", "Product designer\nEnd to end, sketch to ship"],
               ["Team", "1 Product Designer (me)\n1 Product Manager\nEngineering"],
               ["Timeline", "6 months\nSketching to launch"],
-              ["Key metric", "Users entering the\nDRP, DCP and DEP funnels"],
+              ["Scale", "100+ screens\nAcross 5 segment journeys"],
             ].map(([label, body]) => (
               <div key={label}>
                 <p
@@ -201,9 +385,23 @@ const CreditInsightsSlider = () => {
               </div>
             ))}
           </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-10">
+            <PhoneWall
+              screens={[
+                { src: landing, label: "Landing" },
+                { src: welcomeAboard, label: "Welcome aboard" },
+                { src: lockedDep, label: "Home, locked", tall: true },
+                { src: celebrationDep, label: "Unlocked", tall: true },
+                { src: reportFull, label: "Credit report", tall: true },
+              ]}
+              featured={5}
+              width={124}
+            />
+          </motion.div>
         </Slide>
 
-        {/* 2 — OVERVIEW */}
+        {/* ═══ 2 — OVERVIEW ═══ */}
         <Slide>
           <Eyebrow>Overview</Eyebrow>
           <H>What we were actually building</H>
@@ -253,56 +451,45 @@ const CreditInsightsSlider = () => {
           </motion.div>
         </Slide>
 
-        {/* 3 — PROBLEM */}
+        {/* ═══ 3 — PROBLEM ═══ */}
         <Slide>
           <Eyebrow>Problem</Eyebrow>
-          <H>
-            People wanted to fix their score. Nobody told them how.
-          </H>
+          <H>People wanted to fix their score. Nobody told them how.</H>
           <P>
-            Checking your credit score is easy. Every app offers it. What
-            nobody does is tell you what to do next. People saw a number, felt
-            bad or relieved for a minute, and closed the app.
+            Checking your credit score is easy. Every app offers it. What nobody
+            does is tell you what to do next. People saw a number, felt bad or
+            relieved for a minute, and closed the app.
           </P>
           <motion.div variants={fadeUp} className="mt-6 grid gap-4 md:grid-cols-2">
-            <div
-              className="rounded-2xl p-6"
-              style={{ background: PAPER, border: `1px solid ${INK}14` }}
-            >
-              <p
-                className="mb-3 font-sans text-[11.5px] tracking-[0.18em] uppercase"
-                style={{ color: MUTED }}
+            {[
+              [
+                "The user problem",
+                "I know my score is bad. I do not know which part of my debt is causing it, what to pay first, or whether anything I do will actually help. So I do nothing.",
+              ],
+              [
+                "The business problem",
+                "We had three debt products for three very different situations. People arrived not knowing debt relief existed, and we had no way to hand them to the right one without a sales call.",
+              ],
+            ].map(([t, d]) => (
+              <div
+                key={t}
+                className="rounded-2xl p-6"
+                style={{ background: PAPER, border: `1px solid ${INK}14` }}
               >
-                The user problem
-              </p>
-              <p
-                className="font-sans text-[15.5px] leading-relaxed"
-                style={{ color: INK }}
-              >
-                I know my score is bad. I do not know which part of my debt is
-                causing it, what to pay first, or whether anything I do will
-                actually help. So I do nothing.
-              </p>
-            </div>
-            <div
-              className="rounded-2xl p-6"
-              style={{ background: PAPER, border: `1px solid ${INK}14` }}
-            >
-              <p
-                className="mb-3 font-sans text-[11.5px] tracking-[0.18em] uppercase"
-                style={{ color: MUTED }}
-              >
-                The business problem
-              </p>
-              <p
-                className="font-sans text-[15.5px] leading-relaxed"
-                style={{ color: INK }}
-              >
-                We had three debt products for three very different situations.
-                People arrived not knowing debt relief existed, and we had no way
-                to hand them to the right one without a sales call.
-              </p>
-            </div>
+                <p
+                  className="mb-3 font-sans text-[11.5px] tracking-[0.18em] uppercase"
+                  style={{ color: MUTED }}
+                >
+                  {t}
+                </p>
+                <p
+                  className="font-sans text-[15.5px] leading-relaxed"
+                  style={{ color: INK }}
+                >
+                  {d}
+                </p>
+              </div>
+            ))}
           </motion.div>
           <motion.p
             variants={fadeUp}
@@ -314,7 +501,7 @@ const CreditInsightsSlider = () => {
           </motion.p>
         </Slide>
 
-        {/* 4 — OBJECTIVE */}
+        {/* ═══ 4 — OBJECTIVE ═══ */}
         <Slide>
           <Eyebrow>Objective</Eyebrow>
           <H>What I set out to do</H>
@@ -363,7 +550,109 @@ const CreditInsightsSlider = () => {
           </motion.div>
         </Slide>
 
-        {/* 5 — WHO THESE USERS ARE */}
+        {/* ═══ 5 — MARKET / COMPETITIVE ANALYSIS ═══ */}
+        <Slide>
+          <Eyebrow>Competitive analysis</Eyebrow>
+          <H>I opened every app that shows you a score</H>
+          <P>
+            Before drawing anything, I went through the apps our users already
+            had on their phones. Not to borrow layouts. To find the one thing
+            none of them was doing, so we would have a real answer to the
+            question <em>why would anyone come to us for this</em>.
+          </P>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-2 overflow-hidden rounded-2xl"
+            style={{ border: `1px solid ${INK}14` }}
+          >
+            <div
+              className="hidden gap-6 px-6 py-3 md:grid md:grid-cols-[150px_1fr_1fr]"
+              style={{ background: PAPER, borderBottom: `1px solid ${INK}14` }}
+            >
+              {["App", "What it does well", "Where it stops"].map((h) => (
+                <p
+                  key={h}
+                  className="font-sans text-[11px] tracking-[0.16em] uppercase"
+                  style={{ color: MUTED }}
+                >
+                  {h}
+                </p>
+              ))}
+            </div>
+            {COMPETITORS.map((c, i) => (
+              <div
+                key={c.app}
+                className="grid gap-1.5 px-6 py-4 md:grid-cols-[150px_1fr_1fr] md:gap-6"
+                style={{ background: i % 2 ? PAPER : "#fff" }}
+              >
+                <p
+                  className="font-sans text-[14.5px] font-bold"
+                  style={{ color: INK }}
+                >
+                  {c.app}
+                </p>
+                <p className="font-sans text-[14px] leading-snug" style={{ color: INK }}>
+                  {c.does}
+                </p>
+                <p className="font-sans text-[14px] leading-snug" style={{ color: MUTED }}>
+                  {c.gap}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-8 mb-4 font-sans text-[12px] tracking-[0.18em] uppercase"
+            style={{ color: ACCENT }}
+          >
+            Three things I took away
+          </motion.p>
+          <motion.div variants={fadeUp} className="grid gap-4 md:grid-cols-3">
+            {FINDINGS.map((f, i) => (
+              <div
+                key={f.n}
+                className="rounded-2xl p-5"
+                style={{
+                  background: i === 1 ? ACCENT_BG : PAPER,
+                  border: `1px solid ${i === 1 ? ACCENT + "40" : INK + "14"}`,
+                }}
+              >
+                <p
+                  className="mb-2 font-serif text-base"
+                  style={{ color: ACCENT, opacity: 0.65 }}
+                >
+                  {f.n}
+                </p>
+                <p
+                  className="mb-2 font-sans text-[15px] font-bold leading-snug"
+                  style={{ color: i === 1 ? ACCENT : INK }}
+                >
+                  {f.t}
+                </p>
+                <p
+                  className="font-sans text-[13.8px] leading-relaxed"
+                  style={{ color: i === 1 ? ACCENT : MUTED }}
+                >
+                  {f.b}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-7 max-w-3xl font-serif text-xl leading-snug md:text-[1.45rem]"
+            style={{ color: INK }}
+          >
+            Everyone else was in the business of getting you approved. We were
+            the only ones whose business worked when your debt went down. That
+            is the whole reason to open our app instead of theirs.
+          </motion.p>
+        </Slide>
+
+        {/* ═══ 6 — USERS ═══ */}
         <Slide>
           <Eyebrow>Research</Eyebrow>
           <H>Same score, completely different people</H>
@@ -375,8 +664,8 @@ const CreditInsightsSlider = () => {
           <P>
             So the first design decision was not a screen at all. It was
             deciding how we group people. We used what the credit report already
-            told us: how much they owe, how far behind they are, and whether
-            they have any credit history at all.
+            told us: how much they owe, how far behind they are, and whether they
+            have any credit history at all.
           </P>
           <motion.div variants={fadeUp} className="mt-6 grid gap-4 md:grid-cols-2">
             {[
@@ -408,18 +697,30 @@ const CreditInsightsSlider = () => {
                 >
                   {t}
                 </p>
-                <p
-                  className="font-sans text-[14px] leading-snug"
-                  style={{ color: MUTED }}
-                >
+                <p className="font-sans text-[14px] leading-snug" style={{ color: MUTED }}>
                   {d}
                 </p>
               </div>
             ))}
           </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <Row
+              title="One structure, five different first screens"
+              note="Ineligible and no-history users get a real path too, not a dead end"
+              screens={[
+                { src: ntcHome, label: "New to credit" },
+                { src: othersHome, label: "Healthy, monitoring" },
+                { src: lockedDcp, label: "Managing, stretched", tall: true },
+                { src: lockedDrp, label: "Falling behind", tall: true },
+                { src: ineligible, label: "Ineligible, still helped", tall: true },
+              ]}
+              width={126}
+            />
+          </motion.div>
         </Slide>
 
-        {/* 6 — THE LINKING IDEA */}
+        {/* ═══ 7 — ROUTING ═══ */}
         <Slide>
           <Eyebrow>The core idea</Eyebrow>
           <H>The score decides which product you see</H>
@@ -435,10 +736,7 @@ const CreditInsightsSlider = () => {
             className="mt-6 overflow-hidden rounded-2xl"
             style={{ border: `1px solid ${INK}14` }}
           >
-            <div
-              className="grid gap-px md:grid-cols-3"
-              style={{ background: LINE }}
-            >
+            <div className="grid gap-px md:grid-cols-3" style={{ background: LINE }}>
               {[
                 [
                   "DRP",
@@ -488,83 +786,59 @@ const CreditInsightsSlider = () => {
             className="mt-5 max-w-3xl font-sans text-[15px] leading-relaxed"
             style={{ color: MUTED }}
           >
-            Credit Insights was never meant to be the destination. It was the
-            way into these three funnels, built so the handover felt like help
-            rather than a sales pitch.
+            Credit Insights was never meant to be the destination. It was the way
+            into these funnels, built so the handover felt like help rather than
+            a sales pitch.
           </motion.p>
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <Row
+              title="Where each route ends up"
+              screens={[
+                { src: drpMandate, label: "DRP · relief and protection", tall: true },
+                { src: unlockedDcp, label: "DCP · one plan, lower interest", tall: true },
+                { src: unlockedDep, label: "DEP · clear it yourself", tall: true },
+                { src: drpProgram, label: "Enrolled · settlement tracker", tall: true },
+              ]}
+              width={134}
+            />
+          </motion.div>
         </Slide>
 
-        {/* 7 — STRUCTURE / IA */}
+        {/* ═══ 8 — STRUCTURE / IA ═══ */}
         <Slide>
           <Eyebrow>Information architecture</Eyebrow>
           <H>Working out the order things should happen in</H>
           <P>
             Before any visual design, the PM and I argued about sequence. How
-            much do we ask before showing value? When does the score appear?
-            What does the home screen look like before someone has paid, and
-            after?
+            much do we ask before showing value? When does the score appear? What
+            does the home screen look like before someone has paid, and after?
           </P>
-          <motion.div variants={fadeUp} className="mt-6 space-y-3">
-            {[
-              [
-                "01",
-                "Landing",
-                "One promise, one action. Check your score free. No debt talk yet.",
-              ],
-              [
-                "02",
-                "Onboarding",
-                "The smallest set of questions we could get away with, one idea per screen.",
-              ],
-              [
-                "03",
-                "Home, locked",
-                "Score visible. Insights and savings visible but locked. You can see what you are missing.",
-              ],
-              [
-                "04",
-                "Home, unlocked",
-                "Full report, insights, goal tracker, and the product that matches your situation.",
-              ],
-            ].map(([n, t, d]) => (
-              <div
-                key={n}
-                className="flex flex-col gap-2 rounded-xl p-4 md:flex-row md:items-center md:gap-6"
-                style={{ background: PAPER, border: `1px solid ${INK}14` }}
-              >
-                <div className="flex shrink-0 items-baseline gap-3 md:w-56">
-                  <span
-                    className="font-serif text-base"
-                    style={{ color: ACCENT, opacity: 0.6 }}
-                  >
-                    {n}
-                  </span>
-                  <span
-                    className="font-sans text-[15.5px] font-bold"
-                    style={{ color: INK }}
-                  >
-                    {t}
-                  </span>
-                </div>
-                <p
-                  className="font-sans text-[14.5px] leading-snug"
-                  style={{ color: MUTED }}
-                >
-                  {d}
-                </p>
-              </div>
-            ))}
+          <P>
+            This is the map we settled on. One funnel in, one spine through
+            locked to unlocked, then five routes out — and a shared layer every
+            route can reach.
+          </P>
+          <motion.div
+            variants={fadeUp}
+            className="mt-4 overflow-x-auto rounded-2xl p-4 md:p-6"
+            style={{ background: "#fff", border: `1px solid ${INK}14` }}
+          >
+            <IaDiagram className="min-w-[720px]" />
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-6">
-            <ImagePlaceholder
-              label="Add the IA / flow diagram"
-              className="w-full max-w-3xl"
-              aspectRatio="16/9"
-            />
-          </motion.div>
+          <motion.p
+            variants={fadeUp}
+            className="mt-4 font-sans text-[13.5px]"
+            style={{ color: MUTED }}
+          >
+            The two decisions that took longest: putting the score before any
+            debt talk, and keeping the locked and unlocked homes on the same
+            skeleton so unlocking felt like the page filling in rather than a
+            different app.
+          </motion.p>
         </Slide>
 
-        {/* 8 — SKETCHES */}
+        {/* ═══ 9 — SKETCHES ═══ */}
         <Slide>
           <Eyebrow>Low fidelity</Eyebrow>
           <H>It started on paper</H>
@@ -584,94 +858,390 @@ const CreditInsightsSlider = () => {
           </motion.div>
         </Slide>
 
-        {/* 9 — DESIGN SYSTEMS */}
+        {/* ═══ 10 — DESIGN SYSTEMS ═══ */}
         <Slide>
           <Eyebrow>Design systems</Eyebrow>
-          <H>Three products, three different feelings</H>
+          <H>Three products, three design systems</H>
           <P>
-            Each product talks to someone in a different emotional state, so
-            they could not all look the same. Someone being chased by lenders
-            needs calm and reassurance. Someone consolidating wants clarity and
-            numbers. The tone had to change with the audience.
+            We were selling three things to three different people, in three
+            different emotional states. One system would have made all three
+            sound the same, and the wrong tone loses this audience in a single
+            screen. So each product got its own colour, type, component
+            behaviour, illustration style and voice.
           </P>
-          <P>
-            DEP was brand new, so I built its design system from scratch:
-            colour, type scale, component library, states, and the rules for
-            when to use what. The other two already existed, so my job there was
-            to keep them consistent while making the switch between products
-            feel deliberate rather than jarring.
-          </P>
-          <motion.div variants={fadeUp} className="mt-6 grid gap-4 md:grid-cols-3">
-            {[
-              ["DRP", "Calm, reassuring, low pressure"],
-              ["DCP", "Clear, numbers forward, practical"],
-              ["DEP", "Built from 0 to 1, optimistic and forward looking"],
-            ].map(([code, tone], i) => (
+
+          <motion.div variants={fadeUp} className="mt-6 grid gap-5 lg:grid-cols-3">
+            {SYSTEMS.map((s, i) => (
               <div
-                key={code}
-                className="rounded-2xl p-5"
+                key={s.code}
+                className="flex flex-col rounded-2xl p-6"
                 style={{
-                  background: i === 2 ? ACCENT_BG : PAPER,
+                  background: i === 2 ? "#fcfff2" : PAPER,
                   border: `1px solid ${INK}14`,
                 }}
               >
+                <div className="mb-4 flex items-baseline justify-between gap-3">
+                  <div>
+                    <p
+                      className="font-serif text-3xl font-semibold leading-none"
+                      style={{ color: INK }}
+                    >
+                      {s.code}
+                    </p>
+                    <p
+                      className="mt-1.5 font-sans text-[12px] tracking-[0.12em] uppercase"
+                      style={{ color: MUTED }}
+                    >
+                      {s.name}
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5">
+                    {s.colours.map((c) => (
+                      <span
+                        key={c}
+                        title={c}
+                        className="h-7 w-7 rounded-full"
+                        style={{ background: c, border: `1px solid ${INK}1a` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
                 <p
-                  className="mb-1.5 font-serif text-xl font-semibold"
-                  style={{ color: i === 2 ? ACCENT : INK }}
+                  className="mb-4 font-sans text-[13px] leading-snug"
+                  style={{ color: MUTED }}
                 >
-                  {code}
+                  {s.swatchNote}
                 </p>
-                <p
-                  className="font-sans text-[14px] leading-snug"
-                  style={{ color: i === 2 ? ACCENT : MUTED }}
+
+                <dl className="mb-4 space-y-3">
+                  {[
+                    ["Who it is for", s.who],
+                    ["Look and feel", s.feel],
+                    ["Type", s.type],
+                    ["Voice", s.language],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <dt
+                        className="mb-0.5 font-sans text-[10.5px] tracking-[0.14em] uppercase"
+                        style={{ color: ACCENT, opacity: 0.8 }}
+                      >
+                        {k}
+                      </dt>
+                      <dd
+                        className="font-sans text-[13.6px] leading-snug"
+                        style={{ color: INK }}
+                      >
+                        {v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div
+                  className="mt-auto rounded-xl px-4 py-3"
+                  style={{ background: "#fff", border: `1px solid ${INK}14` }}
                 >
-                  {tone}
+                  <p
+                    className="mb-1 font-sans text-[10.5px] tracking-[0.14em] uppercase"
+                    style={{ color: MUTED }}
+                  >
+                    Same job, three ways
+                  </p>
+                  <p
+                    className="font-sans text-[13.5px] font-semibold"
+                    style={{ color: INK }}
+                  >
+                    “{s.cta}”
+                  </p>
+                  <p className="font-sans text-[13px]" style={{ color: MUTED }}>
+                    “{s.line}”
+                  </p>
+                </div>
+
+                <p
+                  className="mt-4 font-sans text-[13.2px] leading-relaxed"
+                  style={{ color: MUTED }}
+                >
+                  {s.why}
                 </p>
               </div>
             ))}
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-5">
-            <ImagePlaceholder
-              label="Add design system foundations, DEP"
-              className="w-full max-w-3xl"
-              aspectRatio="16/9"
+
+          <motion.div variants={fadeUp} className="mt-9">
+            <Row
+              title="The same screen in all three systems"
+              note="Identical structure. Different colour, weight, illustration and words."
+              screens={[
+                { src: lockedDrp, label: "DRP · locked home", tall: true },
+                { src: lockedDcp, label: "DCP · locked home", tall: true },
+                { src: lockedDep, label: "DEP · locked home", tall: true },
+                { src: lockedOthers, label: "Web app · monitoring only", tall: true },
+              ]}
+              width={140}
+            />
+          </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            className="max-w-3xl font-sans text-[15px] leading-relaxed"
+            style={{ color: MUTED }}
+          >
+            DEP was brand new, so I built its system from nothing: palette, type
+            scale, components, states and the rules for when to use what. DRP and
+            DCP already existed, so the work there was keeping them internally
+            consistent while making the jump between products feel deliberate
+            rather than broken.
+          </motion.p>
+        </Slide>
+
+        {/* ═══ 11 — JOURNEY ═══ */}
+        <Slide>
+          <Eyebrow>The journey</Eyebrow>
+          <H>Landing to unlocked, in the order it happens</H>
+          <P>
+            Every screen below is the shipped design. Read it left to right and
+            you are walking the flow exactly as a user does. Tap any screen to
+            open it full size.
+          </P>
+
+          <Row
+            title="01 · Arrive"
+            note="One promise, one action. No debt talk yet."
+            screens={[
+              { src: splash, label: "Splash", tall: true },
+              { src: welcome1, label: "Welcome · the problem" },
+              { src: welcome2, label: "Welcome · the fix" },
+              { src: landing, label: "Landing page" },
+            ]}
+          />
+
+          <Row
+            title="02 · Sign up"
+            note="Name and mobile as per PAN, OTP, consent, then the bureau fetch."
+            screens={[
+              { src: signup, label: "Get started", tall: true },
+              { src: otp, label: "Verify OTP", tall: true },
+              { src: fetching, label: "Fetching your report" },
+            ]}
+          />
+
+          <Row
+            title="03 · Tell us about you"
+            note="One question per screen, on a card stack, so nobody faces a form."
+            screens={[
+              { src: onbGoal, label: "Your financial goal" },
+              { src: onbLoan, label: "What kind of loan" },
+              { src: onbIncome, label: "Monthly income" },
+              { src: welcomeAboard, label: "Welcome aboard" },
+              { src: welcomeAboardDcp, label: "Welcome aboard · DCP" },
+            ]}
+            width={118}
+          />
+
+          <Row
+            title="04 · Locked, then unlocked"
+            note="Score free, reasons paid. The celebration screen exists because paying for a debt product should not feel like a receipt."
+            screens={[
+              { src: lockedDep, label: "Home, locked", tall: true },
+              { src: paywall199, label: "Paywall in context" },
+              { src: coupon, label: "Coupon", tall: true },
+              { src: celebrationDrp, label: "Congratulations", tall: true },
+              { src: unlockedDep, label: "Home, unlocked", tall: true },
+            ]}
+            width={118}
+          />
+        </Slide>
+
+        {/* ═══ 12 — ANATOMY ═══ */}
+        <Slide>
+          <Eyebrow>Anatomy of one screen</Eyebrow>
+          <H>Every block on the locked home had to earn its place</H>
+          <P>
+            This is the DRP locked home. It is the screen doing the most work in
+            the whole product: it has to reveal the score, prove we have read
+            their report, show what we could save them, and ask for money —
+            without ever feeling like a sales page. Here is what each part is for.
+          </P>
+          <motion.div variants={fadeUp} className="mt-8">
+            <AnnotatedScreen
+              src={lockedDrp}
+              alt="DRP locked home screen, annotated"
+              width={238}
+              notes={[
+                {
+                  at: 0.07,
+                  title: "Credit score reveal",
+                  body: "The one thing they came for, at the top, with a plain sentence next to it. A gauge on its own tells people nothing they can act on.",
+                },
+                {
+                  at: 0.185,
+                  title: "Three numbers, not twelve",
+                  body: "Score, EMI burden and default risk. Everything else the bureau sent us collapses behind expandable rows.",
+                },
+                {
+                  at: 0.335,
+                  title: "Programme savings",
+                  body: "Total outstanding, what you pay, what you save — their own figures from their own report, not a marketing range.",
+                },
+                {
+                  at: 0.56,
+                  title: "Protection before the sell",
+                  body: "Harassment protection sits above the paywall on purpose. The most urgent thing for this user is the phone calls stopping.",
+                },
+                {
+                  at: 0.88,
+                  title: "The ask, priced against the gain",
+                  body: "The subscription appears last, with the saving still on screen, so the ₹ ask is read next to the ₹ it unlocks.",
+                },
+              ]}
             />
           </motion.div>
         </Slide>
 
-        {/* 10 — LOCKED TO UNLOCKED */}
+        {/* ═══ 13 — SCORE FACTORS / SPIDER ═══ */}
+        <Slide>
+          <Eyebrow>The part I am proudest of</Eyebrow>
+          <H>Turning one number into five things you can act on</H>
+          <P>
+            A score is a single number, so people treat it like a verdict. But it
+            is made of five things, and usually only one or two of them are the
+            problem. I wanted someone to be able to look once and know which side
+            of their credit life was dragging the rest down.
+          </P>
+          <P>
+            So instead of one gauge, the score is drawn as five arcs sitting
+            together, each with its own reading and its own impact weight. Seen
+            side by side, the weak ones stand out immediately — and every arc is
+            tappable, opening its own screen with the accounts behind it.
+          </P>
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <AnnotatedScreen
+              src={reportScore}
+              alt="Credit report screen with the five score factors, annotated"
+              width={248}
+              notes={[
+                {
+                  at: 0.075,
+                  title: "The number, on a scale",
+                  body: "300 to 900 underneath it, so the score has something to mean. A bare number is just a verdict.",
+                },
+                {
+                  at: 0.22,
+                  title: "What's shaping your score",
+                  body: "The five factors as five arcs in one block. This is the part I am proudest of — you can see the shape of your credit life without reading anything.",
+                },
+                {
+                  at: 0.40,
+                  title: "Accounts, worst first",
+                  body: "After testing I flipped the order so the accounts hurting the score sit above the healthy ones, with the reason printed on the row.",
+                },
+                {
+                  at: 0.74,
+                  title: "Payments due, in the same place",
+                  body: "The one thing that changes the biggest factor is not missing the next payment. So it lives on this screen, not in a settings menu.",
+                },
+                {
+                  at: 0.9,
+                  title: "Disputes, next to the error",
+                  body: "Bureau records are often wrong. Raising a dispute used to be buried, so it moved to sit beside the account it is about.",
+                },
+              ]}
+            />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-10">
+            <Row
+              title="One screen per factor"
+              note="Rating, why it matters, the impact weight, and the accounts responsible."
+              screens={[
+                { src: factorOntime, label: "On-time payments", tall: true },
+                { src: factorUtil, label: "Credit utilisation", tall: true },
+                { src: factorAge, label: "Credit age", tall: true },
+                { src: factorMix, label: "Credit mix", tall: true },
+                { src: factorEnq, label: "Enquiries", tall: true },
+                { src: scoreDetail, label: "Score band explained" },
+              ]}
+              width={116}
+            />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-4">
+            <Row
+              title="DEP · locked state"
+              note="The score and the factors are free. The reason behind them is what you pay for."
+              screens={[
+                { src: lockedDep, label: "Score visible, reasons locked", tall: true },
+                { src: reportFull, label: "Full report, factors at the bottom", tall: true },
+              ]}
+              width={150}
+            />
+          </motion.div>
+        </Slide>
+
+        {/* ═══ 14 — LOCKED TO UNLOCKED ═══ */}
         <Slide>
           <Eyebrow>Paywall</Eyebrow>
           <H>Show the value before asking for anything</H>
           <P>
-            The hardest screen was the locked home page. Lock too much and it
-            feels like a wall. Show too much and there is no reason to pay.
+            The hardest screen was the locked home. Lock too much and it feels
+            like a wall. Show too much and there is no reason to pay.
           </P>
           <P>
-            I tried a lot of versions. What worked was making the locked state
-            specific rather than vague. Not "unlock premium insights" but the
-            actual number: this is what you could save, here is the account
-            causing most of the damage, unlock to see the rest. Real information
-            about your own situation, partly visible.
+            What worked was making the locked state specific rather than vague.
+            Not “unlock premium insights” but the actual number: this is what you
+            could save, here is the account causing most of the damage, unlock to
+            see the rest. Real information about your own situation, partly
+            visible. The locked and unlocked homes share the same skeleton, so
+            paying feels like the page filling in.
           </P>
-          <motion.div
-            variants={fadeUp}
-            className="mt-6 flex flex-wrap justify-center gap-5 md:justify-start"
-          >
-            <PhonePlaceholder label="Home, locked" note="Value visible, detail held back" />
-            <PhonePlaceholder label="Paywall in context" note="Tied to your own report" />
-            <PhonePlaceholder label="Home, unlocked" note="Full insights and next step" />
-          </motion.div>
+
+          <Row
+            title="DRP"
+            note="Locked → paywall → congratulations → protection and mandate"
+            screens={[
+              { src: lockedDrp, label: "Locked", tall: true },
+              { src: paywallDrp, label: "Paywall" },
+              { src: celebrationDrp, label: "Congratulations", tall: true },
+              { src: drpMandate, label: "Unlocked", tall: true },
+            ]}
+            width={130}
+          />
+
+          <Row
+            title="DEP"
+            note="The ask carries the number it unlocks"
+            screens={[
+              { src: lockedDep, label: "Locked", tall: true },
+              { src: paywallDep, label: "Paywall" },
+              { src: celebrationDep, label: "Congratulations", tall: true },
+              { src: unlockedDep, label: "Unlocked", tall: true },
+            ]}
+            width={130}
+          />
+
+          <Row
+            title="DCP and monitoring"
+            note="Same structure, quieter language, no red"
+            screens={[
+              { src: lockedDcp, label: "Locked", tall: true },
+              { src: paywallOthers, label: "Paywall" },
+              { src: unlockedDcp, label: "Unlocked", tall: true },
+              { src: lockedOthers, label: "Web app, locked", tall: true },
+            ]}
+            width={130}
+          />
         </Slide>
 
-        {/* 11 — COPY */}
+        {/* ═══ 15 — COPY ═══ */}
         <Slide>
           <Eyebrow>Content design</Eyebrow>
           <H>Every line was written for a specific person</H>
           <P>
             Debt is embarrassing. The wrong word makes someone close the app and
-            never come back. So the copy changed by segment, not just the
-            layout.
+            never come back. So the copy changed by segment, not just the layout.
           </P>
           <motion.div
             variants={fadeUp}
@@ -689,16 +1259,10 @@ const CreditInsightsSlider = () => {
                 className="grid gap-1 px-6 py-4 md:grid-cols-[220px_1fr] md:gap-6"
                 style={{ background: i % 2 ? PAPER : "#fff" }}
               >
-                <p
-                  className="font-sans text-[14px] font-semibold"
-                  style={{ color: ACCENT }}
-                >
+                <p className="font-sans text-[14px] font-semibold" style={{ color: ACCENT }}>
                   {seg}
                 </p>
-                <p
-                  className="font-sans text-[15px] leading-snug"
-                  style={{ color: INK }}
-                >
+                <p className="font-sans text-[15px] leading-snug" style={{ color: INK }}>
                   {line}
                 </p>
               </div>
@@ -714,7 +1278,7 @@ const CreditInsightsSlider = () => {
           </motion.p>
         </Slide>
 
-        {/* 12 — TESTING */}
+        {/* ═══ 16 — TESTING ═══ */}
         <Slide>
           <Eyebrow>Usability testing</Eyebrow>
           <H>What testing told us we had got wrong</H>
@@ -738,55 +1302,96 @@ const CreditInsightsSlider = () => {
                 className="rounded-2xl p-6"
                 style={{ background: PAPER, border: `1px solid ${INK}14` }}
               >
-                <p
-                  className="mb-2 font-sans text-[15.5px] font-bold"
-                  style={{ color: INK }}
-                >
+                <p className="mb-2 font-sans text-[15.5px] font-bold" style={{ color: INK }}>
                   {t}
                 </p>
-                <p
-                  className="font-sans text-[14.5px] leading-relaxed"
-                  style={{ color: MUTED }}
-                >
+                <p className="font-sans text-[14.5px] leading-relaxed" style={{ color: MUTED }}>
                   {d}
                 </p>
               </div>
             ))}
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-5 grid gap-4 md:grid-cols-2">
-            <ImagePlaceholder label="Before and after, paywall" aspectRatio="16/10" />
-            <ImagePlaceholder label="Before and after, report page" aspectRatio="16/10" />
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <Row
+              title="After"
+              note="Context-led paywall, and a report that leads with the damage"
+              screens={[
+                { src: paywall199, label: "Paywall, in context" },
+                { src: paywallDep, label: "Priced against the saving" },
+                { src: reportFull, label: "Report, restructured", tall: true },
+                { src: accounts, label: "Accounts, flagged first", tall: true },
+                { src: dispute, label: "Raise a dispute", tall: true },
+              ]}
+              width={124}
+            />
+          </motion.div>
+          <motion.div variants={fadeUp}>
+            <ImagePlaceholder
+              label="Add the before shots from the earlier prototype"
+              className="w-full max-w-3xl"
+              aspectRatio="16/9"
+            />
           </motion.div>
         </Slide>
 
-        {/* 13 — SCREENS */}
+        {/* ═══ 17 — SCREENS ═══ */}
         <Slide>
           <Eyebrow>What shipped</Eyebrow>
-          <H>The journey, end to end</H>
+          <H>100+ screens, because there is no such thing as one happy path</H>
           <P>
-            Landing to onboarding, score to insight, locked to unlocked, and out
-            into whichever product fits. Every screen had one job.
+            Five segment journeys, each with its own eligible and ineligible
+            branch, a locked and an unlocked state, empty states, error states,
+            no-credit-history states, coupon retries, and the same flow again for
+            the web app. Every one of those is somebody&apos;s actual first
+            impression, so every one got designed rather than defaulted.
           </P>
-          <motion.div
-            variants={fadeUp}
-            className="mt-6 flex flex-wrap justify-center gap-5 md:justify-start"
-          >
-            <PhonePlaceholder label="Landing" note="One promise, one action" />
-            <PhonePlaceholder label="Onboarding" note="One question per screen" />
-            <PhonePlaceholder label="Score and insights" note="What it means for you" />
-            <PhonePlaceholder label="Goal tracker" note="Progress you can feel" />
-            <PhonePlaceholder label="Product handover" note="Routed by your score" />
-          </motion.div>
+
+          <Row
+            title="Goal tracking"
+            note="A target, a projection, and the disclaimer attached to it"
+            screens={[
+              { src: goalScore, label: "Improve my score", tall: true },
+              { src: goalLoan, label: "Get a loan", tall: true },
+              { src: depGoals, label: "Pick a goal" },
+            ]}
+            width={132}
+          />
+
+          <Row
+            title="DEP · the product I built the system for"
+            note="Calculator, planner, payoff schedule, and choosing which creditors to attack"
+            screens={[
+              { src: depCalc, label: "Savings calculator", tall: true },
+              { src: depPlanner, label: "Monthly planner", tall: true },
+              { src: depSchedule, label: "Payoff schedule", tall: true },
+              { src: depCreditors, label: "Customise creditors" },
+            ]}
+            width={132}
+          />
+
+          <Row
+            title="Edges nobody asks for and everybody hits"
+            note="No bureau record, not eligible, monitoring only, and the web app"
+            screens={[
+              { src: ntcHome, label: "No credit history" },
+              { src: ineligible, label: "Not eligible", tall: true },
+              { src: othersHome, label: "Monitoring only" },
+              { src: lockedOthers, label: "Web app", tall: true },
+              { src: drpProgram, label: "After enrolment", tall: true },
+            ]}
+            width={124}
+          />
         </Slide>
 
-        {/* 14 — REFLECTION */}
+        {/* ═══ 18 — REFLECTION ═══ */}
         <Slide>
           <Eyebrow>Reflection</Eyebrow>
           <H>What I would do differently</H>
           <P>
-            I designed the segmentation from what the credit report told us
-            about people. That was the fastest route and it worked, but it meant
-            the groups were built from data rather than from conversations. If I
+            I designed the segmentation from what the credit report told us about
+            people. That was the fastest route and it worked, but it meant the
+            groups were built from data rather than from conversations. If I
             started again I would talk to a handful of people in each group
             before deciding the groups exist.
           </P>
@@ -795,6 +1400,12 @@ const CreditInsightsSlider = () => {
             near the end of the flow, when it is really the moment the whole
             product either earns trust or loses it. I would design that moment
             first next time, and build the journey backwards from it.
+          </P>
+          <P>
+            Three design systems was the right call for the users and an
+            expensive one for the team. It only stayed maintainable because the
+            structure underneath was shared. If the products keep multiplying, the
+            honest next move is one system with three themes, not four systems.
           </P>
           <motion.div
             variants={fadeUp}
