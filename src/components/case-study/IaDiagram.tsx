@@ -1,82 +1,57 @@
+const VW = 1266;
+const VH = 748;
 const INK = "#1f232d";
-const MUTED = "#6b6f7a";
-const WIRE = "#9d968a";
-const ACCENT = "#265d73";
 
-const CREAM = "#f3ede1";
-const CREAM_LINE = "#d9cfba";
-const CARD_LINE = "#ddd6c8";
-const ACCENT_BG = "#dbeef8";
-const END_BG = "#fbe3dc";
-const END_LINE = "#e2b8a9";
-const DEC_BG = "#efebe2";
-const DEC_LINE = "#cbc2b0";
+/** One lane per stage of the journey, in the order a user meets them. */
+const LANES = [
+  { id: 1, title: "ACQUISITION", x: 6, head: "#fbf0dd", body: "#fdf7ee", node: "#dd9a3b", wire: "#c9862c" },
+  { id: 2, title: "ONBOARDING", x: 322, head: "#ece2fb", body: "#f6f2fe", node: "#7b52d3", wire: "#6b45bd" },
+  { id: 3, title: "LOCKED · PAYWALL", x: 638, head: "#dfecfb", body: "#f0f7fe", node: "#3f8fdd", wire: "#2f7bc6" },
+  { id: 4, title: "UNLOCKED · ROUTED", x: 954, head: "#e0f0e4", body: "#f1f8f2", node: "#4d9c5f", wire: "#3d8a4e" },
+] as const;
 
-const VW = 1040;
-const VH = 1160;
+const LANE_W = 306;
+const BODY_Y = 78;
+const BODY_H = 652;
 
-/* Main spine */
-const SX = 56; // spine left edge
-const SW = 250; // spine node width
-const SC = SX + SW / 2; // spine centre x
-const NH = 64; // process node height
-const PH = 54; // pill height
-const R = 48; // decision radius
+const [L1, L2, L3, L4] = LANES;
+const C1 = L1.x + LANE_W / 2; // 159
+const C2 = L2.x + LANE_W / 2; // 475
+const C3 = L3.x + LANE_W / 2; // 791
+const C4 = L4.x + LANE_W / 2; // 1107
 
-/* ── little building blocks ───────────────────────────────────────────── */
+const NW = 200; // standard node width
+const NH = 46; // standard node height
 
-type BoxProps = {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  rx?: number;
-  fill: string;
-  stroke: string;
-  title: string;
-  sub?: string;
-  titleSize?: number;
-  center?: boolean;
-  titleFont?: string;
-};
+/* ── primitives ───────────────────────────────────────────────────────── */
 
-const Box = ({
-  x, y, w, h, rx = 12, fill, stroke, title, sub, titleSize = 15,
-  center = false, titleFont = "sans-serif",
-}: BoxProps) => {
-  const tx = center ? x + w / 2 : x + 18;
-  const anchor = center ? "middle" : "start";
-  return (
-    <g>
-      <rect x={x} y={y} width={w} height={h} rx={rx} fill={fill} stroke={stroke} strokeWidth={1.3} />
-      <text
-        x={tx} y={sub ? y + 27 : y + h / 2 + 5.5} textAnchor={anchor}
-        fontSize={titleSize} fontWeight={700} fill={INK} fontFamily={titleFont}
-      >
-        {title}
-      </text>
-      {sub && (
-        <text x={tx} y={y + 47} textAnchor={anchor} fontSize={12} fill={MUTED} fontFamily="sans-serif">
-          {sub}
-        </text>
-      )}
-    </g>
-  );
-};
-
-/** Round decision node with up to two lines of label. */
-const Decision = ({ cx, cy, lines }: { cx: number; cy: number; lines: string[] }) => (
+const Node = ({
+  x, y, w = NW, h = NH, rx = 8, fill, label,
+}: { x: number; y: number; w?: number; h?: number; rx?: number; fill: string; label: string }) => (
   <g>
-    <circle cx={cx} cy={cy} r={R} fill={DEC_BG} stroke={DEC_LINE} strokeWidth={1.3} />
+    <rect x={x} y={y} width={w} height={h} rx={rx} fill={fill} />
+    <text
+      x={x + w / 2} y={y + h / 2 + 5} textAnchor="middle"
+      fontSize={13.5} fontWeight={600} fill="#fff" fontFamily="sans-serif"
+    >
+      {label}
+    </text>
+  </g>
+);
+
+const Diamond = ({
+  cx, cy, rx, ry, fill, lines,
+}: { cx: number; cy: number; rx: number; ry: number; fill: string; lines: string[] }) => (
+  <g>
+    <polygon
+      points={`${cx},${cy - ry} ${cx + rx},${cy} ${cx},${cy + ry} ${cx - rx},${cy}`}
+      fill={fill}
+    />
     {lines.map((l, i) => (
       <text
         key={l}
-        x={cx}
-        y={cy + 4 - (lines.length - 1) * 7 + i * 14}
-        textAnchor="middle"
-        fontSize={12}
-        fill={INK}
-        fontFamily="sans-serif"
+        x={cx} y={cy + 5 - (lines.length - 1) * 8 + i * 16}
+        textAnchor="middle" fontSize={13} fontWeight={600} fill="#fff" fontFamily="sans-serif"
       >
         {l}
       </text>
@@ -84,58 +59,56 @@ const Decision = ({ cx, cy, lines }: { cx: number; cy: number; lines: string[] }
   </g>
 );
 
-/** Small label that sits on a branch, like the reference flow charts. */
-const Chip = ({ x, y, text }: { x: number; y: number; text: string }) => {
-  const w = text.length * 6.4 + 16;
+const Wire = ({ d, c, tip }: { d: string; c: string; tip: number }) => (
+  <path
+    d={d}
+    fill="none"
+    stroke={c}
+    strokeWidth={1.9}
+    strokeLinecap="round"
+    markerEnd={`url(#fl-tip-${tip})`}
+  />
+);
+
+const Tag = ({
+  x, y, text, c, anchor = "start",
+}: { x: number; y: number; text: string; c: string; anchor?: "start" | "middle" | "end" }) => (
+  <text
+    x={x} y={y} textAnchor={anchor}
+    fontSize={11.5} fontWeight={600} fill={c} fontFamily="sans-serif"
+  >
+    {text}
+  </text>
+);
+
+/** Horizontal out, then vertical, with a rounded corner. */
+const hv = (x1: number, y1: number, x2: number, y2: number, r = 10) => {
+  const dx = x2 > x1 ? 1 : -1;
+  const dy = y2 > y1 ? 1 : -1;
+  return `M ${x1} ${y1} L ${x2 - r * dx} ${y1} Q ${x2} ${y1} ${x2} ${y1 + r * dy} L ${x2} ${y2}`;
+};
+
+/** Out sideways, along, then back in — the cross-lane and loop-back shape. */
+const hvh = (x1: number, y1: number, xm: number, y2: number, x2: number, r = 10) => {
+  const dx1 = xm > x1 ? 1 : -1;
+  const dy = y2 > y1 ? 1 : -1;
+  const dx2 = x2 > xm ? 1 : -1;
   return (
-    <g>
-      <rect x={x} y={y - 11} width={w} height={22} rx={4} fill={ACCENT_BG} />
-      <text x={x + 8} y={y + 4} fontSize={11.5} fill={ACCENT} fontFamily="sans-serif">
-        {text}
-      </text>
-    </g>
+    `M ${x1} ${y1} L ${xm - r * dx1} ${y1} Q ${xm} ${y1} ${xm} ${y1 + r * dy} ` +
+    `L ${xm} ${y2 - r * dy} Q ${xm} ${y2} ${xm + r * dx2} ${y2} L ${x2} ${y2}`
   );
 };
 
-const wire = {
-  stroke: WIRE,
-  strokeWidth: 1.4,
-  fill: "none",
-  markerEnd: "url(#ia-tip)",
-} as const;
-
-const Line = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => (
-  <path {...wire} d={`M ${x1} ${y1} L ${x2} ${y2}`} />
-);
-
-/* ── spine geometry, top to bottom ────────────────────────────────────── */
-const Y = {
-  landing: 34,
-  signup: 128,
-  pull: 222,
-  decReport: 362, // circle centre
-  onboarding: 448,
-  welcome: 542,
-  locked: 636,
-  paywall: 730,
-  decPaid: 870, // circle centre
-  unlocked: 956,
-  bus: 1046, // horizontal bus feeding the three routes
-  routes: 1082,
-};
-
-/** The three products the score can hand someone off to. */
-const ROUTES = [
-  { code: "DRP", name: "Debt Relief", chip: "already defaulted", fill: "#fdece5", line: "#ecc9bb", x: 56 },
-  { code: "DCP", name: "Consolidation", chip: "paying, stretched", fill: "#e6f0f6", line: "#c3d7e2", x: 336 },
-  { code: "DEP", name: "Elimination", chip: "wants to clear it", fill: "#f2fbdc", line: "#d3e5a8", x: 616 },
+const PRODUCTS = [
+  { y: 364, label: "DRP · Debt relief" },
+  { y: 434, label: "DCP · Consolidation" },
+  { y: 504, label: "DEP · Elimination" },
 ];
-const ROUTE_W = 250;
 
 /**
- * The information architecture as a user flow: one spine down the middle,
- * decision points where the product genuinely forks, and labelled branches
- * for the paths people actually take — including the ones that end early.
+ * The user flow as a swimlane diagram: one lane per stage, diamonds only where
+ * the product genuinely forks, and named endings for the people who stop early
+ * — no report found, and not paying, are both journeys somebody takes.
  */
 export default function IaDiagram({ className = "" }: { className?: string }) {
   return (
@@ -144,152 +117,126 @@ export default function IaDiagram({ className = "" }: { className?: string }) {
         viewBox={`0 0 ${VW} ${VH}`}
         className="h-auto w-full"
         role="img"
-        aria-label="Credit Insights user flow: landing, sign up and OTP, credit report pull, a decision on whether a report exists, onboarding, welcome, locked home, context led paywall, a decision on paying, unlocked home, then routing to DRP, DCP or DEP."
+        aria-label="Credit Insights user flow across four lanes: acquisition, onboarding, locked and paywall, then unlocked and routed to DRP, DCP or DEP."
       >
         <defs>
-          <marker
-            id="ia-tip" viewBox="0 0 10 10" refX="8.5" refY="5"
-            markerWidth="7" markerHeight="7" orient="auto-start-reverse"
-          >
-            <path d="M 0 1 L 9 5 L 0 9 z" fill={WIRE} />
-          </marker>
+          {LANES.map((l) => (
+            <marker
+              key={l.id} id={`fl-tip-${l.id}`} viewBox="0 0 10 10"
+              refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 1 L 9 5 L 0 9 z" fill={l.wire} />
+            </marker>
+          ))}
         </defs>
 
-        {/* ─── band labels, kept off the wires ─── */}
-        {[
-          ["ACQUISITION", SX, 18],
-          ["ON THE LOCKED HOME", 410, 620],
-          ["ROUTED BY THE REPORT", 768, 1042],
-        ].map(([t, x, y]) => (
-          <text
-            key={t as string}
-            x={x as number}
-            y={y as number}
-            fontSize={10.5}
-            letterSpacing={2}
-            fill={MUTED}
-            fontFamily="sans-serif"
-          >
-            {t}
-          </text>
+        {/* ─── lanes ─── */}
+        {LANES.map((l) => (
+          <g key={l.id}>
+            <rect x={l.x} y={8} width={LANE_W} height={52} rx={10} fill={l.head} />
+            <text
+              x={l.x + LANE_W / 2} y={40} textAnchor="middle"
+              fontSize={12.5} fontWeight={700} letterSpacing={1.4} fill={INK}
+              fontFamily="sans-serif"
+            >
+              {l.title}
+            </text>
+            <rect
+              x={l.x} y={BODY_Y} width={LANE_W} height={BODY_H} rx={14}
+              fill={l.body} stroke={l.head} strokeWidth={1.2}
+            />
+          </g>
         ))}
 
-        {/* ─── the spine ─── */}
-        <Box
-          x={SX} y={Y.landing} w={SW} h={PH} rx={PH / 2}
-          fill={CREAM} stroke={CREAM_LINE} title="Landing page" center
-        />
-        <Line x1={SC} y1={Y.landing + PH} x2={SC} y2={Y.signup} />
+        {/* ══════════ LANE 1 · ACQUISITION ══════════ */}
+        <Node x={C1 - 90} y={112} w={180} h={44} rx={22} fill={L1.node} label="Start" />
+        <Wire d={`M ${C1} 156 L ${C1} 190`} c={L1.wire} tip={1} />
 
-        <Box
-          x={SX} y={Y.signup} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
-          title="Sign up · OTP" sub="Name and mobile, as per PAN"
-        />
-        <Line x1={SC} y1={Y.signup + NH} x2={SC} y2={Y.pull} />
+        <Node x={C1 - NW / 2} y={190} fill={L1.node} label="Landing page" />
+        <Wire d={`M ${C1} 236 L ${C1} 268`} c={L1.wire} tip={1} />
 
-        <Box
-          x={SX} y={Y.pull} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
-          title="Pull credit report" sub="Consent, then bureau fetch"
-        />
-        <Line x1={SC} y1={Y.pull + NH} x2={SC} y2={Y.decReport - R} />
+        <Node x={C1 - NW / 2} y={268} fill={L1.node} label="Sign up · OTP" />
+        <Wire d={`M ${C1} 314 L ${C1} 346`} c={L1.wire} tip={1} />
 
-        <Decision cx={SC} cy={Y.decReport} lines={["Report", "found?"]} />
+        <Node x={C1 - NW / 2} y={346} fill={L1.node} label="Pull credit report" />
+        <Wire d={`M ${C1} 392 L ${C1} 426`} c={L1.wire} tip={1} />
 
-        {/* no-record branch */}
-        <Chip x={SC + R + 16} y={Y.decReport} text="no record" />
-        <Line x1={SC + R} y1={Y.decReport} x2={396} y2={Y.decReport} />
-        <Box
-          x={396} y={Y.decReport - NH / 2} w={230} h={NH} fill="#fff" stroke={CARD_LINE}
-          title="New to credit path" sub="Education, not a score"
-        />
-        <Line x1={626} y1={Y.decReport} x2={706} y2={Y.decReport} />
-        <Box
-          x={706} y={Y.decReport - PH / 2} w={276} h={PH} rx={PH / 2}
-          fill={END_BG} stroke={END_LINE} title="How to build a score" center titleSize={14}
-        />
+        <Diamond cx={C1} cy={478} rx={104} ry={52} fill={L1.node} lines={["Report", "found?"]} />
 
-        {/* yes branch continues down the spine */}
-        <Chip x={SC + 14} y={Y.decReport + R + 26} text="report found" />
-        <Line x1={SC} y1={Y.decReport + R} x2={SC} y2={Y.onboarding} />
+        {/* No → build-credit ending */}
+        <Wire d={hv(C1 - 104, 478, 46, 576)} c={L1.wire} tip={1} />
+        <Tag x={56} y={524} text="No" c={L1.wire} />
+        <Node x={22} y={576} w={186} fill={L1.node} label="New to credit path" />
+        <Wire d={`M 115 622 L 115 654`} c={L1.wire} tip={1} />
+        <Node x={22} y={654} w={230} h={44} rx={22} fill={L1.node} label="How to build a score" />
 
-        <Box
-          x={SX} y={Y.onboarding} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
-          title="Onboarding" sub="4 questions, one per screen"
-        />
-        <Line x1={SC} y1={Y.onboarding + NH} x2={SC} y2={Y.welcome} />
+        {/* Yes → lane 2 */}
+        <Wire d={hvh(C1 + 104, 478, 292, 135, L2.x + 53, 12)} c={L1.wire} tip={1} />
+        <Tag x={286} y={462} text="Yes" c={L1.wire} anchor="end" />
 
-        <Box
-          x={SX} y={Y.welcome} w={SW} h={NH} fill="#fff" stroke={CARD_LINE}
-          title="Welcome aboard" sub="Confirmation, then the reveal"
-        />
-        <Line x1={SC} y1={Y.welcome + NH} x2={SC} y2={Y.locked} />
+        {/* ══════════ LANE 2 · ONBOARDING ══════════ */}
+        <Node x={C2 - NW / 2} y={112} fill={L2.node} label="Ask 4 questions" />
+        <Wire d={`M ${C2} 158 L ${C2} 192`} c={L2.wire} tip={2} />
 
-        <Box
-          x={SX} y={Y.locked} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
-          title="Home — locked" sub="Score free, the reason is not"
-        />
-        {/* what is on the locked home */}
-        <Line x1={SX + SW} y1={Y.locked + NH / 2} x2={410} y2={Y.locked + NH / 2} />
-        <Box
-          x={410} y={Y.locked - 4} w={572} h={40} rx={8} fill="#fff" stroke={CARD_LINE}
-          title="Visible: score and band · savings estimate · one flagged account"
-          titleSize={12.5}
-        />
-        <Box
-          x={410} y={Y.locked + 44} w={572} h={40} rx={8} fill={CREAM} stroke={CREAM_LINE}
-          title="Locked: full report · 5 score factors · boost plan · goal tracker"
-          titleSize={12.5}
-        />
+        <Diamond cx={C2} cy={244} rx={104} ry={52} fill={L2.node} lines={["Missed any", "EMIs?"]} />
 
-        <Line x1={SC} y1={Y.locked + NH} x2={SC} y2={Y.paywall} />
+        <Wire d={hv(C2 - 104, 244, 400, 346)} c={L2.wire} tip={2} />
+        <Tag x={356} y={286} text="Yes" c={L2.wire} />
+        <Node x={334} y={346} w={132} h={44} fill={L2.node} label="Tag: at risk" />
 
-        <Box
-          x={SX} y={Y.paywall} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
-          title="Context-led paywall" sub="Priced against the saving it unlocks"
-        />
-        <Line x1={SC} y1={Y.paywall + NH} x2={SC} y2={Y.decPaid - R} />
+        <Wire d={hv(C2 + 104, 244, 550, 346)} c={L2.wire} tip={2} />
+        <Tag x={566} y={286} text="No" c={L2.wire} />
+        <Node x={484} y={346} w={132} h={44} fill={L2.node} label="Tag: healthy" />
 
-        <Decision cx={SC} cy={Y.decPaid} lines={["Paid?"]} />
+        <Wire d={hv(400, 390, C2, 436)} c={L2.wire} tip={2} />
+        <Wire d={hv(550, 390, C2, 436)} c={L2.wire} tip={2} />
+        <Node x={C2 - NW / 2} y={436} fill={L2.node} label="Welcome aboard" />
 
-        {/* not now */}
-        <Chip x={SC + R + 16} y={Y.decPaid} text="not now" />
-        <Line x1={SC + R} y1={Y.decPaid} x2={396} y2={Y.decPaid} />
-        <Box
-          x={396} y={Y.decPaid - PH / 2} w={230} h={PH} rx={PH / 2}
-          fill={END_BG} stroke={END_LINE} title="Free score, kept" center titleSize={14}
+        {/* → lane 3 */}
+        <Wire d={hvh(C2 + NW / 2, 459, 608, 135, L3.x + 53, 12)} c={L2.wire} tip={2} />
+
+        {/* ══════════ LANE 3 · LOCKED · PAYWALL ══════════ */}
+        <Node x={C3 - NW / 2} y={112} fill={L3.node} label="Home — locked" />
+        <Wire d={`M ${C3} 158 L ${C3} 190`} c={L3.wire} tip={3} />
+
+        <Node x={C3 - NW / 2} y={190} fill={L3.node} label="Context-led paywall" />
+        <Wire d={`M ${C3} 236 L ${C3} 270`} c={L3.wire} tip={3} />
+
+        <Diamond cx={C3} cy={322} rx={104} ry={52} fill={L3.node} lines={["Paid?"]} />
+
+        {/* No → keeps the free score, then loops back to the locked home */}
+        <Wire d={hv(C3 - 104, 322, 678, 424)} c={L3.wire} tip={3} />
+        <Tag x={694} y={362} text="No" c={L3.wire} />
+        {/* Endings are pills, so a stop reads differently from a step. */}
+        <Node x={660} y={424} w={196} h={44} rx={22} fill={L3.node} label="Free score, kept" />
+        <Wire d={hvh(660, 446, 650, 135, C3 - NW / 2, 12)} c={L3.wire} tip={3} />
+
+        {/* Yes → lane 4 */}
+        <Wire d={hvh(C3 + 104, 322, 924, 135, L4.x + 53, 12)} c={L3.wire} tip={3} />
+        <Tag x={918} y={306} text="Yes" c={L3.wire} anchor="end" />
+
+        {/* ══════════ LANE 4 · UNLOCKED · ROUTED ══════════ */}
+        <Node x={C4 - NW / 2} y={112} fill={L4.node} label="Home — unlocked" />
+        <Wire d={`M ${C4} 158 L ${C4} 194`} c={L4.wire} tip={4} />
+
+        <Diamond
+          cx={C4} cy={252} rx={104} ry={58} fill={L4.node}
+          lines={["What does the", "report say?"]}
         />
 
-        <Chip x={SC + 14} y={Y.decPaid + R + 26} text="paid" />
-        <Line x1={SC} y1={Y.decPaid + R} x2={SC} y2={Y.unlocked} />
-
-        <Box
-          x={SX} y={Y.unlocked} w={SW} h={NH} fill={ACCENT_BG} stroke={`${ACCENT}55`}
-          title="Home — unlocked" sub="Same skeleton, everything filled in"
-        />
-
-        {/* ─── routing fan: one bus, three drops ─── */}
+        {/* one trunk down the left of the lane, one stub per product */}
         <path
-          d={`M ${SC} ${Y.unlocked + NH} L ${SC} ${Y.bus} M ${ROUTES[0].x + ROUTE_W / 2} ${Y.bus} L ${
-            ROUTES[2].x + ROUTE_W / 2
-          } ${Y.bus}`}
-          stroke={WIRE}
-          strokeWidth={1.4}
-          fill="none"
+          d={hv(C4, 310, 1000, 387, 12)}
+          fill="none" stroke={L4.wire} strokeWidth={1.9} strokeLinecap="round"
         />
-        {ROUTES.map((r) => {
-          const cx = r.x + ROUTE_W / 2;
-          return (
-            <g key={r.code}>
-              <Line x1={cx} y1={Y.bus} x2={cx} y2={Y.routes} />
-              <Chip x={cx + 10} y={Y.bus + 18} text={r.chip} />
-              <Box
-                x={r.x} y={Y.routes} w={ROUTE_W} h={56} rx={10}
-                fill={r.fill} stroke={r.line} title={r.code} sub={r.name}
-                titleSize={17} titleFont="serif"
-              />
-            </g>
-          );
-        })}
+        <path d="M 1000 387 L 1000 527" fill="none" stroke={L4.wire} strokeWidth={1.9} />
+        {PRODUCTS.map((p) => (
+          <g key={p.label}>
+            <Wire d={`M 1000 ${p.y + 23} L 1022 ${p.y + 23}`} c={L4.wire} tip={4} />
+            <Node x={1022} y={p.y} w={220} fill={L4.node} label={p.label} />
+          </g>
+        ))}
       </svg>
     </div>
   );
