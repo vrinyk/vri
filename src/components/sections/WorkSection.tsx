@@ -38,10 +38,11 @@ const PROJECTS: Project[] = [
   },
   {
     year: "2025-FREED",
-    title: "Redesigning onboarding journey for FREED DRP Product",
+    title: "Credit Insights: turning a credit score into a way out of debt",
+    href: "/case-studies/credit-insights",
     stats: [
-      { value: "40%", label: "Increase in Activation" },
-      { value: "32%", label: "Increase in Activation" },
+      { value: "0 to 1", label: "New product, 6 months" },
+      { value: "3", label: "Products routed by score" },
     ],
   },
 ];

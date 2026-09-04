@@ -6,6 +6,7 @@ import SlideHero from "./slides/SlideHero";
 import SlideOverview from "./slides/SlideOverview";
 import SlideProblem from "./slides/SlideProblem";
 import SlideRole from "./slides/SlideRole";
+import SlideResearchApproach from "./slides/SlideResearchApproach";
 import SlideUserInsights from "./slides/SlideUserInsights";
 import SlideUserFeedbacks from "./slides/SlideUserFeedbacks";
 import SlideExperiment1 from "./slides/SlideExperiment1";
@@ -24,21 +25,22 @@ const slides = [
   { id: 2, component: SlideOverview, label: "Overview" },
   { id: 3, component: SlideProblem, label: "Problem" },
   { id: 4, component: SlideRole, label: "Role" },
-  { id: 5, component: SlideUserFeedbacks, label: "User Feedbacks" },
-  { id: 6, component: SlideUserInsights, label: "Insights" },
-  { id: 7, component: SlideExperiment1, label: "Landing Page" },
-  { id: 8, component: SlideExperiment2, label: "Sign up flow" },
-  { id: 9, component: SlideABTesting, label: "Pre Onboarding" },
-  { id: 10, component: SlideIterations, label: "Iterations" },
-  { id: 11, component: SlideHighFidelity, label: "High Fidelity" },
+  { id: 5, component: SlideResearchApproach, label: "Research" },
+  { id: 6, component: SlideUserFeedbacks, label: "User Feedbacks" },
+  { id: 7, component: SlideUserInsights, label: "Insights" },
+  { id: 8, component: SlideExperiment1, label: "Landing Page" },
+  { id: 9, component: SlideExperiment2, label: "Sign up flow" },
+  { id: 10, component: SlideABTesting, label: "Pre Onboarding" },
+  { id: 11, component: SlideIterations, label: "Iterations" },
+  { id: 12, component: SlideHighFidelity, label: "High Fidelity" },
   {
-    id: 12,
+    id: 13,
     component: SlideExperimentAccountSelection,
     label: "Account Selection",
   },
-  { id: 13, component: SlideShowcase, label: "Visual Craft" },
-  { id: 14, component: SlideRetentionConversion, label: "Growth Loops" },
-  { id: 15, component: SlideResults, label: "Results" },
+  { id: 14, component: SlideShowcase, label: "Visual Craft" },
+  { id: 15, component: SlideRetentionConversion, label: "Growth Loops" },
+  { id: 16, component: SlideResults, label: "Results" },
 ];
 
 const CaseStudySlider = () => {
