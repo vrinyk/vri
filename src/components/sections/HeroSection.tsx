@@ -9,7 +9,7 @@ import stickyNote from "../../assets/images/sticky-note.svg";
 import toolsBag from "../../assets/images/tools-bag.png";
 import vinylRecord from "../../assets/images/vinyl-record.png";
 import vrindaPhoto from "../../assets/images/vrinda-photo.png";
-import vrindaHoliPhoto from "../../assets/images/vrinda-holi-photo.jpeg";
+import vrindaHeadshot from "../../assets/images/vrinda-headshot.jpg";
 import speechBubble from "../../assets/images/speech-bubble.svg";
 import pinTop from "../../assets/images/pin-top.png";
 
@@ -41,10 +41,12 @@ export function HeroSection() {
         >
           {/* Polaroid window — actual photo */}
           <div className="absolute inset-[6%] overflow-hidden bg-[#C8CACB]">
+            {/* The window is close to square, the photo is 4:5, so the crop is
+                biased upward to keep her face off the bottom edge. */}
             <img
-              src={vrindaHoliPhoto}
+              src={vrindaHeadshot}
               alt="Vrinda Khandelwal"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-[50%_22%]"
             />
           </div>
         </motion.div>

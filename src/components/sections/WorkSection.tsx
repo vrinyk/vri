@@ -149,22 +149,14 @@ export function WorkSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.9 }}
-              className="space-y-2.5 font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(11px,1vw,16px)] md:max-w-[70%]"
+              className="font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(11px,1vw,16px)] md:max-w-[70%]"
             >
-              <span className="block">
-                I'm the only designer across three products at FREED. 300+
-                screens, 100+ user interviews and 20+ A/B tests so far.
-              </span>
-              <span className="block">
-                I own a problem end to end, from the first chat with the PM to
-                what happens after release. I don't bring one perfect mock. I
-                bring a few directions fast, so the team picks between options
-                instead of reacting to my one bet.
-              </span>
-              <span className="block">
-                Handoff isn't the end. Sitting with users after launch is my
-                favourite part. That's where the next version comes from.
-              </span>
+              I design end-to-end web and mobile products, from research to UI
+              execution across apps focused on finance, productivity, learning,
+              and everyday use cases. Every project starts with curiosity and
+              asking better questions. I shape ideas into tangible solutions
+              through design craft. The goal is always the same design that
+              drives change.
             </motion.p>
           </div>
 
