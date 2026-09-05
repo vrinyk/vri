@@ -127,7 +127,7 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
           >
-            I take complicated things and make them feel obvious — turning
+            I take complicated things and make them feel obvious, turning
             messy, overwhelming problems into experiences people simply get.
             I believe ideas matter more than opinions, and prototypes are the
             fastest way to discover what truly works.

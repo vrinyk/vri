@@ -113,7 +113,7 @@ export function HeroSection() {
         >
           I'm a Product Designer who asks “why?” a little too much. Why does
           this exist? Why is this confusing? Why are people dropping off here?
-          I like the messy part of product problems — and turning that
+          I like the messy part of product problems, and turning that
           complexity into something that feels obvious.
         </motion.p>
       </div>
