@@ -1,4 +1,4 @@
-import PhoneWall from "../PhoneWall";
+import PhoneCarousel from "../PhoneCarousel";
 import type { Screen } from "../PhoneWall";
 import programPage from "@/assets/case-study-freed/experiment-account-selection/program-page.svg";
 import accountsToSettle from "@/assets/case-study-freed/experiment-account-selection/accounts-to-settle.svg";
@@ -14,7 +14,7 @@ const PAPER = "#fbfaf7";
 const GREEN = "#294b3a";
 const GREEN_BG = "#dce8e1";
 
-/** First three render as phones; the rest as thumbnails. */
+/** One phone, stepped through in flow order. */
 const SCREENS: Screen[] = [
   { src: programPage, label: "Programme explained step by step", tall: true },
   { src: accountsToSettle, label: "Pick the first account to settle" },
@@ -140,13 +140,7 @@ const SlideExperimentAccountSelection = () => {
             className="rounded-2xl px-5 py-6 lg:px-6"
             style={{ background: PAPER, border: `1px solid ${LINE}` }}
           >
-            <PhoneWall screens={SCREENS} featured={3} width={168} />
-            <p
-              className="mt-5 text-center font-sans text-[11.5px]"
-              style={{ color: MUTED }}
-            >
-              Tap any screen to open it full size
-            </p>
+            <PhoneCarousel screens={SCREENS} width={262} />
           </div>
         </div>
       </div>
