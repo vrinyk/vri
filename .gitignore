@@ -32,3 +32,6 @@ temp/
 
 # Design source files (Figma exports, zips)
 design-source/*.zip
+
+# A separate repo that lives in this folder — not part of the site
+freed-copilot/
