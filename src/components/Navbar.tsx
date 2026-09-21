@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 
-const SECTIONS = ["Work", "About Me", "Art Corner", "Connect"] as const;
+const SECTIONS = ["Work", "About Me", "Archive", "Connect"] as const;
 export type SectionName = (typeof SECTIONS)[number] | "Home" | "Blank";
 
 interface NavbarProps {

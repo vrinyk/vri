@@ -12,7 +12,7 @@ import { useIsMobile } from "../hooks/useIsMobile";
 import { HeroSection, HeroDecorations } from "./sections/HeroSection";
 import { WorkSection } from "./sections/WorkSection";
 import { AboutSection } from "./sections/AboutSection";
-import { ArtCornerSection } from "./sections/ArtCornerSection";
+import { ArchiveSection } from "./sections/ArchiveSection";
 import { ConnectSection } from "./sections/ConnectSection";
 import { EmptySection } from "./sections/EmptySection";
 import type { ReactNode } from "react";
@@ -21,7 +21,7 @@ const SECTION_ORDER: SectionName[] = [
   "Home",
   "Work",
   "About Me",
-  "Art Corner",
+  "Archive",
   "Connect",
   "Blank",
 ];
@@ -44,7 +44,7 @@ const SECTIONS: SectionData[] = [
   },
   { name: "Work", content: <WorkSection />, isFullscreen: true },
   { name: "About Me", content: <AboutSection /> },
-  { name: "Art Corner", content: <ArtCornerSection />, isFullscreen: true },
+  { name: "Archive", content: <ArchiveSection />, isFullscreen: true },
   { name: "Connect", content: <ConnectSection /> },
   { name: "Blank", content: <EmptySection /> },
 ];
