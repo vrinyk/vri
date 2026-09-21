@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowUpRight, Image as ImageIcon } from "lucide-react";
+import namdaphaSite from "../../assets/images/namdapha-site.jpg";
 
 /** Live site the Arunachal Pradesh card opens. */
 const NAMDAPHA_URL = "https://namdapha-axuo.vercel.app/";
@@ -87,12 +88,13 @@ export function ArchiveSection() {
 function SideProjectCard() {
   const body = (
     <>
-      {/* Image placeholder — swap for a screenshot of the site */}
-      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 border-b border-dashed border-white/25 bg-white/[0.07] md:aspect-auto md:h-full md:w-[46%] md:shrink-0 md:border-b-0 md:border-r">
-        <ImageIcon className="h-6 w-6 text-white/40" aria-hidden="true" />
-        <span className="font-dm-sans text-[10.5px] uppercase tracking-[0.16em] text-white/45">
-          Site preview
-        </span>
+      <div className="aspect-[16/10] w-full overflow-hidden border-b border-white/15 bg-white/[0.07] md:aspect-auto md:h-full md:w-[46%] md:shrink-0 md:border-b-0 md:border-r">
+        <img
+          src={namdaphaSite}
+          alt="The Namdapha Tiger Reserve home page"
+          loading="lazy"
+          className="h-full w-full object-cover object-top"
+        />
       </div>
 
       <div className="flex min-w-0 flex-col justify-center p-5 md:p-[4%]">
