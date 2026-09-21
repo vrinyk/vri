@@ -10,7 +10,6 @@ import agreementAutosave from "@/assets/case-study-freed/experiment-account-sele
 const INK = "#1f232d";
 const MUTED = "#6b6f7a";
 const LINE = "#e6e0d5";
-const PAPER = "#fbfaf7";
 const GREEN = "#294b3a";
 const GREEN_BG = "#dce8e1";
 
@@ -164,11 +163,8 @@ const SlideExperimentAccountSelection = () => {
             </div>
           </div>
 
-          {/* ─── Right: the designs ─── */}
-          <div
-            className="rounded-2xl px-5 py-6 lg:px-6"
-            style={{ background: PAPER, border: `1px solid ${LINE}` }}
-          >
+          {/* ─── Right: the designs, unframed so the phone sits on the page ─── */}
+          <div className="lg:pl-2">
             <PhoneCarousel screens={SCREENS} width={262} />
           </div>
         </div>
