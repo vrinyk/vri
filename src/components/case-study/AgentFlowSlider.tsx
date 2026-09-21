@@ -1,7 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import ImagePlaceholder from "./ImagePlaceholder";
 import Shot from "./Shot";
 import imgQualification from "@/assets/case-study-agent-flow/qualification.png";
 import imgCreditors from "@/assets/case-study-agent-flow/creditors.png";
@@ -9,7 +8,7 @@ import imgSummaryFoir from "@/assets/case-study-agent-flow/summary_foir.png";
 import imgPreferredLenders from "@/assets/case-study-agent-flow/preferred_lenders.png";
 import imgPreLogin from "@/assets/case-study-agent-flow/pre_login.png";
 import imgDocuments from "@/assets/case-study-agent-flow/documents_tab1.png";
-import imgScrubFlow from "@/assets/case-study-agent-flow/scrub_flow.png";
+import imgFileHeader from "@/assets/case-study-agent-flow/scrub_flow.png";
 import imgRequestInfo from "@/assets/case-study-agent-flow/request_information.png";
 import imgRequestDetails from "@/assets/case-study-agent-flow/request_details.png";
 
@@ -33,6 +32,73 @@ const sections = [
   "Solution Deep Dive",
   "Request Information",
   "Impact",
+];
+
+/** Each section: why it changed, what we did, and the call I made. */
+const DEEP_DIVE = [
+  {
+    tag: "Qualification",
+    title: "Qualification Details",
+    why: "Qualifying questions were scattered across sections. Advisors jumped around while the client was on the call.",
+    what: "Net salary, city, housing, employer, bounces and CIBIL grouped at the top of tab 1, in the order advisors ask them.",
+    note: "No wizard. The whole card stays open, because clients jump ahead.",
+    img: imgQualification,
+    label: "Qualification Details",
+  },
+  {
+    tag: "Creditors",
+    title: "Creditor Overview",
+    why: "Advisors cross-referenced Experian data with Excel sheets to decide which creditors to include.",
+    what: "Included and Excluded lists auto-populate from Experian. Toggling a creditor recalculates totals instantly.",
+    note: "The default is a starting point, not a lock. Every field stays editable.",
+    img: imgCreditors,
+    label: "Included and excluded creditors, with live totals",
+  },
+  {
+    tag: "Summary & FOIR",
+    title: "Summary & FOIR Calculator",
+    why: "FOIR was calculated manually in Excel, causing errors and slow pitching on the call.",
+    what: "Automated 'Without FREED vs With FREED' — FOIR, new EMI, reduction %, savings, in real time.",
+    note: "A comparison, not a result. The old number stays next to the new one.",
+    img: imgSummaryFoir,
+    label: "Without FREED vs With FREED",
+  },
+  {
+    tag: "Preferred Lenders",
+    title: "Preferred Lenders",
+    why: "Lender fitment lived in spreadsheets, so recommendations were slow and inconsistent.",
+    what: "Every lender in one table — tenure, rate, EMI, reduction, top-up — with the best option auto-tagged.",
+    note: "Mismatched lenders are tagged, not hidden. Advisors have to explain a no, and TLs review the same list later.",
+    img: imgPreferredLenders,
+    label: "Preferred Lenders, with policy mismatches visible",
+  },
+  {
+    tag: "Pre Login",
+    title: "Pre Login Details",
+    why: "Qualification and login fields sat in one long form, cluttering the call.",
+    what: "Moved to tab 2 — PAN, Aadhaar, DOB, addresses, employment, references — prefilled from tab 1.",
+    note: "Tab 1 is a conversation, tab 2 is data entry. Different jobs, different screens.",
+    img: imgPreLogin,
+    label: "Pre Login Details",
+  },
+  {
+    tag: "Documents",
+    title: "Document Manager",
+    why: "Files were downloaded, renamed and re-uploaded just to record type and date range.",
+    what: "Type, name, date range, comments and a 'Used for Login' toggle, editable in place.",
+    note: "Naming conventions are a workaround for missing fields.",
+    img: imgDocuments,
+    label: "Document Manager",
+  },
+  {
+    tag: "Scrub Flow",
+    title: "Scrub Workflow & Task Tracking",
+    why: "Scrub approvals happened over Excel and email. TLs and ops had no live view of file status.",
+    what: "Advisors request scrub in-app, tasks auto-assign to the TL, and each outcome — approved, rejected, rep pending — notifies the functions it affects.",
+    note: "Edit access freezes while a file is under review. One owner at a time is what makes the status believable.",
+    img: imgFileHeader,
+    label: "File header and Sales Rep Actions",
+  },
 ];
 
 const AgentFlowSlider = () => {
@@ -206,7 +272,7 @@ const AgentFlowSlider = () => {
               <motion.div variants={fadeUp} className="mb-8">
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">Visual Considerations</p>
                 <p className="font-body text-muted-foreground text-[1.125rem] leading-[1.7] mb-4">
-                  We explored several layout options: accordion, multi-tab, and single-scroll. The final decision was to use a <span className="text-accent">sequential single-scroll layout within each tab</span>, placing qualification info and Experian score at the top, with modular sections below. This approach minimised tab-switching while keeping interactions focused and purposeful.
+                  We explored accordion, multi-tab and single-scroll. Accordion hid the next question — advisors read ahead while the client talks. The final decision was a <span className="text-accent">sequential single-scroll layout within each tab</span>, qualification info and Experian score at the top, modular sections below.
                 </p>
               </motion.div>
 
@@ -216,10 +282,11 @@ const AgentFlowSlider = () => {
                   <p>– Consolidated multiple scattered tabs into 2 purpose-driven tabs</p>
                   <p>– Arranged fields in sequential scroll order matching the natural call flow</p>
                   <p>– Kept the most critical info (qualification, Experian score) visible at the top</p>
+                  <p>– Moved the employer, serviceability and lender policy sheets into a right rail</p>
                 </div>
               </motion.div>
               <motion.div variants={fadeUp}>
-                <ImagePlaceholder label="Add layout research visuals" className="w-full max-w-3xl" aspectRatio="16/9" />
+                <Shot src={imgQualification} label="2 tabs, sections in call order, lists in the right rail" className="w-full max-w-3xl" />
               </motion.div>
             </motion.div>
           </div>
@@ -252,7 +319,7 @@ const AgentFlowSlider = () => {
                 </div>
               </motion.div>
               {/* Impact Card */}
-              <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-xl">
+              <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-xl mb-10">
                 <p className="font-body text-sm text-accent font-semibold mb-4">Impact</p>
                 <div className="flex items-center gap-16">
                   <div>
@@ -264,6 +331,9 @@ const AgentFlowSlider = () => {
                     <p className="font-body text-sm text-muted-foreground mt-1">no external Excel needed</p>
                   </div>
                 </div>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <Shot src={imgFileHeader} label="Total outstanding and Experian score, pinned to the file header" className="w-full max-w-3xl" />
               </motion.div>
             </motion.div>
           </div>
@@ -277,11 +347,17 @@ const AgentFlowSlider = () => {
               <motion.h2 variants={fadeUp} className="font-heading text-3xl md:text-[2.75rem] leading-[1.1] tracking-tight mb-8">
                 Agents lost 1 hour every day finding and filling required fields
               </motion.h2>
-              <motion.p variants={fadeUp} className="font-body text-[1.125rem] text-muted-foreground leading-[1.7] max-w-3xl mb-10">
+              <motion.p variants={fadeUp} className="font-body text-[1.125rem] text-muted-foreground leading-[1.7] max-w-3xl mb-8">
                 While observing screen recordings, I noticed agents spend <span className="font-semibold text-foreground">2 to 3 minutes</span> hunting for the required fields after qualification. The form was long, fields were scattered across sections, and agents had to manually cross-reference data from Experian reports. I proposed to restructure the flow so qualification fields come first, creditor data auto-populates from the report, and summary calculations happen in real-time within Spine.
               </motion.p>
-              <motion.div variants={fadeUp}>
-                <ImagePlaceholder label="Add field hunting / screen recording visuals" className="w-full max-w-3xl" aspectRatio="16/9" />
+
+              <motion.div variants={fadeUp} className="mb-8">
+                <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">What I timed</p>
+                <div className="space-y-2 font-body text-muted-foreground text-[1.125rem] leading-[1.7]">
+                  <p>– <span className="font-semibold text-foreground">40 min</span> per qualified file, including the 20-minute call</p>
+                  <p>– <span className="font-semibold text-foreground">20 min</span> more for the TL to re-check it</p>
+                  <p>– <span className="font-semibold text-foreground">8 tabs and sheets</span> open for one conversation</p>
+                </div>
               </motion.div>
             </motion.div>
           </div>
@@ -306,8 +382,8 @@ const AgentFlowSlider = () => {
                 ))}
               </motion.div>
               <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImagePlaceholder label="Before: Old Spine Layout" aspectRatio="16/10" />
-                <Shot src={imgQualification} label="After: Redesigned Tab Structure" />
+                <Shot src={imgQualification} label="Tab 1: Qualification Details" />
+                <Shot src={imgPreLogin} label="Tab 2: Pre Login Details" />
               </motion.div>
             </motion.div>
           </div>
@@ -322,94 +398,38 @@ const AgentFlowSlider = () => {
                 One flow, <em className="italic">seven fixes</em>
               </motion.h2>
               <motion.p variants={fadeUp} className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mb-14">
-                Every section below solved a specific advisor pain — from scattered qualification fields to Excel-based scrub tracking. Together they became the new 2-tab Spine flow.
+Seven sections, each one an advisor pain. Why it changed, what we did, and the call I made.
               </motion.p>
 
-              {[
-                {
-                  tag: "Qualification",
-                  title: "Qualification Details",
-                  problem: "Qualifying questions were scattered across sections. Advisors had to jump around while the client was still on the call.",
-                  solution: "Grouped net salary, city, housing, employer, bounces and CIBIL at the top of tab 1 in the exact order advisors ask on the call.",
-                  label: "Qualification Details",
-                  afterImg: imgQualification,
-                },
-                {
-                  tag: "Creditors",
-                  title: "Creditor Overview",
-                  problem: "Advisors cross-referenced Experian data with separate Excel sheets to decide which creditors to include.",
-                  solution: "Included / Excluded lists auto-populate from Experian. Toggling a creditor instantly recalculates totals inside Spine.",
-                  label: "Creditor Overview",
-                  afterImg: imgCreditors,
-                },
-                {
-                  tag: "Summary & FOIR",
-                  title: "Summary & FOIR Calculator",
-                  problem: "FOIR was calculated manually in Excel, causing errors and slow pitching on the call.",
-                  solution: "Automated 'Without FREED vs With FREED' comparison shows FOIR, new EMI, reduction % and monthly savings in real time.",
-                  label: "Summary with FOIR",
-                  afterImg: imgSummaryFoir,
-                },
-                {
-                  tag: "Preferred Lenders",
-                  title: "Preferred Lenders",
-                  problem: "Lender fitment lived in spreadsheets. Recommending the right lender was slow and inconsistent.",
-                  solution: "All preferred lenders shown with tenure, rate, EMI, reduction, top-up. Best option auto-tagged based on the client profile.",
-                  label: "Preferred Lenders",
-                  afterImg: imgPreferredLenders,
-                },
-                {
-                  tag: "Pre Login",
-                  title: "Pre Login Details",
-                  problem: "Qualification and login fields were mixed into one long form, cluttering the call flow.",
-                  solution: "Separated into tab 2 — PAN, Aadhaar, DOB, addresses, employment, family — used only after the client is qualified.",
-                  label: "Pre Login Details",
-                  afterImg: imgPreLogin,
-                },
-                {
-                  tag: "Documents",
-                  title: "Document Manager",
-                  problem: "Files were renamed and re-uploaded manually. No structure for type, period, or login usage.",
-                  solution: "Type tagging, date ranges, comments and a 'Used for Login' toggle in a single organised view.",
-                  label: "Document Manager",
-                  afterImg: imgDocuments,
-                },
-                {
-                  tag: "Scrub Flow",
-                  title: "Scrub Workflow & Task Tracking",
-                  problem: "Scrub approvals happened over Excel and email. TLs and ops had no live view of file status.",
-                  solution: "Advisors request scrub checks in-app, tasks auto-assign to TLs, and status changes notify advisor, TL, ops and credit officer.",
-                  label: "In-app Scrub Flow",
-                  afterImg: imgScrubFlow,
-                },
-              ].map((item, i) => (
+              {DEEP_DIVE.map((item, i) => (
                 <motion.div key={item.title} variants={fadeUp} className="mb-14 pb-14 border-b border-border/50 last:border-0 last:pb-0 last:mb-0">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="font-heading text-2xl text-accent">0{i + 1}</span>
                     <span className="px-3 py-1 rounded-full border border-border text-[12px] font-body text-muted-foreground">{item.tag}</span>
                   </div>
                   <h3 className="font-heading text-2xl md:text-3xl mb-5">{item.title}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 mb-5">
                     <div>
-                      <p className="font-body text-[12px] tracking-widest uppercase text-muted-foreground mb-2">Problem</p>
-                      <p className="font-body text-[15px] text-muted-foreground leading-relaxed">{item.problem}</p>
+                      <p className="font-body text-[12px] tracking-widest uppercase text-muted-foreground mb-2">Why we changed it</p>
+                      <p className="font-body text-[15px] text-muted-foreground leading-relaxed">{item.why}</p>
                     </div>
                     <div>
-                      <p className="font-body text-[12px] tracking-widest uppercase text-accent mb-2">Solution</p>
-                      <p className="font-body text-[15px] text-foreground leading-relaxed">{item.solution}</p>
+                      <p className="font-body text-[12px] tracking-widest uppercase text-accent mb-2">What we did</p>
+                      <p className="font-body text-[15px] text-foreground leading-relaxed">{item.what}</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <ImagePlaceholder label={`Before: ${item.label}`} aspectRatio="16/10" />
-                    <Shot src={item.afterImg} label={`After: ${item.label}`} />
+                  <div className="rounded-xl bg-secondary/60 px-6 py-4 mb-6 max-w-3xl">
+                    <p className="font-body text-[12px] tracking-widest uppercase text-muted-foreground mb-1.5">The call I made</p>
+                    <p className="font-body text-[15px] text-foreground leading-relaxed">{item.note}</p>
                   </div>
+                  <Shot src={item.img} label={item.label} className="w-full" />
                 </motion.div>
               ))}
             </motion.div>
           </div>
         </section>
 
-        {/* SLIDE 15: Request Information */}
+        {/* SLIDE 9: Request Information */}
         <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -437,6 +457,13 @@ const AgentFlowSlider = () => {
                 </div>
               </motion.div>
 
+              <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-2xl mb-8">
+                <p className="font-body text-sm text-accent font-semibold mb-3">The detail I'm proudest of</p>
+                <p className="font-body text-[1.05rem] text-foreground leading-[1.7]">
+                  Spine pre-selects the empty fields. The advisor edits that list down instead of building it up from memory — deleting is faster than remembering.
+                </p>
+              </motion.div>
+
               <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-xl mb-10">
                 <p className="font-body text-sm text-accent font-semibold mb-4">Impact</p>
                 <div className="flex items-center gap-16">
@@ -453,13 +480,13 @@ const AgentFlowSlider = () => {
 
               <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Shot src={imgRequestDetails} label="Request Details panel" />
-                <Shot src={imgRequestInfo} label="Request Information dialog" />
+                <Shot src={imgRequestInfo} label="Request Information in the right rail" />
               </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* SLIDE 16: Impact */}
+        {/* SLIDE 10: Impact */}
         <section className="min-w-[100vw] flex-shrink-0 snap-start overflow-y-auto px-5 md:px-16 lg:px-24 pt-6 md:pt-12 pb-10 md:pb-16 flex flex-col justify-start">
           <div className="max-w-4xl mx-auto w-full">
             <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -473,10 +500,11 @@ const AgentFlowSlider = () => {
                   <ul className="font-body text-muted-foreground space-y-3 text-[15px] leading-relaxed">
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Listened to loan advisor calls to map the real qualification workflow</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Collaborated closely with the PM to define requirements, edge cases, and system flows</li>
+                    <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Turned each rule into something visible — a default, a tag, a locked field, a notification</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Designed the new 2-tab Spine architecture aligned to the call flow</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Created high-fidelity prototypes for loan advisors, TLs, and ops personas</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Built the design prototype in Lovable for stakeholder validation</li>
-                    <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Worked closely with 1 PM to prioritise features and manage scope</li>
+                    <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Stayed on through handoff, build reviews and design QA</li>
                   </ul>
                 </div>
                 <div>
