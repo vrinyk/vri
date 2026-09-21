@@ -32,7 +32,7 @@ const PROJECTS: Project[] = [
   {
     year: "2025 · FREED",
     title: "Decluttering the Agent Flow for Spine, the internal CRM",
-    tags: ["Web App", "B2B", "Internal Tool"],
+    tags: ["SaaS", "B2B", "Internal Tool"],
     blurb:
       "How loan advisors went from 6 scattered tabs and 8 open sheets to 2 tabs built around the call.",
     image: agentFlowCardPreview,
@@ -195,9 +195,19 @@ export function WorkSection() {
               transition={{ duration: 0.5, delay: 0.9 }}
               className="font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)]"
             >
-              End-to-end web and mobile products, from research to UI. Fintech,
-              productivity and learning, mostly. Every project starts with a
-              better question.
+              End-to-end web apps, mobile apps and SaaS products, from research
+              to UI. Mostly fintech, where a confusing screen costs someone real
+              money, so clarity is the whole job.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.97 }}
+              className="mt-2 font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)]"
+            >
+              I listen before I draw, sit with the engineers through build, and
+              read the funnel after launch to find out whether it actually
+              worked. Every project starts with a better question.
             </motion.p>
           </div>
 
