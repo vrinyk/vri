@@ -120,47 +120,71 @@ export function AboutSection() {
         </motion.svg>
 
         {/* ─── Right: Bio text ─── */}
-        <div className="relative mt-6 w-full md:absolute md:right-[5%] md:top-[36%] md:mt-0 md:w-[48%]">
+        <div className="relative mt-6 w-full md:absolute md:right-[5%] md:top-[31%] md:mt-0 md:w-[48%]">
           <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="font-dm-sans text-[12px] uppercase tracking-[0.2em] text-white/50 mb-3 md:text-[clamp(9px,0.8vw,12px)]"
+          >
+            How it started
+          </motion.p>
+
+          <motion.h3
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
+            className="font-oswald text-[22px] font-semibold uppercase leading-tight text-white mb-3.5 md:mb-[4%] md:text-[clamp(18px,2.1vw,34px)]"
+          >
+            Economics first,<br />design for good
+          </motion.h3>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
             className="font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
           >
-            I take complicated things and make them feel obvious, turning
-            messy, overwhelming problems into experiences people simply get.
-            I believe ideas matter more than opinions, and prototypes are the
-            fastest way to discover what truly works.
+            Three years of economics taught me to look for the incentive
+            behind the behaviour. Design let me do something about it.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.65 }}
+            transition={{ duration: 0.5, delay: 0.72 }}
             className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
           >
-            Curious by nature, I design with empathy, iterate quickly, and
-            enjoy simplifying products that need to feel effortless and
-            trustworthy.
+            Today I'm the sole product designer at FREED, India's first
+            digital debt relief platform — three products, five PMs, and users
+            across Tier 2 and Tier 3 India.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.84 }}
             className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
           >
-            From economics to design, I found my calling in colour, motion,
-            and thoughtful systems. Outside work, I'm usually creating
-            something new or escaping to the mountains, where fresh air and
-            good sunsets do the best thinking.
+            I talk to users first and draw second. 100+ interviews, 300+
+            screens, 20+ experiments.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.95 }}
-            className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90 italic"
+            transition={{ duration: 0.5, delay: 0.94 }}
+            className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
+          >
+            Off the clock: making something with my hands, or the mountains,
+            where the good thinking happens.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.04 }}
+            className="mt-3 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90 italic"
           >
             Let's make something complicated look easy.
           </motion.p>
