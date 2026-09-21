@@ -24,27 +24,32 @@ const SCREENS: Screen[] = [
   { src: agreementAutosave, label: "Agreement and AutoPay" },
 ];
 
-/** The design process, in the order it actually happened. */
-const PROCESS = [
+/** What the old screen did, what it does now, and why it moved. */
+const CHANGES = [
   {
     n: "01",
-    title: "Listened before drawing",
-    body: "Sat with the sales floor through 100+ recorded pitches, logging the order reps explained things in and the sentence that turned a hesitant user into a yes.",
+    title: "One account first, not the whole plan",
+    before:
+      "The programme opened with every loan, every date and every number at once.",
+    why: "Reps closed by talking through one loan. A full plan on first read lands as a demand, not an offer — so the screen now leads with a single account and folds the rest behind “3 more loans to settle”.",
   },
   {
     n: "02",
-    title: "Found where it broke",
-    body: "Event data put the bleed on the programme screen, not the form. High time on screen, low progression. A comprehension problem, not a friction one.",
+    title: "The user chooses which lender goes first",
+    before: "The order was fixed by the system. Users either accepted all of it or left.",
+    why: "The debt people feel is the one whose recovery agent is calling. Change account lets them settle that lender first, which turns the system's plan into their plan.",
   },
   {
     n: "03",
-    title: "Borrowed the pitch",
-    body: "Reps opened with one loan. The product asked users to accept everything at once. So the screen was rebuilt around a single first choice.",
+    title: "The programme explains itself on the screen",
+    before: "Understanding how settlement worked needed a human on the phone.",
+    why: "Event data put the drop on the programme screen, not the form — high time on screen, low progression. So the pitch became part of the page: save month by month, FREED negotiates, the account settles.",
   },
   {
     n: "04",
-    title: "Shipped and measured",
-    body: "Prototype, dev handoff, QA, event tracking, phased release, then read the funnel back.",
+    title: "A payment summary you can read in one breath",
+    before: "Fees, GST and creditor payouts were spread across the flow.",
+    why: "The last question before committing is always “what do I actually pay?”. One modal answers it — total loan, payment to creditors, settlement fees, total paid, and what they save.",
   },
 ];
 
@@ -76,7 +81,9 @@ const SlideExperimentAccountSelection = () => {
               style={{ color: MUTED }}
             >
               Users understood debt settlement when a human explained it and gave
-              up when a screen did. So I stopped designing and went to listen.
+              up when a screen did. So I sat with 100+ recorded pitches, read the
+              funnel back, and rebuilt the programme screen around the one thing
+              reps always did first: talk about a single loan.
             </p>
 
             {/* Result strip */}
@@ -106,29 +113,51 @@ const SlideExperimentAccountSelection = () => {
               </span>
             </div>
 
-            {/* Process — the how */}
+            {/* What changed, and why */}
+            <p
+              className="font-sans text-[10.5px] tracking-[0.2em] uppercase mb-4"
+              style={{ color: GREEN, opacity: 0.8 }}
+            >
+              What I changed, and why
+            </p>
+
             <div className="grid sm:grid-cols-2 gap-x-7 gap-y-5">
-              {PROCESS.map((p) => (
-                <div key={p.n}>
+              {CHANGES.map((c) => (
+                <div key={c.n}>
                   <div className="flex items-baseline gap-2 mb-1.5">
                     <span
                       className="font-serif text-[15px]"
                       style={{ color: GREEN, opacity: 0.6 }}
                     >
-                      {p.n}
+                      {c.n}
                     </span>
                     <h3
                       className="font-sans text-[14.5px] font-bold"
                       style={{ color: INK }}
                     >
-                      {p.title}
+                      {c.title}
                     </h3>
                   </div>
+
+                  {/* the old screen, kept in view so the change is legible */}
+                  <p
+                    className="font-sans text-[12.4px] leading-[1.5] mb-1.5 pl-2.5"
+                    style={{ color: MUTED, borderLeft: `2px solid ${LINE}` }}
+                  >
+                    <span
+                      className="tracking-[0.14em] uppercase text-[9.5px] mr-1.5"
+                      style={{ opacity: 0.75 }}
+                    >
+                      Before
+                    </span>
+                    {c.before}
+                  </p>
+
                   <p
                     className="font-sans text-[13.2px] leading-[1.55]"
                     style={{ color: MUTED }}
                   >
-                    {p.body}
+                    {c.why}
                   </p>
                 </div>
               ))}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import type { Screen } from "./PhoneWall";
 
@@ -27,6 +27,8 @@ export default function PhoneCarousel({
 }: PhoneCarouselProps) {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const panes = useRef<(HTMLDivElement | null)[]>([]);
   const n = screens.length;
 
   // Frame width is capped by the viewport so the arrows never get pushed off
@@ -38,6 +40,32 @@ export default function PhoneCarousel({
     (d: number) => setI((v) => (v + d + n) % n),
     [n]
   );
+
+  // A page taller than the frame travels top to bottom on its own, so the
+  // whole screen is seen without touching it. Distance depends on the image's
+  // real height, so this runs in JS rather than CSS keyframes.
+  useEffect(() => {
+    const el = panes.current[i];
+    if (!el || !screens[i]?.tall || paused || zoom) return;
+    let raf = 0;
+    let dir = 1;
+    let last = performance.now();
+    const SPEED = 26;
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      const max = el.scrollHeight - el.clientHeight;
+      if (max > 0) {
+        let next = el.scrollTop + dir * SPEED * dt;
+        if (next >= max) { next = max; dir = -1; }
+        else if (next <= 0) { next = 0; dir = 1; }
+        el.scrollTop = next;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [i, screens, paused, zoom]);
 
   useEffect(() => {
     if (!zoom) return;
@@ -73,9 +101,13 @@ export default function PhoneCarousel({
                 transform: `translateX(-${(i * 100) / n}%)`,
               }}
             >
-              {screens.map((s) => (
+              {screens.map((s, idx) => (
                 <div
                   key={s.label}
+                  ref={(el) => { panes.current[idx] = el; }}
+                  onMouseEnter={() => setPaused(true)}
+                  onMouseLeave={() => setPaused(false)}
+                  onTouchStart={() => setPaused(true)}
                   className="h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                   style={{ width: `${100 / n}%` }}
                 >
