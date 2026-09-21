@@ -139,52 +139,44 @@ export function AboutSection() {
             Economics first,<br />design for good
           </motion.h3>
 
+          {/* Two paragraphs in the reference's shape: where the making started,
+              then how it turned into product design. */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
+            className="font-dm-sans text-[14px] leading-[1.55] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.5] text-white/80"
           >
-            Three years of economics taught me to look for the incentive
-            behind the behaviour. Design let me do something about it.
+            I grew up watching shows like <em className="italic">M.A.D</em> and{" "}
+            <em className="italic">Art Attack</em>, which first sparked my love
+            for making things, whether a birthday card or a cardboard castle.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.72 }}
-            className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
+            transition={{ duration: 0.5, delay: 0.75 }}
+            className="mt-3 font-dm-sans text-[14px] leading-[1.55] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.5] text-white/80"
           >
-            Today I'm the sole product designer at FREED, India's first
-            digital debt relief platform — three products, five PMs, and users
-            across Tier 2 and Tier 3 India.
+            With a background in{" "}
+            <span className="font-medium text-white">Economics</span>, I found
+            my way into{" "}
+            <span className="font-medium text-white">product design</span> in
+            college, where{" "}
+            <span className="font-medium text-white">
+              curiosity and problem solving
+            </span>{" "}
+            finally clicked together. Today I'm the sole product designer at
+            FREED, India's first digital debt relief platform, designing money
+            decisions for people across Tier 2 and Tier 3 India — 100+
+            interviews, 300+ screens, 20+ experiments in.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.84 }}
-            className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
-          >
-            I talk to users first and draw second. 100+ interviews, 300+
-            screens, 20+ experiments.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.94 }}
-            className="mt-2.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90"
-          >
-            Off the clock: making something with my hands, or the mountains,
-            where the good thinking happens.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.04 }}
-            className="mt-3 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90 italic"
+            transition={{ duration: 0.5, delay: 0.9 }}
+            className="mt-3.5 font-dm-sans text-[14px] leading-[1.5] md:text-[clamp(10px,0.95vw,15px)] md:leading-[1.45] text-white/90 italic"
           >
             Let's make something complicated look easy.
           </motion.p>
