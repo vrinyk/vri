@@ -19,9 +19,9 @@ export function CardWrapper({
 }: CardWrapperProps) {
   return (
     // The 16:9 aspect ratio only applies from md up. On a phone a 16:9 card is
-    // about 210px tall, so mobile uses a min height and grows with content.
+    // about 210px tall, so mobile grows with content instead.
     <div
-      className={`relative mx-auto w-full max-w-[1100px] min-h-[560px] md:min-h-0 md:[aspect-ratio:16/9] ${className}`}
+      className={`relative mx-auto w-full max-w-[1100px] md:[aspect-ratio:16/9] ${className}`}
       style={style}
     >
       {/* Stacked back card — offset blueprint layer (scrapbook mockup)
@@ -33,9 +33,13 @@ export function CardWrapper({
         aria-hidden
       /> */}
 
-      {/* Main blue card */}
+      {/* Main blue card.
+          The min height lives here, not on the parent. With `h-full` against a
+          parent sized only by `min-height`, the card stayed 560px while the
+          content kept growing, so anything past the fold spilled outside the
+          inner border frame on a phone. */}
       <div
-        className={`relative z-10 h-full w-full overflow-visible rounded-lg grid-plus shadow-[8px_10px_24px_rgba(30,40,80,0.25)] transition-colors duration-500 ease-out ${
+        className={`relative z-10 min-h-[560px] w-full overflow-visible rounded-lg grid-plus shadow-[8px_10px_24px_rgba(30,40,80,0.25)] transition-colors duration-500 ease-out md:h-full md:min-h-0 ${
           isActive ? "bg-blue-card" : "bg-blue-card-back"
         }`}
       >
