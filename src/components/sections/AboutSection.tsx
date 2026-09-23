@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import woodsPhoto from "../../assets/images/about-woods.jpg";
 import ramenPhoto from "../../assets/images/about-ramen.jpg";
-import holiPhoto from "../../assets/images/about-holi.jpg";
 
 /** A photo in a polaroid frame, with a strip of tape. */
 function Polaroid({
@@ -74,28 +73,25 @@ export function AboutSection() {
               </figcaption>
             </figure>
 
-            <figure className="w-[62%] self-end">
+            <figure className="w-[64%] self-end">
               <Polaroid src={ramenPhoto} alt="A bowl of ramen" rotate={5} tape="right" />
               <figcaption className="mt-2 text-center font-oswald text-[15px] font-bold text-[#e8a23a]">
                 Fin-Gourmet
               </figcaption>
             </figure>
 
-            <figure className="w-[86%]">
-              <Polaroid src={holiPhoto} alt="Holi, with the cat" rotate={-2} />
-              <figcaption className="mt-3 text-center font-caveat text-[17px] font-bold text-white">
-                currently chasing after my dreams always!
-              </figcaption>
-            </figure>
+            <p className="self-start font-caveat text-[17px] font-bold leading-tight text-white">
+              currently chasing after my dreams always!
+            </p>
           </div>
 
           {/* desktop: scrapbook, laid out so nothing collides */}
           <div className="relative hidden h-full w-full md:block">
-            <div className="absolute left-0 top-[8%] w-[44%]">
+            <div className="absolute left-0 top-[7%] w-[48%]">
               <Polaroid src={woodsPhoto} alt="Above the clouds on a trek" rotate={-5} />
             </div>
 
-            <div className="absolute left-[50%] top-0 w-[50%]">
+            <div className="absolute left-[54%] top-0 w-[46%]">
               <p className="font-caveat text-[clamp(14px,1.4vw,22px)] font-bold leading-tight text-white">
                 I find myself in woods,
                 <br />
@@ -104,25 +100,21 @@ export function AboutSection() {
               <CurlyArrow className="mt-1 w-[clamp(46px,4.4vw,74px)] text-[#F2C94C]" />
             </div>
 
-            <div className="absolute left-[52%] top-[28%] w-[40%]">
+            <div className="absolute left-[50%] top-[33%] w-[44%]">
               <Polaroid src={ramenPhoto} alt="A bowl of ramen" rotate={6} tape="right" />
             </div>
             <p
-              className="absolute left-[56%] top-[74%] font-oswald text-[clamp(12px,1.15vw,18px)] font-bold text-[#e8a23a]"
+              className="absolute left-[54%] top-[84%] font-oswald text-[clamp(12px,1.15vw,18px)] font-bold text-[#e8a23a]"
               style={{ rotate: "6deg" }}
             >
               Fin-Gourmet
             </p>
 
-            <div className="absolute left-[1%] top-[62%] w-[50%]">
-              <Polaroid src={holiPhoto} alt="Holi, with the cat" rotate={-3} />
-            </div>
-
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.9 }}
-              className="absolute left-[56%] top-[84%] w-[42%]"
+              className="absolute left-[2%] top-[76%] w-[44%]"
               style={{ rotate: "-7deg" }}
             >
               <p className="font-caveat text-[clamp(11px,1.15vw,17px)] font-bold leading-snug text-white">

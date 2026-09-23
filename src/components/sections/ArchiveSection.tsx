@@ -27,14 +27,11 @@ export function ArchiveSection() {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="mx-auto max-w-3xl text-center"
       >
-        <p className="font-dm-sans text-[11px] uppercase tracking-[0.24em] text-white/55 md:text-[clamp(9px,0.8vw,12px)]">
-          Archive
-        </p>
-        <h2 className="mt-2.5 font-oswald text-[26px] font-semibold uppercase leading-[1.05] text-white md:text-[clamp(28px,3.6vw,54px)]">
+        <h2 className="font-oswald text-[26px] font-semibold uppercase leading-[1.05] text-white md:text-[clamp(28px,3.6vw,54px)]">
           My work, beyond case studies
         </h2>
         <p className="mx-auto mt-3 max-w-xl font-dm-sans text-[13.5px] leading-relaxed text-white/75 md:text-[clamp(11px,1vw,16px)]">
-          A little bit of this and a little bit of that — side projects, posters,
+          A little bit of this and a little bit of that: side projects, posters,
           type, sketchbook pages and the things I make when nobody briefs me.
         </p>
       </motion.div>
@@ -60,10 +57,6 @@ export function ArchiveSection() {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="mt-8 pb-4 md:mt-[3.5%]"
       >
-        <p className="mx-auto mb-3 max-w-5xl font-dm-sans text-[10.5px] uppercase tracking-[0.2em] text-white/50 md:text-[clamp(9px,0.72vw,11.5px)]">
-          Art & experiments
-        </p>
-
         {/* Runs edge to edge — the negative margin cancels the section padding
             so the strip bleeds off both sides instead of stopping short. */}
         <div
@@ -84,18 +77,14 @@ export function ArchiveSection() {
             transition={{ duration: 36, ease: "linear", repeat: Infinity }}
           >
             {[...ART, ...ART].map((art, i) => (
-              <figure key={`${art.label}-${i}`} className="shrink-0">
-                <img
-                  src={art.src}
-                  alt={art.label}
-                  loading="lazy"
-                  aria-hidden={i >= ART.length}
-                  className="h-[190px] w-auto rounded-xl object-cover shadow-[0_10px_26px_rgba(20,28,60,0.3)] md:h-[clamp(190px,21vw,310px)]"
-                />
-                <figcaption className="mt-2 font-dm-sans text-[11px] text-white/55 md:text-[clamp(9px,0.75vw,12.5px)]">
-                  {art.label}
-                </figcaption>
-              </figure>
+              <img
+                key={`${art.label}-${i}`}
+                src={art.src}
+                alt={art.label}
+                loading="lazy"
+                aria-hidden={i >= ART.length}
+                className="h-[190px] w-auto shrink-0 rounded-xl object-cover shadow-[0_10px_26px_rgba(20,28,60,0.3)] md:h-[clamp(190px,21vw,310px)]"
+              />
             ))}
           </motion.div>
         </div>
@@ -129,7 +118,7 @@ function SideProjectCard() {
         </h3>
         <p className="mt-2.5 font-dm-sans text-[13px] leading-relaxed text-white/75 md:text-[clamp(10px,0.92vw,15px)]">
           I got the opportunity to work with the Arunachal Pradesh wildlife
-          reserve to rebuild their website — from design through deployment,
+          reserve to rebuild their website, from design through deployment,
           with accessibility and nature-first storytelling as the north stars.
         </p>
         <span className="mt-4 inline-flex items-center gap-1.5 font-dm-sans text-[12.5px] font-medium text-white md:text-[clamp(10px,0.9vw,14px)]">
