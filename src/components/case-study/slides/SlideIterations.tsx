@@ -27,7 +27,7 @@ const SlideIterations = () => {
           className="text-sm mt-6 text-[#6b6f7a]/80 max-w-xl leading-relaxed italic"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
-          Endless debates with PMs, late-night pivots fueled by AI insights, marketing pushing for "just one more tweak" — every version got closer to something that finally clicked.
+          Endless debates with PMs, late-night pivots fueled by AI insights, marketing pushing for "just one more tweak". Every version got closer to something that finally clicked.
         </p>
       </div>
 

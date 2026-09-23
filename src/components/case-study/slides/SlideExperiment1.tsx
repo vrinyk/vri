@@ -149,7 +149,7 @@ const SlideExperiment1 = () => {
           </span>
         </div>
 
-        {/* UI – Illustrations & Motion Section */}
+        {/* UI: Illustrations & Motion Section */}
         <div className="mt-20 rounded-3xl p-8">
           <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-start">
             {/* Left Side - Phone Mockup + Pointers */}
@@ -198,7 +198,7 @@ const SlideExperiment1 = () => {
                 className="text-2xl md:text-3xl font-sans font-bold mb-6 text-center"
                 style={{ color: '#2e2e2e' }}
               >
-                UI – Illustrations & Motion
+                UI: Illustrations & Motion
               </h3>
               <div className="w-56 h-[420px] rounded-2xl shadow-lg overflow-hidden bg-white">
                 <img 

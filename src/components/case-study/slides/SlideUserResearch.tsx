@@ -22,8 +22,8 @@ const COHORTS = [
     tier: "Tier 1",
     share: "24%",
     voice: "“I need this handled today.”",
-    debt: "₹7L – ₹22L",
-    income: "₹40K – ₹1.4L",
+    debt: "₹7L to ₹22L",
+    income: "₹40K to ₹1.4L",
     state: "Urgency",
     journey: "Skip education. Straight to plan + advisor callback.",
   },
@@ -33,8 +33,8 @@ const COHORTS = [
     tier: "Tier 2",
     share: "41%",
     voice: "“Show me the maths first.”",
-    debt: "₹2.7L – ₹50L",
-    income: "₹15K – ₹25K",
+    debt: "₹2.7L to ₹50L",
+    income: "₹15K to ₹25K",
     state: "Comparison",
     journey: "Lead with savings calculator and lender comparison.",
   },
@@ -44,8 +44,8 @@ const COHORTS = [
     tier: "Tier 3",
     share: "35%",
     voice: "“I don't know where to start.”",
-    debt: "₹2L – ₹7.6L",
-    income: "₹20K – ₹22K",
+    debt: "₹2L to ₹7.6L",
+    income: "₹20K to ₹22K",
     state: "Confusion",
     journey: "One question per screen. Defer every optional field.",
   },
@@ -97,7 +97,7 @@ const SlideUserResearch = () => {
           style={{ color: INK, opacity: 0.72 }}
         >
           Debt size told us what people owed, never how they behaved. So we
-          clustered 12,000 profiles on behaviour instead — and let the segments
+          clustered 12,000 profiles on behaviour instead, and let the segments
           decide the journey.
         </motion.p>
 
@@ -247,7 +247,7 @@ const SlideUserResearch = () => {
           >
             The clusters split on <em className="italic">emotional state</em>,
             not income. Two users with identical debt needed opposite
-            onboarding — which is why one flow was never going to work.
+            onboarding, which is why one flow was never going to work.
           </p>
         </motion.div>
       </motion.div>

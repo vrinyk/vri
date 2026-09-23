@@ -30,7 +30,7 @@ const CHANGES = [
     title: "One account first, not the whole plan",
     before:
       "The programme opened with every loan, every date and every number at once.",
-    why: "Reps closed by talking through one loan. A full plan on first read lands as a demand, not an offer — so the screen now leads with a single account and folds the rest behind “3 more loans to settle”.",
+    why: "Reps closed by talking through one loan. A full plan on first read lands as a demand, not an offer, so the screen now leads with a single account and folds the rest behind “3 more loans to settle”.",
   },
   {
     n: "02",
@@ -42,13 +42,13 @@ const CHANGES = [
     n: "03",
     title: "The programme explains itself on the screen",
     before: "Understanding how settlement worked needed a human on the phone.",
-    why: "Event data put the drop on the programme screen, not the form — high time on screen, low progression. So the pitch became part of the page: save month by month, FREED negotiates, the account settles.",
+    why: "Event data put the drop on the programme screen, not the form: high time on screen, low progression. So the pitch became part of the page: save month by month, FREED negotiates, the account settles.",
   },
   {
     n: "04",
     title: "A payment summary you can read in one breath",
     before: "Fees, GST and creditor payouts were spread across the flow.",
-    why: "The last question before committing is always “what do I actually pay?”. One modal answers it — total loan, payment to creditors, settlement fees, total paid, and what they save.",
+    why: "The last question before committing is always “what do I actually pay?”. One modal answers it: total loan, payment to creditors, settlement fees, total paid, and what they save.",
   },
 ];
 

@@ -24,7 +24,7 @@ const SlideABTesting = () => {
         
         <ul className="text-base md:text-lg text-[#6b6f7a] mb-10 leading-relaxed space-y-3">
           <li>
-            <strong className="text-[#1f232d]">Users didn't clearly understand DRP:</strong> what FREED does/doesn't do, how the program works, and what to expect—causing doubt and drop-offs.
+            <strong className="text-[#1f232d]">Users didn't clearly understand DRP:</strong> what FREED does/doesn't do, how the program works, and what to expect, causing doubt and drop-offs.
           </li>
           <li>
             <strong className="text-[#1f232d]">Too many screens + too much text:</strong> users skimmed, missed key points (payments, AutoPay, fees), and abandoned mid-journey.
@@ -47,7 +47,7 @@ const SlideABTesting = () => {
             <strong className="text-[#1f232d]">Fewer pages, same understanding:</strong> I had to compress the flow without losing clarity or increasing support tickets.
           </li>
           <li>
-            <strong className="text-[#1f232d]">Explain complex concepts fast:</strong> SPA, AutoPay, and fees needed to be understood in seconds—without jargon.
+            <strong className="text-[#1f232d]">Explain complex concepts fast:</strong> SPA, AutoPay, and fees needed to be understood in seconds, without jargon.
           </li>
           <li>
             <strong className="text-[#1f232d]">Small screen + short attention:</strong> messaging had to be highly scannable and visual-first, not text-heavy.

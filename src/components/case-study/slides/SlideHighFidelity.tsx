@@ -129,7 +129,7 @@ const SlideHighFidelity = () => {
                   <p className="text-xs text-[#6b6f7a]">
                     We only ever showed eligible accounts, so users assumed the rest were
                     forgotten and lost trust in the plan. Added Eligible vs Not Eligible
-                    tabs with a reason against each — nothing goes missing, and users
+                    tabs with a reason against each, so nothing goes missing, and users
                     learn why an account can't be settled.
                   </p>
                 </div>

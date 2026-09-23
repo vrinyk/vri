@@ -7,7 +7,7 @@ const dropoffStages = [
 
 const comprehensionIssues = [
   { title: "Settlement vs Consolidation", quote: '"Expected DCP, got settlement"' },
-  { title: "Payment Flow", quote: '"Who do I pay – FREED or bank?"' },
+  { title: "Payment Flow", quote: '"Who do I pay, FREED or bank?"' },
   { title: "Program Benefits", quote: '"Not aware of creditor protection"' },
   { title: "Total Cost", quote: '"Confused about final amount"' },
   { title: "Monthly Calculations", quote: '"Considered it as EMI"' },

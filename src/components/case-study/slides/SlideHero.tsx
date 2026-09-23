@@ -43,7 +43,7 @@ const SlideHero = () => {
         </p>
         
         <p className="font-sans text-xl text-[#6b6f7a] mb-8">
-          — Vrinda Khandelwal
+          Vrinda Khandelwal
         </p>
         
         <div className="flex flex-wrap gap-3 mb-16">

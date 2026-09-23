@@ -12,7 +12,7 @@ const SlideProblem = () => {
               Problem
             </h3>
             <p className="text-xl text-[#1f232d] leading-relaxed max-w-4xl">
-              The easy assumption was that Freed's onboarding needed a UI fix — shorten the flow, clean up the screens. But when users dropped off mid-way through sharing financial details, or abandoned the payment step, it wasn't because the button was hard to find. It was because they didn't trust the platform yet. These weren't design problems. They were trust problems.
+              The easy assumption was that Freed's onboarding needed a UI fix: shorten the flow, clean up the screens. But when users dropped off mid-way through sharing financial details, or abandoned the payment step, it wasn't because the button was hard to find. It was because they didn't trust the platform yet. These weren't design problems. They were trust problems.
             </p>
           </div>
 
@@ -27,7 +27,7 @@ const SlideProblem = () => {
             <div className="bg-[#f9ddd4]/20 rounded-xl p-6 border-l-4 border-[#f9ddd4]">
               <h4 className="font-semibold text-[#1f232d] mb-2">Lengthy Flow</h4>
               <p className="text-[#6b6f7a] text-sm">
-                Too many steps before showing value — users left before they understood why it mattered
+                Too many steps before showing value, so users left before they understood why it mattered
               </p>
             </div>
             <div className="bg-[#dbeef8]/20 rounded-xl p-6 border-l-4 border-[#dbeef8]">
@@ -39,7 +39,7 @@ const SlideProblem = () => {
             <div className="bg-[#dce8e1]/20 rounded-xl p-6 border-l-4 border-[#dce8e1]">
               <h4 className="font-semibold text-[#1f232d] mb-2">Language Gap</h4>
               <p className="text-[#6b6f7a] text-sm">
-                Debt relief concepts weren't explained in users' own language — creating anxiety, not clarity
+                Debt relief concepts weren't explained in users' own language, which created anxiety, not clarity
               </p>
             </div>
           </div>

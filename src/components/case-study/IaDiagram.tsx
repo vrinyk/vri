@@ -197,7 +197,7 @@ export default function IaDiagram({ className = "" }: { className?: string }) {
         <Wire d={hvh(C2 + NW / 2, 459, 608, 135, L3.x + 53, 12)} c={L2.wire} tip={2} />
 
         {/* ══════════ LANE 3 · LOCKED · PAYWALL ══════════ */}
-        <Node x={C3 - NW / 2} y={112} fill={L3.node} label="Home — locked" />
+        <Node x={C3 - NW / 2} y={112} fill={L3.node} label="Home, locked" />
         <Wire d={`M ${C3} 158 L ${C3} 190`} c={L3.wire} tip={3} />
 
         <Node x={C3 - NW / 2} y={190} fill={L3.node} label="Context-led paywall" />
@@ -217,7 +217,7 @@ export default function IaDiagram({ className = "" }: { className?: string }) {
         <Tag x={918} y={306} text="Yes" c={L3.wire} anchor="end" />
 
         {/* ══════════ LANE 4 · UNLOCKED · ROUTED ══════════ */}
-        <Node x={C4 - NW / 2} y={112} fill={L4.node} label="Home — unlocked" />
+        <Node x={C4 - NW / 2} y={112} fill={L4.node} label="Home, unlocked" />
         <Wire d={`M ${C4} 158 L ${C4} 194`} c={L4.wire} tip={4} />
 
         <Diamond

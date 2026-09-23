@@ -58,7 +58,7 @@ const DEEP_DIVE = [
     tag: "Summary & FOIR",
     title: "Summary & FOIR Calculator",
     why: "FOIR was calculated manually in Excel, causing errors and slow pitching on the call.",
-    what: "Automated 'Without FREED vs With FREED' — FOIR, new EMI, reduction %, savings, in real time.",
+    what: "Automated 'Without FREED vs With FREED': FOIR, new EMI, reduction %, savings, in real time.",
     note: "A comparison, not a result. The old number stays next to the new one.",
     img: imgSummaryFoir,
     label: "Without FREED vs With FREED",
@@ -67,7 +67,7 @@ const DEEP_DIVE = [
     tag: "Preferred Lenders",
     title: "Preferred Lenders",
     why: "Lender fitment lived in spreadsheets, so recommendations were slow and inconsistent.",
-    what: "Every lender in one table — tenure, rate, EMI, reduction, top-up — with the best option auto-tagged.",
+    what: "Every lender in one table: tenure, rate, EMI, reduction and top-up, with the best option auto-tagged.",
     note: "Mismatched lenders are tagged, not hidden. Advisors have to explain a no, and TLs review the same list later.",
     img: imgPreferredLenders,
     label: "Preferred Lenders, with policy mismatches visible",
@@ -76,7 +76,7 @@ const DEEP_DIVE = [
     tag: "Pre Login",
     title: "Pre Login Details",
     why: "Qualification and login fields sat in one long form, cluttering the call.",
-    what: "Moved to tab 2 — PAN, Aadhaar, DOB, addresses, employment, references — prefilled from tab 1.",
+    what: "Moved to tab 2: PAN, Aadhaar, DOB, addresses, employment and references, prefilled from tab 1.",
     note: "Tab 1 is a conversation, tab 2 is data entry. Different jobs, different screens.",
     img: imgPreLogin,
     label: "Pre Login Details",
@@ -94,7 +94,7 @@ const DEEP_DIVE = [
     tag: "Scrub Flow",
     title: "Scrub Workflow & Task Tracking",
     why: "Scrub approvals happened over Excel and email. TLs and ops had no live view of file status.",
-    what: "Advisors request scrub in-app, tasks auto-assign to the TL, and each outcome — approved, rejected, rep pending — notifies the functions it affects.",
+    what: "Advisors request scrub in-app, tasks auto-assign to the TL, and each outcome, approved, rejected or rep pending, notifies the functions it affects.",
     note: "Edit access freezes while a file is under review. One owner at a time is what makes the status believable.",
     img: imgFileHeader,
     label: "File header and Sales Rep Actions",
@@ -272,17 +272,17 @@ const AgentFlowSlider = () => {
               <motion.div variants={fadeUp} className="mb-8">
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">Visual Considerations</p>
                 <p className="font-body text-muted-foreground text-[1.125rem] leading-[1.7] mb-4">
-                  We explored accordion, multi-tab and single-scroll. Accordion hid the next question — advisors read ahead while the client talks. The final decision was a <span className="text-accent">sequential single-scroll layout within each tab</span>, qualification info and Experian score at the top, modular sections below.
+                  We explored accordion, multi-tab and single-scroll. Accordion hid the next question, and advisors read ahead while the client talks. The final decision was a <span className="text-accent">sequential single-scroll layout within each tab</span>, qualification info and Experian score at the top, modular sections below.
                 </p>
               </motion.div>
 
               <motion.div variants={fadeUp} className="mb-8">
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">Key Changes</p>
                 <div className="space-y-2 font-body text-muted-foreground text-[1.125rem] leading-[1.7]">
-                  <p>– Consolidated multiple scattered tabs into 2 purpose-driven tabs</p>
-                  <p>– Arranged fields in sequential scroll order matching the natural call flow</p>
-                  <p>– Kept the most critical info (qualification, Experian score) visible at the top</p>
-                  <p>– Moved the employer, serviceability and lender policy sheets into a right rail</p>
+                  <p>• Consolidated multiple scattered tabs into 2 purpose-driven tabs</p>
+                  <p>• Arranged fields in sequential scroll order matching the natural call flow</p>
+                  <p>• Kept the most critical info (qualification, Experian score) visible at the top</p>
+                  <p>• Moved the employer, serviceability and lender policy sheets into a right rail</p>
                 </div>
               </motion.div>
               <motion.div variants={fadeUp}>
@@ -313,9 +313,9 @@ const AgentFlowSlider = () => {
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-2">The Solution</p>
                 <p className="font-body text-muted-foreground text-[1.125rem] leading-[1.7] mb-1">The system had to preserve advisor context:</p>
                 <div className="space-y-1 font-body text-muted-foreground text-[1.125rem] leading-[1.7]">
-                  <p>– Auto-populate fields from Experian data (creditors, outstanding, score)</p>
-                  <p>– Keep the last viewed tab and scroll position when switching between files</p>
-                  <p>– Show client summary and key metrics at the top without needing to scroll</p>
+                  <p>• Auto-populate fields from Experian data (creditors, outstanding, score)</p>
+                  <p>• Keep the last viewed tab and scroll position when switching between files</p>
+                  <p>• Show client summary and key metrics at the top without needing to scroll</p>
                 </div>
               </motion.div>
               {/* Impact Card */}
@@ -354,9 +354,9 @@ const AgentFlowSlider = () => {
               <motion.div variants={fadeUp} className="mb-8">
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">What I timed</p>
                 <div className="space-y-2 font-body text-muted-foreground text-[1.125rem] leading-[1.7]">
-                  <p>– <span className="font-semibold text-foreground">40 min</span> per qualified file, including the 20-minute call</p>
-                  <p>– <span className="font-semibold text-foreground">20 min</span> more for the TL to re-check it</p>
-                  <p>– <span className="font-semibold text-foreground">8 tabs and sheets</span> open for one conversation</p>
+                  <p>• <span className="font-semibold text-foreground">40 min</span> per qualified file, including the 20-minute call</p>
+                  <p>• <span className="font-semibold text-foreground">20 min</span> more for the TL to re-check it</p>
+                  <p>• <span className="font-semibold text-foreground">8 tabs and sheets</span> open for one conversation</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -450,17 +450,17 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
                   We built a <span className="font-semibold">Request Information</span> feature directly into Spine. Advisors can now send structured requests for details and documents to clients without needing to call them.
                 </p>
                 <div className="space-y-2 font-body text-muted-foreground text-[1rem] leading-[1.7]">
-                  <p>– <span className="font-semibold text-foreground">Request Details</span>: Send specific data requests (bank statements, salary slips) with document type, date period, and comments</p>
-                  <p>– <span className="font-semibold text-foreground">Request Documents</span>: Ask for client documents with type selection and period filters</p>
-                  <p>– Clients receive <span className="text-accent">nudges via WhatsApp, email, and the FREED app</span></p>
-                  <p>– No more waiting on hold or chasing clients across channels</p>
+                  <p>• <span className="font-semibold text-foreground">Request Details</span>: Send specific data requests (bank statements, salary slips) with document type, date period, and comments</p>
+                  <p>• <span className="font-semibold text-foreground">Request Documents</span>: Ask for client documents with type selection and period filters</p>
+                  <p>• Clients receive <span className="text-accent">nudges via WhatsApp, email, and the FREED app</span></p>
+                  <p>• No more waiting on hold or chasing clients across channels</p>
                 </div>
               </motion.div>
 
               <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-2xl mb-8">
                 <p className="font-body text-sm text-accent font-semibold mb-3">The detail I'm proudest of</p>
                 <p className="font-body text-[1.05rem] text-foreground leading-[1.7]">
-                  Spine pre-selects the empty fields. The advisor edits that list down instead of building it up from memory — deleting is faster than remembering.
+                  Spine pre-selects the empty fields. The advisor edits that list down instead of building it up from memory. Deleting is faster than remembering.
                 </p>
               </motion.div>
 
@@ -500,7 +500,7 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
                   <ul className="font-body text-muted-foreground space-y-3 text-[15px] leading-relaxed">
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Listened to loan advisor calls to map the real qualification workflow</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Collaborated closely with the PM to define requirements, edge cases, and system flows</li>
-                    <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Turned each rule into something visible — a default, a tag, a locked field, a notification</li>
+                    <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Turned each rule into something visible: a default, a tag, a locked field, a notification</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Designed the new 2-tab Spine architecture aligned to the call flow</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Created high-fidelity prototypes for loan advisors, TLs, and ops personas</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Built the design prototype in Lovable for stakeholder validation</li>

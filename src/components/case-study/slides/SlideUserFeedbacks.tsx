@@ -1,27 +1,27 @@
 import { MessageSquare, BarChart3 } from "lucide-react";
 
 const userInterviews = [
-  "I couldn't see all my loan accounts — it felt incomplete and confusing.",
+  "I couldn't see all my loan accounts. It felt incomplete and confusing.",
   "I didn't understand who I'm supposed to pay… FREED or the bank?",
   "I thought this was like EMI repayment or consolidation. Settlement wasn't clear.",
-  "Kuch samajh nahi aaya — I needed a step-by-step explanation.",
+  "Kuch samajh nahi aaya. I needed a step-by-step explanation.",
   "I couldn't figure out the total amount I'll pay in the end or how monthly savings work.",
 ];
 
 const salesRepsFeedbacks = [
   "Most users think FREED pays creditors first, and they repay FREED later as EMI.",
-  "90% users don't read the agreement/program details — they skip and misunderstand.",
+  "90% users don't read the agreement/program details. They skip and misunderstand.",
   "Biggest friction is trust: some users assume it's fraud due to unclear payment flow.",
-  "Users don't know what happens after signup — next steps are not obvious.",
+  "Users don't know what happens after signup. Next steps are not obvious.",
   "Users don't understand protection from creditor calls and the real program benefits.",
 ];
 
 const appReviews = [
-  "Payment flow is unclear — who am I paying and why?",
+  "Payment flow is unclear. Who am I paying and why?",
   "Not enough transparency on which accounts are covered / visible.",
   "Too many terms… settlement process is not explained simply.",
   "I need clear breakdown: what I pay monthly + total payable + when settlement happens.",
-  "Explain benefits clearly — especially how you stop creditor calls and support the user.",
+  "Explain benefits clearly, especially how you stop creditor calls and support the user.",
 ];
 
 const commonProblems = [
@@ -65,7 +65,7 @@ const SlideUserFeedbacks = () => {
             What users actually said
           </h3>
           <p className="text-[#6b6f7a] max-w-2xl">
-            I started with questions, not hypotheses. Talking to real users — and listening to the language they used — revealed the problem wasn't about UI. Words like <em>"fraud"</em>, <em>"confused"</em>, <em>"who do I even pay?"</em> weren't describing a navigation issue. They were describing a trust crisis.
+            I started with questions, not hypotheses. Talking to real users, and listening to the language they used, revealed the problem wasn't about UI. Words like <em>"fraud"</em>, <em>"confused"</em>, <em>"who do I even pay?"</em> weren't describing a navigation issue. They were describing a trust crisis.
           </p>
         </div>
         
@@ -180,7 +180,7 @@ const SlideUserFeedbacks = () => {
             className="inline-block text-lg mb-4 text-[#1f232d]"
             style={{ fontFamily: "'Caveat', cursive" }}
           >
-            The real problems users had — not the ones we assumed
+            The real problems users had, not the ones we assumed
           </span>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">

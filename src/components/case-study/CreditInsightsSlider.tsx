@@ -851,8 +851,8 @@ const CreditInsightsSlider = () => {
           </P>
           <P>
             This is the flow we settled on. One path in, two real decision
-            points, and named endings for the people who stop early — because
-            no report found and not paying are both journeys somebody takes.
+            points, and named endings for the people who stop early. No report
+            found and not paying are both journeys somebody takes.
           </P>
           <motion.div
             variants={fadeUp}
@@ -869,7 +869,7 @@ const CreditInsightsSlider = () => {
             The two calls that took longest: putting the score before any debt
             talk, and keeping the locked and unlocked homes on the same skeleton
             so unlocking felt like the page filling in rather than a different
-            app. Underneath all three routes sits one shared layer — credit
+            app. Underneath all three routes sits one shared layer: credit
             report, the five score factors, account detail, disputes and the
             goal tracker.
           </motion.p>
@@ -1104,8 +1104,8 @@ const CreditInsightsSlider = () => {
           <P>
             This is the DRP locked home. It is the screen doing the most work in
             the whole product: it has to reveal the score, prove we have read
-            their report, show what we could save them, and ask for money —
-            without ever feeling like a sales page. Here is what each part is for.
+            their report, show what we could save them, and ask for money without
+            ever feeling like a sales page. Here is what each part is for.
           </P>
           <motion.div variants={fadeUp} className="mt-8">
             <AnnotatedScreen
@@ -1126,7 +1126,7 @@ const CreditInsightsSlider = () => {
                 {
                   at: 0.335,
                   title: "Programme savings",
-                  body: "Total outstanding, what you pay, what you save — their own figures from their own report, not a marketing range.",
+                  body: "Total outstanding, what you pay, what you save. Their own figures from their own report, not a marketing range.",
                 },
                 {
                   at: 0.56,

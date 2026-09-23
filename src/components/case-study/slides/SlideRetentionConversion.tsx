@@ -179,7 +179,7 @@ const SlideRetentionConversion = () => {
                 className="font-sans text-xl md:text-2xl font-bold mb-1"
                 style={{ color: '#2e2e2e', fontFamily: "'DM Sans', sans-serif" }}
               >
-                FREED Shield – Building Protection &amp; Emotional Assurance
+                FREED Shield: Building Protection &amp; Emotional Assurance
               </h3>
               <p
                 className="text-base font-semibold mb-2"
@@ -196,7 +196,7 @@ const SlideRetentionConversion = () => {
               <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Solution →</h4>
                 <p className="text-xs text-[#6b6f7a]">
-                  To directly address this emotional barrier, we introduced FREED Shield — a clearly communicated protection layer within the product journey to upload harassment reports and legal guidance, providing structured support and guidance.
+                  To directly address this emotional barrier, we introduced FREED Shield, a clearly communicated protection layer within the product journey to upload harassment reports and legal guidance, providing structured support and guidance.
                 </p>
               </div>
               <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30 space-y-1.5">
