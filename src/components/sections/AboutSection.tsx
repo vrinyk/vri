@@ -165,13 +165,13 @@ export function AboutSection() {
             className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
             <span className="font-medium text-white">Economics</span> came
-            first. What pulled me into{" "}
-            <span className="font-medium text-white">design</span> was caring
-            less about how systems work and more about{" "}
+            first, and it still shapes how I work.{" "}
+            <span className="font-medium text-white">Design</span> pulled me in
+            when I realised I cared less about how systems work than about{" "}
             <span className="font-medium text-white">
-              how people feel using them
+              how people experience them
             </span>
-            , where they get stuck, and what makes something finally click.
+            , where they get stuck, and what makes something feel obvious.
           </motion.p>
 
           <motion.p
@@ -180,10 +180,10 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.82 }}
             className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
-            I taught myself at night and freelanced while working part-time. I
-            shipped indie apps, got the marketing, the engineering and the
-            positioning wrong, and learned more from that than from anything
-            since. The economics still shapes how I work.
+            I taught myself at night and freelanced while working part-time.
+            Since then I have launched products from scratch at a few startups
+            and shipped indie apps, getting marketing, engineering and
+            positioning wrong enough times to learn from it.
           </motion.p>
 
           <motion.p
