@@ -155,24 +155,35 @@ export function AboutSection() {
             I grew up on <em className="italic">M.A.D</em> and{" "}
             <em className="italic">Art Attack</em>, and on watching my mom
             thread beads at the kitchen table. That is where the urge to make
-            things started, whether it was a handmade gift or a sorting hat.
+            things started.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.75 }}
+            transition={{ duration: 0.5, delay: 0.72 }}
             className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
             <span className="font-medium text-white">Economics</span> came
-            first. I found my way into{" "}
-            <span className="font-medium text-white">design</span> by being nosy
-            about everything around me, and that is where{" "}
+            first. What pulled me into{" "}
+            <span className="font-medium text-white">design</span> was caring
+            less about how systems work and more about{" "}
             <span className="font-medium text-white">
-              curiosity and problem solving
-            </span>{" "}
-            finally clicked together. Today I design thoughtful, immersive
-            experiences that balance imagination with structure.
+              how people feel using them
+            </span>
+            , where they get stuck, and what makes something finally click.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.82 }}
+            className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
+          >
+            I taught myself at night and freelanced while working part-time. I
+            shipped indie apps, got the marketing, the engineering and the
+            positioning wrong, and learned more from that than from anything
+            since. The economics still shapes how I work.
           </motion.p>
 
           <motion.p
