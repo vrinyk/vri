@@ -152,10 +152,10 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="font-dm-sans text-[14px] leading-[1.6] text-white/80 md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
-            I grew up on <em className="italic">M.A.D</em> and{" "}
-            <em className="italic">Art Attack</em>, and on watching my mom
-            thread beads at the kitchen table. That is where the urge to make
-            things started.
+            I grew up watching <em className="italic">M.A.D</em> and{" "}
+            <em className="italic">Art Attack</em>, and watching my mom thread
+            beads at the kitchen table. I think that's where my urge to make
+            things began.
           </motion.p>
 
           <motion.p
@@ -164,14 +164,13 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.72 }}
             className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
-            <span className="font-medium text-white">Economics</span> came
-            first, and it still shapes how I work.{" "}
-            <span className="font-medium text-white">Design</span> pulled me in
-            when I realised I cared less about how systems work than about{" "}
+            I studied <span className="font-medium text-white">Economics</span>
+            , but somewhere along the way I became more curious about{" "}
             <span className="font-medium text-white">
-              how people experience them
+              the people inside those systems
             </span>
-            , where they get stuck, and what makes something feel obvious.
+            . Why do they get stuck? What makes something feel intuitive? Why
+            does one experience make sense instantly while another doesn't?
           </motion.p>
 
           <motion.p
@@ -180,10 +179,12 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.82 }}
             className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
           >
-            I taught myself at night and freelanced while working part-time.
-            Since then I have launched products from scratch at a few startups
-            and shipped indie apps, getting marketing, engineering and
-            positioning wrong enough times to learn from it.
+            So I started teaching myself design at night and freelancing while
+            working part-time, and slowly found my way into{" "}
+            <span className="font-medium text-white">product design</span>,
+            where I could combine the things I liked most: understanding
+            people, making things, and figuring out why something wasn't
+            working.
           </motion.p>
 
           <motion.p
@@ -192,7 +193,9 @@ export function AboutSection() {
             transition={{ duration: 0.5, delay: 0.9 }}
             className="mt-4 font-dm-sans text-[14px] italic leading-[1.5] text-white/90 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)]"
           >
-            Let's make something complicated look easy.
+            Now I'm still driven by the same curiosity I had as a kid: to take
+            something complicated and make it feel simple, thoughtful, and a
+            little more human.
           </motion.p>
         </div>
       </div>
