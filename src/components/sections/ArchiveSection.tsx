@@ -1,18 +1,20 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Image as ImageIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import namdaphaSite from "../../assets/images/namdapha-site.jpg";
+import artBlueStudy from "../../assets/images/art-blue-study.jpg";
+import artWatercolour from "../../assets/images/art-watercolour-portrait.jpg";
+import artPressedFlowers from "../../assets/images/art-pressed-flowers.jpg";
+import artSortingHat from "../../assets/images/art-sorting-hat.jpg";
 
 /** Live site the Arunachal Pradesh card opens. */
 const NAMDAPHA_URL = "https://namdapha-axuo.vercel.app/";
 
-/** Art and experiments — images to be dropped in later. */
-const TILES = [
-  { label: "Poster study", ratio: "3/4" },
-  { label: "Type experiment", ratio: "1/1" },
-  { label: "Sketchbook", ratio: "3/4" },
-  { label: "Calendar type", ratio: "1/1" },
-  { label: "Photo walk", ratio: "4/5" },
-  { label: "3D still", ratio: "1/1" },
+/** Things made with no brief attached. */
+const ART = [
+  { src: artBlueStudy, label: "Everything blue" },
+  { src: artWatercolour, label: "Watercolour portrait" },
+  { src: artPressedFlowers, label: "I am a mosaic of" },
+  { src: artSortingHat, label: "The sorting hat" },
 ];
 
 export function ArchiveSection() {
@@ -56,25 +58,46 @@ export function ArchiveSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="mx-auto mt-8 max-w-5xl pb-4 md:mt-[3.5%]"
+        className="mt-8 pb-4 md:mt-[3.5%]"
       >
-        <p className="mb-3 font-dm-sans text-[10.5px] uppercase tracking-[0.2em] text-white/50 md:text-[clamp(9px,0.72vw,11.5px)]">
+        <p className="mx-auto mb-3 max-w-5xl font-dm-sans text-[10.5px] uppercase tracking-[0.2em] text-white/50 md:text-[clamp(9px,0.72vw,11.5px)]">
           Art & experiments
         </p>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
-          {TILES.map(tile => (
-            <figure key={tile.label} className="min-w-0">
-              <div
-                className="flex w-full flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-white/30 bg-white/[0.07]"
-                style={{ aspectRatio: tile.ratio }}
-              >
-                <ImageIcon className="h-5 w-5 text-white/40" aria-hidden="true" />
-              </div>
-              <figcaption className="mt-1.5 font-dm-sans text-[10.5px] text-white/55 md:text-[clamp(9px,0.72vw,12px)]">
-                {tile.label}
-              </figcaption>
-            </figure>
-          ))}
+
+        {/* Runs edge to edge — the negative margin cancels the section padding
+            so the strip bleeds off both sides instead of stopping short. */}
+        <div
+          className="-mx-5 overflow-hidden md:-mx-[6%]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)",
+          }}
+        >
+          {/* The list is rendered twice and the track travels exactly half its
+              own width. The trailing padding matches the gap — without it the
+              track is half a gap short of a full cycle and the loop jumps. */}
+          <motion.div
+            className="flex w-max gap-4 pr-4 md:gap-5 md:pr-5"
+            animate={{ x: ["-50%", "0%"] }}
+            transition={{ duration: 36, ease: "linear", repeat: Infinity }}
+          >
+            {[...ART, ...ART].map((art, i) => (
+              <figure key={`${art.label}-${i}`} className="shrink-0">
+                <img
+                  src={art.src}
+                  alt={art.label}
+                  loading="lazy"
+                  aria-hidden={i >= ART.length}
+                  className="h-[190px] w-auto rounded-xl object-cover shadow-[0_10px_26px_rgba(20,28,60,0.3)] md:h-[clamp(190px,21vw,310px)]"
+                />
+                <figcaption className="mt-2 font-dm-sans text-[11px] text-white/55 md:text-[clamp(9px,0.75vw,12.5px)]">
+                  {art.label}
+                </figcaption>
+              </figure>
+            ))}
+          </motion.div>
         </div>
       </motion.div>
     </div>
