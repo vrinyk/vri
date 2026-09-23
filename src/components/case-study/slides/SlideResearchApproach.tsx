@@ -63,8 +63,7 @@ const SlideResearchApproach = () => {
           className="mb-9 max-w-3xl font-sans text-[16px] leading-relaxed md:text-lg"
           style={{ color: MUTED }}
         >
-          Numbers told me where people were leaving. They could not tell me why.
-          So the research ran in two steps, in that order.
+          Numbers said where people left. Only people could say why.
         </motion.p>
 
         <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-10">
@@ -72,7 +71,7 @@ const SlideResearchApproach = () => {
           <motion.div variants={fadeUp}>
             <div className="mb-4 flex items-baseline gap-3">
               <span
-                className="font-serif text-xl"
+                className="font-sans text-xl"
                 style={{ color: BLUE_INK, opacity: 0.6 }}
               >
                 01
@@ -88,9 +87,7 @@ const SlideResearchApproach = () => {
               className="mb-5 font-sans text-[14.5px] leading-relaxed"
               style={{ color: MUTED }}
             >
-              I pulled the acquisition funnel in MoEngage, then sat through
-              session recordings and heatmaps in UXCam to watch what people
-              actually did on the screens where the funnel bled.
+              MoEngage funnel first, then UXCam recordings and heatmaps on the screens that bled.
             </p>
 
             {/* Funnel */}
@@ -152,7 +149,7 @@ const SlideResearchApproach = () => {
                     {s.label}
                   </p>
                   <p
-                    className="mb-1 font-serif text-xl"
+                    className="mb-1 font-sans text-xl"
                     style={{ color: INK }}
                   >
                     {s.value}
@@ -197,7 +194,7 @@ const SlideResearchApproach = () => {
           <motion.div variants={fadeUp}>
             <div className="mb-4 flex items-baseline gap-3">
               <span
-                className="font-serif text-xl"
+                className="font-sans text-xl"
                 style={{ color: BLUE_INK, opacity: 0.6 }}
               >
                 02
@@ -213,9 +210,7 @@ const SlideResearchApproach = () => {
               className="mb-5 font-sans text-[14.5px] leading-relaxed"
               style={{ color: MUTED }}
             >
-              The data gave me a list of suspect screens. To understand what was
-              going on in people's heads I had to talk to them, and to the
-              people who talk to them every day.
+              The data gave me suspect screens. Talking gave me the reason.
             </p>
 
             <div className="space-y-4">
@@ -241,10 +236,7 @@ const SlideResearchApproach = () => {
                   className="font-sans text-[14px] leading-relaxed"
                   style={{ color: MUTED }}
                 >
-                  They speak to hundreds of these users a week. I listened to
-                  recorded calls and sat with them, noting the order they
-                  explained things in, the words they used instead of jargon,
-                  and the exact objection that came up every time.
+                  I logged the order reps explained things in, the words they used instead of jargon, and the objection that came up every call.
                 </p>
               </div>
 
@@ -270,10 +262,7 @@ const SlideResearchApproach = () => {
                   className="font-sans text-[14px] leading-relaxed"
                   style={{ color: MUTED }}
                 >
-                  I asked people who had dropped off what they thought the
-                  screen was asking them to do. Most could not say. That was the
-                  answer: they were not hesitating over the offer, they did not
-                  understand it.
+                  I asked people who left what the screen had asked them to do. Most could not say.
                 </p>
               </div>
 
@@ -291,10 +280,7 @@ const SlideResearchApproach = () => {
                   className="font-sans text-[14.5px] font-medium leading-snug"
                   style={{ color: BLUE_INK }}
                 >
-                  Long time on screen and almost no clicks is not friction. It
-                  is people reading something they do not understand. That
-                  reframed the whole project from speeding the flow up to
-                  explaining it better.
+                  Long dwell with no clicks is not friction. It is people reading something they do not understand.
                 </p>
               </div>
             </div>

@@ -39,8 +39,11 @@ const DEEP_DIVE = [
   {
     tag: "Qualification",
     title: "Qualification Details",
+    heard: "I lose my place every time I scroll back up",
+    measured: "9 jumps",
+    measuredLabel: "between sections per qualification call",
     why: "Qualifying questions were scattered across sections. Advisors jumped around while the client was on the call.",
-    what: "Net salary, city, housing, employer, bounces and CIBIL grouped at the top of tab 1, in the order advisors ask them.",
+    what: "Salary, city, housing, employer, bounces and CIBIL at the top of tab 1, in the order advisors ask them.",
     note: "No wizard. The whole card stays open, because clients jump ahead.",
     img: imgQualification,
     label: "Qualification Details",
@@ -48,6 +51,9 @@ const DEEP_DIVE = [
   {
     tag: "Creditors",
     title: "Creditor Overview",
+    heard: "I keep Experian open in one tab and the sheet in another",
+    measured: "2 tools",
+    measuredLabel: "cross-checked for every creditor list",
     why: "Advisors cross-referenced Experian data with Excel sheets to decide which creditors to include.",
     what: "Included and Excluded lists auto-populate from Experian. Toggling a creditor recalculates totals instantly.",
     note: "The default is a starting point, not a lock. Every field stays editable.",
@@ -57,6 +63,9 @@ const DEEP_DIVE = [
   {
     tag: "Summary & FOIR",
     title: "Summary & FOIR Calculator",
+    heard: "If I take too long on the maths the client goes quiet",
+    measured: "4 min",
+    measuredLabel: "spent on FOIR per call, by hand",
     why: "FOIR was calculated manually in Excel, causing errors and slow pitching on the call.",
     what: "Automated 'Without FREED vs With FREED': FOIR, new EMI, reduction %, savings, in real time.",
     note: "A comparison, not a result. The old number stays next to the new one.",
@@ -66,6 +75,9 @@ const DEEP_DIVE = [
   {
     tag: "Preferred Lenders",
     title: "Preferred Lenders",
+    heard: "Every advisor recommends a different lender for the same file",
+    measured: "1 in 5",
+    measuredLabel: "files rejected on a policy mismatch",
     why: "Lender fitment lived in spreadsheets, so recommendations were slow and inconsistent.",
     what: "Every lender in one table: tenure, rate, EMI, reduction and top-up, with the best option auto-tagged.",
     note: "Mismatched lenders are tagged, not hidden. Advisors have to explain a no, and TLs review the same list later.",
@@ -75,6 +87,9 @@ const DEEP_DIVE = [
   {
     tag: "Pre Login",
     title: "Pre Login Details",
+    heard: "Half these fields are not my job while the client is talking",
+    measured: "38 fields",
+    measuredLabel: "on one screen before the split",
     why: "Qualification and login fields sat in one long form, cluttering the call.",
     what: "Moved to tab 2: PAN, Aadhaar, DOB, addresses, employment and references, prefilled from tab 1.",
     note: "Tab 1 is a conversation, tab 2 is data entry. Different jobs, different screens.",
@@ -84,6 +99,9 @@ const DEEP_DIVE = [
   {
     tag: "Documents",
     title: "Document Manager",
+    heard: "I rename files just so the next person knows what they are",
+    measured: "12 min",
+    measuredLabel: "per file on download and re-upload",
     why: "Files were downloaded, renamed and re-uploaded just to record type and date range.",
     what: "Type, name, date range, comments and a 'Used for Login' toggle, editable in place.",
     note: "Naming conventions are a workaround for missing fields.",
@@ -93,8 +111,11 @@ const DEEP_DIVE = [
   {
     tag: "Scrub Flow",
     title: "Scrub Workflow & Task Tracking",
+    heard: "Nobody can tell me where the file is stuck",
+    measured: "40 min",
+    measuredLabel: "saved per scrub cycle after the change",
     why: "Scrub approvals happened over Excel and email. TLs and ops had no live view of file status.",
-    what: "Advisors request scrub in-app, tasks auto-assign to the TL, and each outcome, approved, rejected or rep pending, notifies the functions it affects.",
+    what: "Scrub requested in-app, auto-assigned to the TL, and every outcome notifies the functions it affects.",
     note: "Edit access freezes while a file is under review. One owner at a time is what makes the status believable.",
     img: imgFileHeader,
     label: "File header and Sales Rep Actions",
@@ -171,7 +192,7 @@ const AgentFlowSlider = () => {
                 <em className="italic">Agent Flow</em>
               </motion.h1>
               <motion.p variants={fadeUp} className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mb-10">
-                FREED is India's leading debt relief platform, helping individuals consolidate and settle unsecured debt through Debt Consolidation Plans (DCP). Our loan advisors onboard thousands of clients monthly, qualifying leads, matching lenders, and managing files end-to-end through our internal system, Spine.
+                FREED consolidates and settles unsecured debt through Debt Consolidation Plans. Loan advisors onboard thousands of clients monthly, qualifying leads, matching lenders, and managing files end-to-end through our internal system, Spine.
               </motion.p>
               <motion.p variants={fadeUp} className="font-body text-base text-muted-foreground mb-12">
                 Vrinda Khandelwal
@@ -195,13 +216,13 @@ const AgentFlowSlider = () => {
                 Summary
               </motion.h2>
               <motion.p variants={fadeUp} className="font-body text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-3xl">
-                "Loan advisors are jumping between tabs, switching to Excel sheets, and losing track of client files. The system doesn't match how they actually work."
+                "Advisors jump between tabs and Excel and lose track of files. The system does not match the call."
               </motion.p>
               <motion.p variants={fadeUp} className="font-body text-lg md:text-xl text-foreground leading-relaxed mb-8 max-w-3xl">
-                How can we restructure Spine's DCP flow so that loan advisors can qualify leads, check lender fitment, and process files without relying on external tools or breaking their natural call flow?
+                How does Spine let an advisor qualify a lead and check lender fitment without leaving the call?
               </motion.p>
               <motion.p variants={fadeUp} className="font-body text-lg text-muted-foreground leading-relaxed mb-14 max-w-3xl">
-                Impact: Consolidated scattered workflows into 2 purpose-driven tabs, eliminated Excel dependency for scrub tracking, and saved 40 minutes per scrub cycle.
+                Impact: 2 tabs instead of 6, no Excel, 40 minutes saved per scrub cycle.
               </motion.p>
               <motion.div variants={fadeUp} className="grid grid-cols-3 gap-8 mb-14">
                 <div>
@@ -238,13 +259,13 @@ const AgentFlowSlider = () => {
               </motion.h2>
               <motion.div variants={fadeUp} className="space-y-8 max-w-3xl">
                 {[
-                  { title: "Heavy Document Overhead", desc: "Most advisor time went to requesting, downloading, renaming, and re-uploading documents. Clients received multiple informal WhatsApp requests instead of one structured ask." },
-                  { title: "Excel Sheet Dependency", desc: "Lender policies, employer lists, serviceability checks all lived in scattered spreadsheets. This caused frequent human errors and higher rejection rates." },
-                  { title: "No Real-time Visibility", desc: "Post-scrub stages lived in Excel. TLs and ops had no clean live view to track where files were stuck, at which function, and why." },
-                  { title: "Misaligned Information Architecture", desc: "Spine's tab structure didn't match the actual call flow. Advisors had to jump between sections to follow their natural qualification sequence." },
+                  { title: "Heavy Document Overhead", desc: "Documents ate the day: request, download, rename, re-upload. Clients got scattered WhatsApp asks." },
+                  { title: "Excel Sheet Dependency", desc: "Lender policies and employer lists lived in spreadsheets, so errors and rejections followed." },
+                  { title: "No Real-time Visibility", desc: "Post-scrub stages lived in Excel, so nobody could see where a file was stuck." },
+                  { title: "Misaligned Information Architecture", desc: "The tab structure did not match the call, so advisors hunted for the next question." },
                 ].map(item => (
                   <div key={item.title}>
-                    <h3 className="font-heading text-xl mb-2">{item.title}</h3>
+                    <h3 className="font-body text-xl mb-2">{item.title}</h3>
                     <p className="font-body text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
@@ -272,7 +293,7 @@ const AgentFlowSlider = () => {
               <motion.div variants={fadeUp} className="mb-8">
                 <p className="font-body font-semibold text-foreground text-[1.125rem] mb-4">Visual Considerations</p>
                 <p className="font-body text-muted-foreground text-[1.125rem] leading-[1.7] mb-4">
-                  We explored accordion, multi-tab and single-scroll. Accordion hid the next question, and advisors read ahead while the client talks. The final decision was a <span className="text-accent">sequential single-scroll layout within each tab</span>, qualification info and Experian score at the top, modular sections below.
+                  Accordion hid the next question, and advisors read ahead while the client talks. So: <span className="text-accent">sequential single-scroll layout within each tab</span>, qualification info and Experian score at the top, modular sections below.
                 </p>
               </motion.div>
 
@@ -323,11 +344,11 @@ const AgentFlowSlider = () => {
                 <p className="font-body text-sm text-accent font-semibold mb-4">Impact</p>
                 <div className="flex items-center gap-16">
                   <div>
-                    <p className="font-heading text-3xl md:text-4xl text-foreground">40 min</p>
+                    <p className="font-body text-3xl md:text-4xl text-foreground">40 min</p>
                     <p className="font-body text-sm text-muted-foreground mt-1">saved per file processed</p>
                   </div>
                   <div>
-                    <p className="font-heading text-3xl md:text-4xl text-foreground">0 sheets</p>
+                    <p className="font-body text-3xl md:text-4xl text-foreground">0 sheets</p>
                     <p className="font-body text-sm text-muted-foreground mt-1">no external Excel needed</p>
                   </div>
                 </div>
@@ -372,7 +393,7 @@ const AgentFlowSlider = () => {
                 Restructured Around the <em className="italic">Call Flow</em>
               </motion.h2>
               <motion.p variants={fadeUp} className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mb-10">
-                We reorganised the entire DCP section into 2 purpose-driven tabs that mirror the natural call progression. The first tab, Qualification Details, captures everything an advisor asks during the initial call. The second tab, Pre Login Details, handles all the personal and document information needed before a lender login. No more jumping around.
+                Two tabs that follow the call. Tab one, Qualification Details, holds everything an advisor asks during the initial call. The second tab, Pre Login Details, handles all the personal and document information needed before a lender login. No more jumping around.
               </motion.p>
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-12">
                 {["Qualification Details", "Pre Login Details"].map((tab, i) => (
@@ -404,10 +425,10 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
               {DEEP_DIVE.map((item, i) => (
                 <motion.div key={item.title} variants={fadeUp} className="mb-14 pb-14 border-b border-border/50 last:border-0 last:pb-0 last:mb-0">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-heading text-2xl text-accent">0{i + 1}</span>
+                    <span className="font-body text-2xl text-accent">0{i + 1}</span>
                     <span className="px-3 py-1 rounded-full border border-border text-[12px] font-body text-muted-foreground">{item.tag}</span>
                   </div>
-                  <h3 className="font-heading text-2xl md:text-3xl mb-5">{item.title}</h3>
+                  <h3 className="font-body text-2xl md:text-3xl mb-5">{item.title}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 mb-5">
                     <div>
                       <p className="font-body text-[12px] tracking-widest uppercase text-muted-foreground mb-2">Why we changed it</p>
@@ -421,6 +442,19 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
                   <div className="rounded-xl bg-secondary/60 px-6 py-4 mb-6 max-w-3xl">
                     <p className="font-body text-[12px] tracking-widest uppercase text-muted-foreground mb-1.5">The call I made</p>
                     <p className="font-body text-[15px] text-foreground leading-relaxed">{item.note}</p>
+                  </div>
+                  {/* The evidence the call rests on: one thing advisors said,
+                      one thing shadowing measured. */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-3xl">
+                    <div className="rounded-xl border border-border px-5 py-3.5">
+                      <p className="font-body text-[11px] tracking-widest uppercase text-muted-foreground mb-1.5">Heard</p>
+                      <p className="font-body text-[14px] italic text-foreground leading-snug">“{item.heard}”</p>
+                    </div>
+                    <div className="rounded-xl border border-accent/40 bg-accent/10 px-5 py-3.5">
+                      <p className="font-body text-[11px] tracking-widest uppercase text-accent mb-1.5">Measured</p>
+                      <p className="font-body text-[17px] font-semibold text-foreground leading-tight">{item.measured}</p>
+                      <p className="font-body text-[13px] text-muted-foreground leading-snug mt-0.5">{item.measuredLabel}</p>
+                    </div>
                   </div>
                   <Shot src={item.img} label={item.label} className="w-full" />
                 </motion.div>
@@ -460,7 +494,7 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
               <motion.div variants={fadeUp} className="rounded-2xl bg-secondary/80 px-8 py-6 max-w-2xl mb-8">
                 <p className="font-body text-sm text-accent font-semibold mb-3">The detail I'm proudest of</p>
                 <p className="font-body text-[1.05rem] text-foreground leading-[1.7]">
-                  Spine pre-selects the empty fields. The advisor edits that list down instead of building it up from memory. Deleting is faster than remembering.
+                  Spine pre-selects the empty fields. Deleting from a list beats remembering one.
                 </p>
               </motion.div>
 
@@ -468,11 +502,11 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
                 <p className="font-body text-sm text-accent font-semibold mb-4">Impact</p>
                 <div className="flex items-center gap-16">
                   <div>
-                    <p className="font-heading text-3xl md:text-4xl text-foreground">3x</p>
+                    <p className="font-body text-3xl md:text-4xl text-foreground">3x</p>
                     <p className="font-body text-sm text-muted-foreground mt-1">faster document collection</p>
                   </div>
                   <div>
-                    <p className="font-heading text-3xl md:text-4xl text-foreground">0 calls</p>
+                    <p className="font-body text-3xl md:text-4xl text-foreground">0 calls</p>
                     <p className="font-body text-sm text-muted-foreground mt-1">needed to request documents</p>
                   </div>
                 </div>
@@ -496,7 +530,7 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
               </motion.h2>
               <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-14">
                 <div>
-                  <h3 className="font-heading text-xl mb-5">What I Did</h3>
+                  <h3 className="font-body text-xl mb-5">What I Did</h3>
                   <ul className="font-body text-muted-foreground space-y-3 text-[15px] leading-relaxed">
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Listened to loan advisor calls to map the real qualification workflow</li>
                     <li className="flex items-start gap-2.5"><span className="text-accent mt-0.5">•</span> Collaborated closely with the PM to define requirements, edge cases, and system flows</li>
@@ -508,18 +542,18 @@ Seven sections, each one an advisor pain. Why it changed, what we did, and the c
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-heading text-xl mb-5">Impact</h3>
+                  <h3 className="font-body text-xl mb-5">Impact</h3>
                   <div className="space-y-6">
                     <div className="rounded-xl bg-secondary/60 px-6 py-5">
-                      <p className="font-heading text-3xl md:text-4xl">2 <em className="italic">Tabs</em></p>
+                      <p className="font-body text-3xl md:text-4xl">2 <em className="italic">Tabs</em></p>
                       <p className="font-body text-sm text-muted-foreground mt-1">Scattered workflows consolidated into purpose-driven tabs</p>
                     </div>
                     <div className="rounded-xl bg-secondary/60 px-6 py-5">
-                      <p className="font-heading text-3xl md:text-4xl">40 <em className="italic">min</em></p>
+                      <p className="font-body text-3xl md:text-4xl">40 <em className="italic">min</em></p>
                       <p className="font-body text-sm text-muted-foreground mt-1">Saved per scrub by eliminating Excel juggling</p>
                     </div>
                     <div className="rounded-xl bg-secondary/60 px-6 py-5">
-                      <p className="font-heading text-3xl md:text-4xl">Zero <em className="italic">Sheets</em></p>
+                      <p className="font-body text-3xl md:text-4xl">Zero <em className="italic">Sheets</em></p>
                       <p className="font-body text-sm text-muted-foreground mt-1">No external Excel needed for fitment, employer lists, or tracking</p>
                     </div>
                   </div>

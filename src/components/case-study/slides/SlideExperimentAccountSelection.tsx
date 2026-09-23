@@ -97,7 +97,7 @@ const SlideExperimentAccountSelection = () => {
                 >
                   Conversion
                 </span>
-                <span className="font-serif text-2xl xl:text-[1.75rem]" style={{ color: INK }}>
+                <span className="font-sans text-2xl xl:text-[1.75rem]" style={{ color: INK }}>
                   8% <span style={{ color: MUTED }}>→</span>{" "}
                   <span style={{ color: GREEN }}>10%</span>
                 </span>
@@ -125,7 +125,7 @@ const SlideExperimentAccountSelection = () => {
                 <div key={c.n}>
                   <div className="flex items-baseline gap-2 mb-1.5">
                     <span
-                      className="font-serif text-[15px]"
+                      className="font-sans text-[15px]"
                       style={{ color: GREEN, opacity: 0.6 }}
                     >
                       {c.n}

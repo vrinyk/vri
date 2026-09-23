@@ -89,14 +89,14 @@ const SlideExperiment2 = () => {
                   <span className="text-xs font-semibold text-[#1f232d]">Issue 1</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Signup felt heavy and overwhelming →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    The old design used a strong orange background with dense form fields and long consent text, making the first interaction feel stressful and effort-heavy.
+                    Orange everywhere, dense fields and a wall of consent text. The first impression read as pressure.
                   </p>
                 </div>
                 <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <span className="text-xs font-semibold text-[#1f232d]">Issue 2</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Single long form caused drop-offs →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    All input fields were crammed into a single screen, making the signup process feel lengthy and discouraging users from completing it.
+                    Every field on one screen. People scrolled, saw how much was left, and closed it.
                   </p>
                 </div>
               </div>
@@ -122,19 +122,19 @@ const SlideExperiment2 = () => {
                   <span className="text-xs font-semibold text-[#294b3a]">Solved</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Calmer and simpler signup experience →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    Redesigned the screen with a white background, better spacing, and clearer visual hierarchy to make the form feel lighter, easier, and less intimidating to complete.
+                    White ground, real spacing, one clear hierarchy. The same questions now read as light.
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
                   <span className="text-xs font-semibold text-[#294b3a]">Solved</span>
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Multi-step form with progressive disclosure →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    Split the long form into multiple focused steps, reducing cognitive load and improving completion rates by showing one task at a time with clear progress indication.
+                    One task per step with visible progress, so the end is always in sight.
                   </p>
                 </div>
                 <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30">
                   <p className="text-sm font-bold text-[#294b3a]">
-                    This experiment aimed to reduce signup anxiety and improve form completion by focusing on visual calmness and trust reinforcement.
+                    Signup completion moved from 44% to 58% across the test.
                   </p>
                 </div>
               </div>

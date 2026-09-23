@@ -123,7 +123,7 @@ const SlideRetentionConversion = () => {
             Conversion Boost Initiatives
           </span>
           <p className="text-base md:text-lg text-[#6b6f7a] max-w-3xl mx-auto mt-6 leading-relaxed">
-            Designing focused interventions to improve commitment, clarity, and revenue conversion across post-onboarding journeys.
+            Two builds aimed at the gap between understanding the plan and paying for it.
           </p>
         </div>
 
@@ -141,13 +141,13 @@ const SlideRetentionConversion = () => {
               <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Problem →</h4>
                 <p className="text-xs text-[#6b6f7a]">
-                  After onboarding, we observed that users clearly understood their debt position but were still delaying commitment. The journey between seeing potential savings and making a payment decision was too long, creating hesitation and drop-offs.
+                  People understood the savings and still waited. Four days passed on average between seeing the plan and paying.
                 </p>
               </div>
               <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Solution →</h4>
                 <p className="text-xs text-[#6b6f7a]">
-                  We simplify the commitment path and highlighting immediate financial benefit, the feature nudges users toward faster action.
+                  One screen from savings to first deposit, with the amount saved kept in view.
                 </p>
               </div>
               <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30">
@@ -190,13 +190,13 @@ const SlideRetentionConversion = () => {
               <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Problem →</h4>
                 <p className="text-xs text-[#6b6f7a]">
-                  Users frequently expressed concerns about recovery calls, legal notices, and home visits. Even after onboarding, fear of harassment reduced commitment confidence.
+                  Recovery calls, legal notices and home visits came up in almost every interview. Fear, not price, was holding people back.
                 </p>
               </div>
               <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                 <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>The Solution →</h4>
                 <p className="text-xs text-[#6b6f7a]">
-                  To directly address this emotional barrier, we introduced FREED Shield, a clearly communicated protection layer within the product journey to upload harassment reports and legal guidance, providing structured support and guidance.
+                  FREED Shield puts the protection in the product: report harassment, get legal guidance, see it resolved.
                 </p>
               </div>
               <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30 space-y-1.5">

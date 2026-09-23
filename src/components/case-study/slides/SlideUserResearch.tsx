@@ -174,7 +174,7 @@ const SlideUserResearch = () => {
                   {c.tier}
                 </span>
                 <span
-                  className="font-serif text-2xl font-semibold"
+                  className="font-sans text-2xl font-semibold"
                   style={{ color: BLUE_INK }}
                 >
                   {c.share}
@@ -182,7 +182,7 @@ const SlideUserResearch = () => {
               </div>
 
               <h3
-                className="font-serif text-[1.6rem] font-semibold leading-tight mb-3"
+                className="font-sans text-[1.6rem] font-semibold leading-tight mb-3"
                 style={{ color: INK }}
               >
                 {c.name}
@@ -242,7 +242,7 @@ const SlideUserResearch = () => {
           style={{ background: `${BLUE}59`, borderColor: BLUE_INK, borderRadius: 0 }}
         >
           <p
-            className="font-serif text-xl md:text-[1.4rem] leading-snug max-w-4xl"
+            className="font-sans text-xl md:text-[1.4rem] leading-snug max-w-4xl"
             style={{ color: INK }}
           >
             The clusters split on <em className="italic">emotional state</em>,

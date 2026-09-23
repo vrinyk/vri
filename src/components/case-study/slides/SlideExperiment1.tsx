@@ -138,7 +138,7 @@ const SlideExperiment1 = () => {
             A-B Testing UI Ideation
           </h2>
           <p className="text-lg text-[#6b6f7a] max-w-2xl mx-auto mb-6">
-            Exploring different design variations and testing them with real users to validate our hypotheses and optimize the user experience.
+            Three versions of the first screen, put in front of real users. The winner was the one that named the problem before selling the fix.
           </p>
           {/* Experiment 2 Box */}
           <span 
@@ -171,15 +171,15 @@ const SlideExperiment1 = () => {
               <div className="space-y-3 flex-1">
                 <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Visual-First Communication →</h4>
-                  <p className="text-xs text-[#6b6f7a]">Used illustrations and motion to convey the message instantly, ensuring users understand the context even without reading the text.</p>
+                  <p className="text-xs text-[#6b6f7a]">The message lands before a word is read. 62% of sessions never scrolled past the first fold.</p>
                 </div>
                 <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Motion-Led Attention Flow →</h4>
-                  <p className="text-xs text-[#6b6f7a]">Subtle animations and eye-direction cues guide user focus naturally across the screen, increasing engagement and comprehension.</p>
+                  <p className="text-xs text-[#6b6f7a]">Motion points the eye at the next thing to read, so the order is felt rather than explained.</p>
                 </div>
                 <div className="bg-[#f7f3ec]/50 rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Progressive Value Clarity →</h4>
-                  <p className="text-xs text-[#6b6f7a]">Clearly communicates what FREED does and how it helps users get out of debt through a simple, step-by-step visual narrative.</p>
+                  <p className="text-xs text-[#6b6f7a]">Problem, then solution, then proof. Users could repeat back what FREED does after one pass.</p>
                 </div>
               </div>
             </div>

@@ -65,7 +65,7 @@ const SlideUserFeedbacks = () => {
             What users actually said
           </h3>
           <p className="text-[#6b6f7a] max-w-2xl">
-            I started with questions, not hypotheses. Talking to real users, and listening to the language they used, revealed the problem wasn't about UI. Words like <em>"fraud"</em>, <em>"confused"</em>, <em>"who do I even pay?"</em> weren't describing a navigation issue. They were describing a trust crisis.
+            The words people used gave it away. Not a navigation problem: <em>"fraud"</em>, <em>"confused"</em>, <em>"who do I even pay?"</em> weren't describing a navigation issue. They were describing a trust crisis.
           </p>
         </div>
         
@@ -152,7 +152,7 @@ const SlideUserFeedbacks = () => {
             </h3>
           </div>
           <p className="text-[#6b6f7a] max-w-3xl mb-6">
-            I conducted a structured survey with sales representatives to understand recurring user confusions, objections, and mental models observed during real customer conversations. These insights directly informed the DRP onboarding redesign.
+            A structured survey with the reps who take these calls every day, on the confusions that come up every time. These insights directly informed the DRP onboarding redesign.
           </p>
           
           {/* Survey Images */}

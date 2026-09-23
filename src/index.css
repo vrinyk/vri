@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:opsz@9..40&family=Gasoek+One&family=Oswald:wght@600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:opsz@9..40&family=Gasoek+One&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-oswald: 'Oswald', sans-serif;
+  --font-open: 'Open Sans', system-ui, sans-serif;
   --font-dm-sans: 'DM Sans', sans-serif;
   --font-caveat: 'Caveat', cursive;
   --font-gasoek: 'Gasoek One', serif;
@@ -122,13 +123,24 @@
   --ring: 40 20% 80%;
 }
 
+/* Case studies run on one typeface. Playfair is kept for the page title
+   only; every component heading and all body copy is Open Sans. */
+.case-study {
+  --font-sans: 'Open Sans', system-ui, sans-serif;
+  --font-body: 'Open Sans', system-ui, sans-serif;
+  font-family: var(--font-sans);
+}
+
 .case-study h1,
-.case-study h2,
+.case-study h2 {
+  font-family: var(--font-serif);
+}
+
 .case-study h3,
 .case-study h4,
 .case-study h5,
 .case-study h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
 }
 
 .case-study * {

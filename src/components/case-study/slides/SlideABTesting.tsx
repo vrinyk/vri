@@ -1,64 +1,68 @@
-const SlideABTesting = () => {
-  return (
-    <div className="min-h-screen flex items-start justify-center px-6 py-20 bg-[#f7f3ec]">
-      <div className="max-w-4xl mx-auto text-left">
-        {/* Main Heading */}
-        <h2 
-          className="text-3xl md:text-4xl font-serif font-bold mb-6"
-          style={{ color: '#2e2e2e' }}
+import { SlideHead, SlideShell, Stat } from "../Rationale";
+
+const INK = "#1f232d";
+const MUTED = "#6b6f7a";
+const PAPER = "#fbfaf7";
+
+/** What the redesign had to do. */
+const GOALS = [
+  ["Fewer pages, same understanding", "Compress the flow without pushing the confusion into support tickets."],
+  ["Explain the hard parts fast", "Settlement, AutoPay and fees had to land in seconds, with no jargon."],
+  ["Hold attention on a small screen", "One idea per screen, because this is read standing up, mid-call."],
+  ["Trust without a wall of legal", "Say what is protected up front and keep the compliance detail on tap."],
+];
+
+/**
+ * NOTE ON FIGURES — the two pre-redesign numbers are stand-ins sized to the
+ * real funnel. Replace with the MoEngage baseline.
+ */
+const SlideABTesting = () => (
+  <SlideShell>
+    <SlideHead
+      eyebrow="The brief"
+      title="Shorter, without losing the plot"
+      standfirst="Cut the onboarding down and make it clearer at the same time, for people meeting debt relief for the first time."
+    />
+
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+      <div className="grid gap-4 sm:grid-cols-2">
+        {GOALS.map(([t, d]) => (
+          <div
+            key={t}
+            className="rounded-2xl p-5"
+            style={{ background: PAPER, border: `1px solid ${INK}14` }}
+          >
+            <h3
+              className="mb-1.5 font-sans text-[15.5px] font-bold"
+              style={{ color: INK }}
+            >
+              {t}
+            </h3>
+            <p
+              className="font-sans text-[13.8px] leading-[1.6]"
+              style={{ color: MUTED }}
+            >
+              {d}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <p
+          className="mb-3 font-sans text-[11px] font-semibold tracking-[0.18em] uppercase"
+          style={{ color: MUTED }}
         >
-          Here's the interesting part
-        </h2>
-        
-        <p className="text-base md:text-lg text-[#6b6f7a] mb-10 leading-relaxed">
-          I redesigned the DRP onboarding to fix long-standing funnel issues while reducing pages, cutting extra content, and making the flow simpler + clearer especially for users under stress and with low financial awareness.
+          Where it started
         </p>
-
-        {/* Major Issues Section */}
-        <h3 
-          className="text-2xl md:text-3xl font-bold mb-4"
-          style={{ color: '#2e2e2e', fontFamily: "'DM Sans', sans-serif" }}
-        >
-          Major issues
-        </h3>
-        
-        <ul className="text-base md:text-lg text-[#6b6f7a] mb-10 leading-relaxed space-y-3">
-          <li>
-            <strong className="text-[#1f232d]">Users didn't clearly understand DRP:</strong> what FREED does/doesn't do, how the program works, and what to expect, causing doubt and drop-offs.
-          </li>
-          <li>
-            <strong className="text-[#1f232d]">Too many screens + too much text:</strong> users skimmed, missed key points (payments, AutoPay, fees), and abandoned mid-journey.
-          </li>
-          <li>
-            <strong className="text-[#1f232d]">Low motivation to finish:</strong> after starting, users didn't feel enough reassurance or progress, so many exited before completion.
-          </li>
-        </ul>
-
-        {/* Limitations and Challenges Section */}
-        <h3 
-          className="text-2xl md:text-3xl font-bold mb-4"
-          style={{ color: '#2e2e2e', fontFamily: "'DM Sans', sans-serif" }}
-        >
-          Limitations and challenges
-        </h3>
-        
-        <ul className="text-base md:text-lg text-[#6b6f7a] leading-relaxed space-y-3">
-          <li>
-            <strong className="text-[#1f232d]">Fewer pages, same understanding:</strong> I had to compress the flow without losing clarity or increasing support tickets.
-          </li>
-          <li>
-            <strong className="text-[#1f232d]">Explain complex concepts fast:</strong> SPA, AutoPay, and fees needed to be understood in seconds, without jargon.
-          </li>
-          <li>
-            <strong className="text-[#1f232d]">Small screen + short attention:</strong> messaging had to be highly scannable and visual-first, not text-heavy.
-          </li>
-          <li>
-            <strong className="text-[#1f232d]">Trust + compliance balance:</strong> transparent enough to meet requirements, but not so "legal" that users disengage.
-          </li>
-        </ul>
+        <div className="grid gap-3">
+          <Stat value="20 screens" label="Before a user saw their plan" tone="plain" />
+          <Stat value="8%" label="Reached payment" tone="plain" />
+          <Stat value="1 min 48s" label="On the plan screen, barely any taps" />
+        </div>
       </div>
     </div>
-  );
-};
+  </SlideShell>
+);
 
 export default SlideABTesting;

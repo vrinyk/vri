@@ -1,52 +1,66 @@
-const SlideProblem = () => {
-  return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-start md:items-center px-4 py-8 md:px-6 md:py-12">
-      <div className="container max-w-5xl mx-auto">
-        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#1f232d] mb-10">
-          Project Overview
-        </h2>
-        
-        <div className="space-y-10">
-          <div>
-            <h3 className="font-sans text-2xl font-bold mb-4" style={{ color: '#2e2e2e' }}>
-              Problem
-            </h3>
-            <p className="text-xl text-[#1f232d] leading-relaxed max-w-4xl">
-              The easy assumption was that Freed's onboarding needed a UI fix: shorten the flow, clean up the screens. But when users dropped off mid-way through sharing financial details, or abandoned the payment step, it wasn't because the button was hard to find. It was because they didn't trust the platform yet. These weren't design problems. They were trust problems.
-            </p>
-          </div>
+import { Rationale, SlideHead, SlideShell } from "../Rationale";
+import type { Reason } from "../Rationale";
 
-          {/* Highlighted callout */}
-          <div className="border-l-4 border-[#1f232d] pl-6 py-2 max-w-3xl">
-            <p className="text-xl text-[#1f232d] font-medium italic leading-relaxed">
-              "If we mistake a trust problem for a UI problem, we'll end up designing a better interface that still doesn't solve the user's real concern."
-            </p>
-          </div>
+const INK = "#1f232d";
+const ACCENT = "#265d73";
+const ACCENT_BG = "#dbeef8";
 
-          <div className="grid md:grid-cols-3 gap-6 mt-4">
-            <div className="bg-[#f9ddd4]/20 rounded-xl p-6 border-l-4 border-[#f9ddd4]">
-              <h4 className="font-semibold text-[#1f232d] mb-2">Lengthy Flow</h4>
-              <p className="text-[#6b6f7a] text-sm">
-                Too many steps before showing value, so users left before they understood why it mattered
-              </p>
-            </div>
-            <div className="bg-[#dbeef8]/20 rounded-xl p-6 border-l-4 border-[#dbeef8]">
-              <h4 className="font-semibold text-[#1f232d] mb-2">A Trust Problem</h4>
-              <p className="text-[#6b6f7a] text-sm">
-                Sensitive data was asked for before the platform had earned the right to ask
-              </p>
-            </div>
-            <div className="bg-[#dce8e1]/20 rounded-xl p-6 border-l-4 border-[#dce8e1]">
-              <h4 className="font-semibold text-[#1f232d] mb-2">Language Gap</h4>
-              <p className="text-[#6b6f7a] text-sm">
-                Debt relief concepts weren't explained in users' own language, which created anxiety, not clarity
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+/**
+ * NOTE ON FIGURES
+ * The percentages below are stand-ins shaped to match the real funnel, not
+ * measured values. Swap them for the MoEngage numbers before this is shown.
+ */
+const REASONS: Reason[] = [
+  {
+    decision: "Value before forms",
+    why: "People were asked to commit before they knew what they were committing to, so they left at the first ask.",
+    heard: "I didn't know what I was signing up for",
+    measured: "38%",
+    measuredLabel: "left before the plan screen",
+  },
+  {
+    decision: "Earn the right to ask",
+    why: "Income and loan details came up while the platform was still a stranger. Trust has to be built before that question.",
+    heard: "Why do you need my salary already?",
+    measured: "1 in 4",
+    measuredLabel: "dropped at the income step",
+  },
+  {
+    decision: "Their words, not ours",
+    why: "Settlement, SPA and AutoPay were explained in our language. People read them as risk rather than relief.",
+    heard: "Kuch samajh nahi aaya",
+    measured: "11%",
+    measuredLabel: "tapped the main CTA",
+  },
+];
+
+const SlideProblem = () => (
+  <SlideShell>
+    <SlideHead
+      eyebrow="The problem"
+      title={<>It looked like a UI problem. It was a trust problem.</>}
+      standfirst="People were not dropping off because the flow was long. They were dropping off because they did not believe what was on the other side."
+    />
+
+    <div className="grid gap-4 md:grid-cols-3">
+      {REASONS.map((r, i) => (
+        <Rationale key={r.decision} n={`0${i + 1}`} reason={r} />
+      ))}
     </div>
-  );
-};
+
+    <div
+      className="mt-6 rounded-2xl px-6 py-5"
+      style={{ background: ACCENT_BG, borderLeft: `4px solid ${ACCENT}` }}
+    >
+      <p
+        className="max-w-4xl font-sans text-[16px] font-semibold leading-snug md:text-[18px]"
+        style={{ color: INK }}
+      >
+        Fix a trust problem as a UI problem and you ship a tidier screen that
+        still loses the user.
+      </p>
+    </div>
+  </SlideShell>
+);
 
 export default SlideProblem;

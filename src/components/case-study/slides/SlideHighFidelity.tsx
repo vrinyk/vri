@@ -115,7 +115,7 @@ const SlideHighFidelity = () => {
                   <span className="text-xs font-semibold text-[#294b3a]">What I solved here?</span>
                   <h4 className="font-sans font-bold text-sm mb-1 mt-2" style={{ color: '#2e2e2e' }}>Made how the program works clear →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    Explained the savings program in a simple, visual way users can understand at a glance.
+                    Save monthly, FREED negotiates, the account settles. Three steps, on the screen.
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
@@ -127,21 +127,18 @@ const SlideHighFidelity = () => {
                 <div className="rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Surfaced the accounts we were hiding →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    We only ever showed eligible accounts, so users assumed the rest were
-                    forgotten and lost trust in the plan. Added Eligible vs Not Eligible
-                    tabs with a reason against each, so nothing goes missing, and users
-                    learn why an account can't be settled.
+                    We hid the accounts we could not settle, so people assumed we had lost them. Both lists now show, each with a reason.
                   </p>
                 </div>
                 <div className="rounded-xl p-3">
                   <h4 className="font-sans font-bold text-sm mb-1" style={{ color: '#2e2e2e' }}>Clarified savings via AutoPay/UPI →</h4>
                   <p className="text-xs text-[#6b6f7a]">
-                    Users understand exactly how money is saved through their preferred payment method.
+                    AutoPay and UPI shown as where the money sits, not as a permission request.
                   </p>
                 </div>
                 <div className="bg-[#dce8e1]/20 rounded-xl p-3 border border-[#dce8e1]/30">
                   <p className="text-sm font-bold text-[#294b3a]">
-                    Added benefits + trust cues upfront to build confidence before users commit.
+                    Protection and benefits appear before the ask, not after it.
                   </p>
                 </div>
               </div>

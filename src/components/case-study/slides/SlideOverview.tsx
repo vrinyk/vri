@@ -18,7 +18,7 @@ const SlideOverview = () => {
                   About the Product
                 </h3>
                 <p className="text-lg text-[#1f232d] leading-relaxed">
-                  Managing debt in India is often overwhelming, especially with constant creditor calls and low financial literacy. Freed addresses this by breaking down credit scores into simple insights, consolidating multiple loans into a single structured plan, and offering clear repayment strategies that reduce interest burden and loan tenure.
+                  FREED turns scattered credit card and loan debt into one structured plan, for people fielding creditor calls with little financial guidance.
                 </p>
               </div>
               

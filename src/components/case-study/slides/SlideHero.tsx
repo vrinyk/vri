@@ -65,7 +65,7 @@ const SlideHero = () => {
               className="relative bg-gradient-to-b from-[#dce8e1]/30 to-[#dce8e1]/10 rounded-2xl p-6 border border-[#dce8e1]/30"
             >
               
-              <h3 className="font-serif text-lg mb-3">
+              <h3 className="font-sans text-lg mb-3">
                 <span className="font-bold text-[#1f232d]">{card.type}</span>{" "}
                 <span className="italic text-[#1f232d]">{card.title}</span>
               </h3>
