@@ -14,7 +14,7 @@ const GREEN = "#294b3a";
 const GREEN_BG = "#dce8e1";
 
 /** One phone, stepped through in flow order. */
-const SCREENS: Screen[] = [
+export const ACCOUNT_SELECTION_SCREENS: Screen[] = [
   { src: programPage, label: "Programme explained step by step", tall: true },
   { src: accountsToSettle, label: "Pick the first account to settle" },
   { src: paymentSummary, label: "Itemised payment summary" },
@@ -165,7 +165,7 @@ const SlideExperimentAccountSelection = () => {
 
           {/* ─── Right: the designs, unframed so the phone sits on the page ─── */}
           <div className="lg:pl-2">
-            <PhoneCarousel screens={SCREENS} width={262} />
+            <PhoneCarousel screens={ACCOUNT_SELECTION_SCREENS} width={262} />
           </div>
         </div>
       </div>
