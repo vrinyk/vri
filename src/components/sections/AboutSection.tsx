@@ -136,12 +136,14 @@ export function AboutSection() {
         </motion.div>
 
         {/* ─── Bio ─── */}
-        <div className="w-full md:w-[49%]">
+        {/* Kept short on purpose: the card has a fixed height, so the copy has to
+            fit inside it at laptop sizes rather than spill over the title. */}
+        <div className="w-full md:w-[49%] md:max-h-full md:min-h-0">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="mb-4 font-oswald text-[22px] font-semibold uppercase leading-[1.1] text-white md:mb-[6%] md:text-[clamp(19px,2.15vw,36px)]"
+            className="mb-4 font-oswald text-[22px] font-semibold uppercase leading-[1.1] text-white md:mb-[5%] md:text-[clamp(18px,1.9vw,32px)]"
           >
             Economics first,<br />design for good
           </motion.h3>
@@ -150,51 +152,45 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="font-dm-sans text-[14px] leading-[1.6] text-white/80 md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
+            className="font-dm-sans text-[14px] leading-[1.6] text-white/80 md:text-[clamp(11px,1vw,15.5px)] md:leading-[1.6]"
           >
-            I grew up watching <em className="italic">M.A.D</em> and{" "}
-            <em className="italic">Art Attack</em>, and watching my mom thread
-            beads at the kitchen table. I think that's where my urge to make
-            things began.
+            I grew up on <em className="italic">M.A.D</em> and{" "}
+            <em className="italic">Art Attack</em>, watching my mom thread beads
+            at the kitchen table. That's where the urge to make things began.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.72 }}
-            className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
+            className="mt-3 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:text-[clamp(11px,1vw,15.5px)] md:leading-[1.6] md:mt-[3.5%]"
           >
-            I studied <span className="font-medium text-white">Economics</span>
-            , but somewhere along the way I became more curious about{" "}
+            I studied <span className="font-medium text-white">Economics</span>,
+            then got more curious about{" "}
             <span className="font-medium text-white">
               the people inside those systems
             </span>
-            . Why do they get stuck? What makes something feel intuitive? Why
-            does one experience make sense instantly while another doesn't?
+            : why they get stuck, and why some things just click.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.82 }}
-            className="mt-4 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)] md:leading-[1.65]"
+            className="mt-3 font-dm-sans text-[14px] leading-[1.6] text-white/80 md:text-[clamp(11px,1vw,15.5px)] md:leading-[1.6] md:mt-[3.5%]"
           >
-            So I started teaching myself design at night and freelancing while
-            working part-time, and slowly found my way into{" "}
-            <span className="font-medium text-white">product design</span>,
-            where I could combine the things I liked most: understanding
-            people, making things, and figuring out why something wasn't
-            working.
+            So I taught myself design at night, freelanced on the side, and
+            found my way into{" "}
+            <span className="font-medium text-white">product design</span>.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.9 }}
-            className="mt-4 font-dm-sans text-[14px] italic leading-[1.5] text-white/90 md:mt-[4%] md:text-[clamp(11px,1.02vw,16px)]"
+            className="mt-3 font-dm-sans text-[14px] italic leading-[1.5] text-white/90 md:mt-[3.5%] md:text-[clamp(11px,1vw,15.5px)]"
           >
-            Now I'm still driven by the same curiosity I had as a kid: to take
-            something complicated and make it feel simple, thoughtful, and a
+            Same curiosity today: make the complicated feel simple, and a
             little more human.
           </motion.p>
         </div>
