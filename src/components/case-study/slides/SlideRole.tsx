@@ -51,7 +51,12 @@ const SlideRole = () => {
 
           {/* Right: same clickable phone as the Account Selection slide */}
           <div className="flex justify-center">
-            <PhoneCarousel screens={ACCOUNT_SELECTION_SCREENS} width={250} />
+            <PhoneCarousel
+              screens={ACCOUNT_SELECTION_SCREENS}
+              width={270}
+              device="iphone"
+              showCaption={false}
+            />
           </div>
         </div>
       </div>

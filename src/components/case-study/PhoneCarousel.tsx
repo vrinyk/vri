@@ -11,6 +11,10 @@ interface PhoneCarouselProps {
   /** Frame width in px. Height follows a 414 x 875 phone. */
   width?: number;
   className?: string;
+  /** "iphone" draws a titanium iPhone body with a Dynamic Island and side buttons. */
+  device?: "simple" | "iphone";
+  /** Hide the label, dots and hint under the phone. */
+  showCaption?: boolean;
 }
 
 /**
@@ -24,6 +28,8 @@ export default function PhoneCarousel({
   screens,
   width = 268,
   className = "",
+  device = "simple",
+  showCaption = true,
 }: PhoneCarouselProps) {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState(false);
@@ -34,7 +40,13 @@ export default function PhoneCarousel({
   // Frame width is capped by the viewport so the arrows never get pushed off
   // screen on a phone. Height is derived in CSS so it tracks whichever wins.
   const frameW = `min(${width}px, 62vw)`;
-  const frameH = `calc(${frameW} * 875 / 414)`;
+  const iphone = device === "iphone";
+  // iPhone body: 3px titanium rim + 9px black bezel around the 414 x 875 screen.
+  const BODY = 12;
+  const frameH = iphone
+    ? `calc((${frameW} - ${BODY * 2}px) * 875 / 414 + ${BODY * 2}px)`
+    : `calc(${frameW} * 875 / 414)`;
+  const radius = `calc(${frameW} * 0.16)`;
 
   const go = useCallback(
     (d: number) => setI((v) => (v + d + n) % n),
@@ -87,6 +99,91 @@ export default function PhoneCarousel({
         style={{ width: `calc(${frameW} + 96px)`, maxWidth: "100%" }}
       >
         {/* ── the phone ── */}
+        {iphone ? (
+          <div
+            className="relative mx-auto bg-[linear-gradient(145deg,#e4e6ea_0%,#9ea3aa_22%,#d7dade_48%,#868b93_76%,#cfd2d6_100%)] p-[3px] shadow-[0_32px_60px_-18px_rgba(20,24,31,0.5),0_10px_20px_-10px_rgba(20,24,31,0.3)]"
+            style={{ width: frameW, height: frameH, borderRadius: radius }}
+          >
+            {/* side buttons */}
+            <span aria-hidden className="absolute -left-[3px] top-[17%] h-[4%] w-[3px] rounded-l-sm bg-[#8e939a]" />
+            <span aria-hidden className="absolute -left-[3px] top-[25%] h-[7.5%] w-[3px] rounded-l-sm bg-[#8e939a]" />
+            <span aria-hidden className="absolute -left-[3px] top-[34%] h-[7.5%] w-[3px] rounded-l-sm bg-[#8e939a]" />
+            <span aria-hidden className="absolute -right-[3px] top-[28%] h-[11%] w-[3px] rounded-r-sm bg-[#8e939a]" />
+
+            <div
+              className="h-full w-full bg-[#0b0c0f] p-[9px] ring-1 ring-black/40"
+              style={{ borderRadius: `calc(${radius} - 3px)` }}
+            >
+              <div
+                className="relative h-full w-full overflow-hidden bg-white"
+                style={{ borderRadius: `calc(${radius} - 12px)` }}
+              >
+            {/* One track, translated — keeps each screen's own scroll position
+                instead of remounting the image on every step. */}
+            <div
+              className="flex h-full transition-transform duration-400 ease-out"
+              style={{
+                width: `${n * 100}%`,
+                transform: `translateX(-${(i * 100) / n}%)`,
+              }}
+            >
+              {screens.map((s, idx) => (
+                <div
+                  key={s.label}
+                  ref={(el) => { panes.current[idx] = el; }}
+                  onMouseEnter={() => setPaused(true)}
+                  onMouseLeave={() => setPaused(false)}
+                  onTouchStart={() => setPaused(true)}
+                  className="h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ width: `${100 / n}%` }}
+                >
+                  <img src={s.src} alt={s.label} className="block w-full" />
+                </div>
+              ))}
+            </div>
+
+                {/* Fixed iOS status bar: scrolling content passes beneath it,
+                    the way it does on a real phone. */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 z-10 flex h-[4.6%] items-center justify-between bg-white px-[7%] font-sans font-semibold text-black"
+                  style={{ fontSize: `calc(${frameW} * 0.047)` }}
+                >
+                  <span>16:45</span>
+                  <span className="absolute left-1/2 top-[22%] h-[78%] w-[31%] -translate-x-1/2 rounded-full bg-black" />
+                  <span className="flex items-center gap-[0.3em]">
+                    <svg viewBox="0 0 17 11" className="h-[0.72em]" fill="currentColor">
+                      <rect x="0" y="7" width="3" height="4" rx="0.8" />
+                      <rect x="4.6" y="5" width="3" height="6" rx="0.8" />
+                      <rect x="9.2" y="2.5" width="3" height="8.5" rx="0.8" />
+                      <rect x="13.8" y="0" width="3" height="11" rx="0.8" />
+                    </svg>
+                    <span className="text-[0.8em]">5G</span>
+                    <svg viewBox="0 0 26 12" className="h-[0.78em]" fill="none">
+                      <rect x="0.5" y="0.5" width="22" height="11" rx="3.2" stroke="currentColor" strokeOpacity="0.4" />
+                      <rect x="2" y="2" width="19" height="8" rx="2" fill="currentColor" />
+                      <rect x="23.6" y="4" width="1.8" height="4" rx="0.9" fill="currentColor" fillOpacity="0.4" />
+                    </svg>
+                  </span>
+                </div>
+                {/* glass sheen */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0)_38%)]"
+                />
+              </div>
+            </div>
+
+          <button
+            type="button"
+            onClick={() => setZoom(true)}
+            aria-label={`Open ${current.label} full size`}
+            className="absolute bottom-6 right-6 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[#1f232d]/85 transition-colors hover:bg-[#1f232d]"
+          >
+            <Maximize2 className="h-3.5 w-3.5 text-white" />
+          </button>
+          </div>
+        ) : (
         <div
           className="relative mx-auto rounded-[1.9rem] bg-[#14181f] p-1.5 shadow-[0_20px_44px_-14px_rgba(20,24,31,0.45)]"
           style={{ width: frameW, height: frameH }}
@@ -126,6 +223,7 @@ export default function PhoneCarousel({
             <Maximize2 className="h-3.5 w-3.5 text-white" />
           </button>
         </div>
+        )}
 
         {/* ── arrows, flanking the frame ── */}
         <button
@@ -148,6 +246,8 @@ export default function PhoneCarousel({
         </button>
       </div>
 
+      {showCaption && (
+        <>
       {/* ── caption and dots ── */}
       <p
         className="mt-4 text-center font-sans text-[13.5px] font-medium"
@@ -175,6 +275,8 @@ export default function PhoneCarousel({
       <p className="mt-2 text-center font-sans text-[11.5px]" style={{ color: MUTED }}>
         {i + 1} of {n} · scroll inside the phone, or open it full size
       </p>
+        </>
+      )}
 
       {zoom && (
         <div
