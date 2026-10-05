@@ -48,7 +48,6 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "0 to 1", "Fintech"],
     blurb:
       "How a credit score stopped being a number and started routing people to the right way out of debt.",
-    href: "/case-studies/credit-insights",
     stats: [
       { value: "0 to 1", label: "6 months" },
       { value: "3", label: "Products" },

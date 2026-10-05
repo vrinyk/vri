@@ -1,5 +1,4 @@
-import mockupOld from "@/assets/case-study-freed/mockup-old.png";
-import mockupNew from "@/assets/case-study-freed/mockup-new.png";
+import phoneMockup from "@/assets/case-study-freed/freed-phone-mockup.gif";
 
 const SlideOverview = () => {
   return (
@@ -33,33 +32,15 @@ const SlideOverview = () => {
             </div>
           </div>
           
-          {/* Right - Phone Mockups */}
-          <div className="flex justify-center items-center gap-8">
-            {/* Phone 1 - Old */}
-            <div className="flex flex-col items-center">
-              <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 shadow-xl overflow-hidden">
-                <div className="w-full h-full rounded-[2rem] overflow-hidden">
-                  <img 
-                    src={mockupOld} 
-                    alt="Old app design" 
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-              </div>
-            </div>
-            
-            {/* Phone 2 - New */}
-            <div className="flex flex-col items-center">
-              <div className="w-56 h-[480px] bg-[#1f232d] rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
-                <div className="w-full h-full rounded-[2rem] overflow-hidden">
-                  <img 
-                    src={mockupNew} 
-                    alt="New app design" 
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-              </div>
-            </div>
+          {/* Right - Phone Mockup (animated walkthrough, frame baked into the GIF) */}
+          <div className="flex justify-center items-center">
+            <img
+              src={phoneMockup}
+              alt="FREED app walkthrough on a phone: splash screen, then onboarding"
+              width={448}
+              height={960}
+              className="w-[min(260px,62vw)] h-auto drop-shadow-[0_18px_40px_rgba(31,35,45,0.28)]"
+            />
           </div>
         </div>
       </div>
