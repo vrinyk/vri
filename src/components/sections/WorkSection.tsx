@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-preview.png";
 import agentFlowCardPreview from "../../assets/case-study-agent-flow/agent-flow-card-preview.png";
 import emiScoreCardPreview from "../../assets/case-study-emi-score/emi-work-card-preview.webp";
+import lovableLogo from "../../assets/tools/lovable.webp";
+import claudeLogo from "../../assets/tools/claude.webp";
+import chatgptLogo from "../../assets/tools/chatgpt.webp";
+import adobeCcLogo from "../../assets/tools/adobe-cc.webp";
 
 const MotionLink = motion(Link);
 
@@ -69,14 +73,14 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/** Monogram tiles rather than brand marks — no third-party logo assets needed. */
-const TOOLS = [
+/** Real logos where we have them; monogram tiles for the rest. `pad` insets logos drawn on white. */
+const TOOLS: { name: string; mark: string; color: string; logo?: string; pad?: boolean }[] = [
   { name: "Figma", mark: "F", color: "#F24E1E" },
-  { name: "Lovable", mark: "L", color: "#FF4F8B" },
-  { name: "Claude", mark: "C", color: "#D97757" },
-  { name: "ChatGPT", mark: "GPT", color: "#10A37F" },
+  { name: "Lovable", mark: "L", color: "#FF4F8B", logo: lovableLogo, pad: true },
+  { name: "Claude", mark: "C", color: "#D97757", logo: claudeLogo },
+  { name: "ChatGPT", mark: "GPT", color: "#10A37F", logo: chatgptLogo },
   { name: "FontForge", mark: "Ff", color: "#4C7BD1" },
-  { name: "Adobe CC", mark: "Cc", color: "#ED2224" },
+  { name: "Adobe CC", mark: "Cc", color: "#ED2224", logo: adobeCcLogo },
 ];
 
 export function WorkSection() {
@@ -238,13 +242,22 @@ export function WorkSection() {
             <div className="grid grid-cols-3 gap-x-4 gap-y-3 md:grid-cols-6 md:gap-x-[clamp(10px,1.2vw,20px)]">
               {TOOLS.map(tool => (
                 <div key={tool.name} className="flex flex-col items-center gap-1.5">
-                  <span
-                    className="flex h-9 w-9 items-center justify-center rounded-xl font-oswald text-[13px] font-semibold uppercase text-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] md:text-[clamp(10px,0.95vw,15px)]"
-                    style={{ backgroundColor: tool.color }}
-                    aria-hidden="true"
-                  >
-                    {tool.mark}
-                  </span>
+                  {tool.logo ? (
+                    <span
+                      className={`flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] ${tool.pad ? "p-[18%]" : ""}`}
+                      aria-hidden="true"
+                    >
+                      <img src={tool.logo} alt="" className={`h-full w-full ${tool.pad ? "object-contain" : "object-cover"}`} />
+                    </span>
+                  ) : (
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-xl font-oswald text-[13px] font-semibold uppercase text-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] md:text-[clamp(10px,0.95vw,15px)]"
+                      style={{ backgroundColor: tool.color }}
+                      aria-hidden="true"
+                    >
+                      {tool.mark}
+                    </span>
+                  )}
                   <span className="font-dm-sans text-[10px] text-white/70 md:text-[clamp(8px,0.68vw,11px)]">
                     {tool.name}
                   </span>
