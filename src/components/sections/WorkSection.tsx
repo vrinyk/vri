@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-preview.png";
 import agentFlowCardPreview from "../../assets/case-study-agent-flow/agent-flow-card-preview.png";
+import emiScoreCardPreview from "../../assets/case-study-emi-score/emi-work-card-preview.webp";
 
 const MotionLink = motion(Link);
 
@@ -40,6 +41,19 @@ const PROJECTS: Project[] = [
     stats: [
       { value: "40 min", label: "Per scrub", dir: "down" },
       { value: "2 tabs", label: "From 6+", dir: "down" },
+    ],
+  },
+  {
+    year: "2026 · FREED",
+    title: "EMI Score: should I take another loan?",
+    tags: ["Mobile App", "0 to 1", "Vernacular UX"],
+    blurb:
+      "How a free score, tested with 22 borrowers, learned to give a verdict instead of a number.",
+    image: emiScoreCardPreview,
+    href: "/case-studies/emi-score",
+    stats: [
+      { value: "22", label: "Users tested" },
+      { value: "3", label: "Languages" },
     ],
   },
   {
