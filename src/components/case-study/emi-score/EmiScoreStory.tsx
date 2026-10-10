@@ -5,6 +5,8 @@ import {
   Landmark, Languages, Lock, MessagesSquare, Mic, PenTool, Route, Search, Sparkles, TrendingDown, Users, Wallet,
 } from "lucide-react";
 import * as A from "./assets";
+import chatgptLogo from "../../../assets/tools/chatgpt.webp";
+import claudeLogo from "../../../assets/tools/claude.webp";
 import { Phone, Zoom } from "./ui";
 
 /* ── Tokens ─────────────────────────────────────────────────────
@@ -946,15 +948,17 @@ function AiSection() {
         <Headline one="AI for speed." two="People for truth." />
       </Reveal>
       <div className="mt-14 grid grid-cols-2 gap-8 md:grid-cols-5">
-        {[
-          ["GPT", "#10A37F", "ChatGPT", "Copy in 3 languages"],
-          ["G", "#4285F4", "Gemini", "Market research"],
-          ["C", "#D97757", "Claude", "Flow + score data"],
-          ["CD", NAVY, "Claude Design", "Prototypes in hours"],
-          ["CC", INK, "Claude Code", "This case study"],
-        ].map(([m, c, n, j], k) => (
+        {([
+          [chatgptLogo, "ChatGPT", "Copy in 3 languages"],
+          [null, "Gemini", "Market research"],
+          [claudeLogo, "Claude", "Flow + score data"],
+          [claudeLogo, "Claude Design", "Prototypes in hours"],
+          [claudeLogo, "Claude Code", "This case study"],
+        ] as const).map(([logo, n, j], k) => (
           <Reveal key={n} delay={k * 0.05}>
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl text-[15px] font-bold text-white" style={{ background: c, fontFamily: DISPLAY }}>{m}</span>
+            <span className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-[0_6px_16px_-10px_rgba(18,20,23,.45)]">
+              {logo ? <img src={logo} alt="" className="h-full w-full object-cover" /> : <GeminiMark />}
+            </span>
             <p className="mt-5 text-[20px] font-bold leading-tight" style={{ fontFamily: DISPLAY }}>{j}</p>
             <p className="mt-1 text-[15px]" style={{ color: GREY }}>{n}</p>
           </Reveal>
@@ -965,6 +969,22 @@ function AiSection() {
         <ShotTile src={A.aiFlowProto} alt="Intro prototype with language toggle" cap="The intro, with a language toggle." />
       </Reveal>
     </Section>
+  );
+}
+
+/** Gemini's four-point sparkle, drawn inline since no logo file was supplied. */
+function GeminiMark() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[62%] w-[62%]" aria-hidden="true">
+      <defs>
+        <linearGradient id="gemini-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#1C7DFF" />
+          <stop offset="0.55" stopColor="#7B6CF6" />
+          <stop offset="1" stopColor="#E66C9C" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#gemini-g)" d="M12 0C12.6 6.4 17.6 11.4 24 12 17.6 12.6 12.6 17.6 12 24 11.4 17.6 6.4 12.6 0 12 6.4 11.4 11.4 6.4 12 0Z" />
+    </svg>
   );
 }
 
