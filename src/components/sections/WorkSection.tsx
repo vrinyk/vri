@@ -26,12 +26,13 @@ const PROJECTS: Project[] = [
     title: "EMI Score: should I take another loan?",
     tags: ["Mobile App", "0 to 1", "Vernacular UX"],
     blurb:
-      "How a free score, tested with 22 borrowers, learned to give a verdict instead of a number.",
+      "How 22 borrower interviews turned a confusing score into one clear answer: take the loan, or don't.",
     image: emiScoreCardPreview,
     href: "/case-studies/emi-score",
     stats: [
-      { value: "22", label: "Users tested" },
-      { value: "3", label: "Languages" },
+      // Placeholder figures until post-launch numbers are in
+      { value: "45%", label: "Engagement", dir: "up" },
+      { value: "28%", label: "Retention", dir: "up" },
     ],
   },
   {
@@ -122,12 +123,12 @@ export function WorkSection() {
               </p>
 
               {/* Project preview image — the biggest thing on the card */}
-              <div className="w-full aspect-[16/10] rounded-lg bg-[#D1D3D4] mb-3.5 overflow-hidden md:aspect-auto md:flex-1 md:min-h-0 md:mb-[1.2vw]">
+              <div className={`w-full aspect-[16/10] rounded-lg mb-3.5 overflow-hidden ${project.image ? "" : "bg-[#D1D3D4]"} md:aspect-auto md:flex-1 md:min-h-0 md:mb-[1.2vw]`}>
                 {project.image && (
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-full w-full object-cover object-top"
+                    className="h-full w-full object-contain"
                   />
                 )}
               </div>
