@@ -109,7 +109,7 @@ export function WorkSection() {
 
         {/* ─── Project Cards ─── */}
         {/* Horizontal scroller: ~2.5 cards in view, so the half card hints there is more */}
-        <div className="hide-scrollbar relative mt-6 flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 md:mt-[1.5%] md:mb-[1.5%] md:min-h-0 md:flex-1 md:scroll-px-[2.5vw] md:gap-[2vw] md:px-[2.5vw]">
+        <div className="hide-scrollbar relative mt-6 flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 md:mt-[1%] md:mb-[1.2%] md:min-h-0 md:flex-1 md:scroll-px-[2.5vw] md:gap-[2vw] md:px-[2.5vw]">
           {PROJECTS.map((project, i) => (
             <motion.div
               key={i}
@@ -123,7 +123,7 @@ export function WorkSection() {
               </p>
 
               {/* Project preview image — the biggest thing on the card */}
-              <div className={`w-full aspect-[16/10] rounded-lg mb-3.5 overflow-hidden ${project.image ? "" : "bg-[#D1D3D4]"} md:aspect-auto md:flex-1 md:min-h-0 md:mb-[1.2vw]`}>
+              <div className={`w-full aspect-[16/10] rounded-lg mb-3.5 overflow-hidden ${project.image ? "" : "bg-[#D1D3D4]"} md:aspect-auto md:flex-1 md:min-h-0 md:mb-[1.2vw] md:[@media(max-height:720px)]:hidden`}>
                 {project.image && (
                   <img
                     src={project.image}
@@ -198,13 +198,13 @@ export function WorkSection() {
         </div>
 
         {/* ─── Bottom: Stuff I've Worked On + Tools ─── */}
-        <div className="relative mt-8 flex w-full flex-col items-start gap-6 px-5 pb-8 md:mt-0 md:shrink-0 md:flex-row md:items-end md:justify-between md:gap-[5%] md:px-[2.5vw] md:pb-[2.5%]">
-          <div className="md:max-w-[52%]">
+        <div className="relative mt-8 flex w-full flex-col items-start gap-6 px-5 pb-8 md:mt-0 md:shrink-0 md:flex-row md:items-end md:justify-between md:gap-[5%] md:px-[2.5vw] md:pb-[1.5%]">
+          <div className="md:max-w-[60%]">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="font-oswald text-[24px] font-semibold uppercase text-white mb-2 md:text-[clamp(20px,2.4vw,36px)]"
+              className="font-oswald text-[24px] font-semibold uppercase leading-none text-white mb-1.5 md:text-[clamp(18px,1.9vw,30px)]"
             >
               Stuff I've Worked On
             </motion.h2>
@@ -212,21 +212,12 @@ export function WorkSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.9 }}
-              className="font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)]"
+              className="font-dm-sans text-[13.5px] leading-snug text-white/80 md:text-[clamp(10px,0.9vw,14px)]"
             >
-              End-to-end web apps, mobile apps and SaaS products, from research
-              to UI. Mostly fintech, where a confusing screen costs someone real
-              money, so clarity is the whole job.
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.97 }}
-              className="mt-2 font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)] md:[@media(max-height:780px)]:hidden"
-            >
-              I listen before I draw, sit with the engineers through build, and
-              read the funnel after launch to find out whether it actually
-              worked. Every project starts with a better question.
+              End-to-end web, mobile and SaaS products, mostly fintech, where a
+              confusing screen costs someone real money. I listen before I draw,
+              stay with engineering through build, and read the funnel after
+              launch to see if it worked.
             </motion.p>
           </div>
 
