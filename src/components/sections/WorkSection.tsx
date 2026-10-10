@@ -2,6 +2,12 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-preview.png";
 import agentFlowCardPreview from "../../assets/case-study-agent-flow/agent-flow-card-preview.png";
+import emiScoreCardPreview from "../../assets/case-study-emi-score/emi-work-card-preview.webp";
+import figmaLogo from "../../assets/tools/figma.webp";
+import lovableLogo from "../../assets/tools/lovable.webp";
+import claudeLogo from "../../assets/tools/claude.webp";
+import chatgptLogo from "../../assets/tools/chatgpt.webp";
+import adobeCcLogo from "../../assets/tools/adobe-cc.webp";
 
 const MotionLink = motion(Link);
 
@@ -16,6 +22,20 @@ type Project = {
 };
 
 const PROJECTS: Project[] = [
+  {
+    year: "2026 · FREED",
+    title: "EMI Score: should I take another loan?",
+    tags: ["Mobile App", "0 to 1", "Vernacular UX"],
+    blurb:
+      "How 22 borrower interviews turned a confusing score into one clear answer: take the loan, or don't.",
+    image: emiScoreCardPreview,
+    href: "/case-studies/emi-score",
+    stats: [
+      // Placeholder figures until post-launch numbers are in
+      { value: "45%", label: "Engagement", dir: "up" },
+      { value: "28%", label: "Retention", dir: "up" },
+    ],
+  },
   {
     year: "2025 · FREED",
     title: "Redesigning the onboarding journey for FREED DRP",
@@ -55,22 +75,21 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/** Monogram tiles rather than brand marks — no third-party logo assets needed. */
-const TOOLS = [
-  { name: "Figma", mark: "F", color: "#F24E1E" },
-  { name: "Lovable", mark: "L", color: "#FF4F8B" },
-  { name: "Claude", mark: "C", color: "#D97757" },
-  { name: "ChatGPT", mark: "GPT", color: "#10A37F" },
-  { name: "FontForge", mark: "Ff", color: "#4C7BD1" },
-  { name: "Adobe CC", mark: "Cc", color: "#ED2224" },
+/** Real logos where we have them; monogram tiles for the rest. `pad` insets logos drawn on white. */
+const TOOLS: { name: string; mark: string; color: string; logo?: string; pad?: boolean }[] = [
+  { name: "Figma", mark: "F", color: "#F24E1E", logo: figmaLogo, pad: true },
+  { name: "Lovable", mark: "L", color: "#FF4F8B", logo: lovableLogo, pad: true },
+  { name: "Claude", mark: "C", color: "#D97757", logo: claudeLogo },
+  { name: "ChatGPT", mark: "GPT", color: "#10A37F", logo: chatgptLogo },
+  { name: "Adobe CC", mark: "Cc", color: "#ED2224", logo: adobeCcLogo },
 ];
 
 export function WorkSection() {
   return (
     <>
-      <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg md:block">
+      <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg">
         {/* ─── Marquee ─── */}
-        <div className="relative left-0 w-full shrink-0 overflow-hidden pt-5 md:absolute md:top-[2.5%] md:pt-0">
+        <div className="relative left-0 w-full shrink-0 overflow-hidden pt-5 md:pt-[1.5%]">
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
             transition={{ duration: 15, ease: "linear", repeat: Infinity }}
@@ -89,26 +108,27 @@ export function WorkSection() {
         </div>
 
         {/* ─── Project Cards ─── */}
-        <div className="relative mt-6 flex w-full flex-col gap-5 px-5 md:absolute md:top-[13%] md:left-[2.5%] md:right-[2.5%] md:mt-0 md:h-[60%] md:w-auto md:flex-row md:gap-[2.5%] md:px-0">
+        {/* Horizontal scroller: ~2.5 cards in view, so the half card hints there is more */}
+        <div className="hide-scrollbar relative mt-6 flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 md:mt-[1%] md:mb-[1.2%] md:min-h-0 md:flex-1 md:scroll-px-[2.5vw] md:gap-[2vw] md:px-[2.5vw]">
           {PROJECTS.map((project, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
-              className="flex min-w-0 flex-col rounded-2xl bg-cream p-5 md:flex-1 md:p-[4%]"
+              className="flex w-[80vw] flex-none snap-start flex-col rounded-2xl bg-cream p-5 md:w-[37vw] md:p-[2.4vw]"
             >
               <p className="font-dm-sans text-[12px] uppercase tracking-[0.14em] text-black/50 mb-2.5 md:mb-[3%] md:text-[clamp(10px,0.85vw,13px)]">
                 {project.year}
               </p>
 
               {/* Project preview image — the biggest thing on the card */}
-              <div className="w-full aspect-[16/10] rounded-lg bg-[#D1D3D4] mb-3.5 overflow-hidden md:aspect-auto md:flex-1 md:min-h-28 md:mb-[5%]">
+              <div className={`w-full aspect-[16/10] rounded-lg mb-3.5 overflow-hidden ${project.image ? "" : "bg-[#D1D3D4]"} md:aspect-auto md:flex-1 md:min-h-0 md:mb-[1.2vw] md:[@media(max-height:720px)]:hidden`}>
                 {project.image && (
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-full w-full object-cover object-top"
+                    className="h-full w-full object-contain"
                   />
                 )}
               </div>
@@ -140,15 +160,15 @@ export function WorkSection() {
                   <div className="flex gap-5 md:gap-[8%]">
                     {project.stats.map((stat, j) => (
                       <div key={j}>
-                        <p className="flex items-baseline gap-1 whitespace-nowrap font-oswald text-[17px] font-semibold text-green-800 md:text-[clamp(14px,1.1vw,20px)]">
+                        <p className="flex items-baseline gap-1 whitespace-nowrap font-inter-tight text-[26px] font-bold leading-none tracking-[-0.03em] tabular-nums text-[#272e46] md:text-[clamp(22px,2.1vw,36px)]">
                           {stat.dir && (
-                            <span aria-hidden="true" className="text-[0.7em] text-green-700">
+                            <span aria-hidden="true" className="text-[0.6em] font-semibold text-green-700">
                               {stat.dir === "up" ? "↗" : "↘"}
                             </span>
                           )}
                           {stat.value}
                         </p>
-                        <p className="whitespace-nowrap font-dm-sans text-[10.5px] text-black/55 md:text-[clamp(8px,0.7vw,11.5px)]">
+                        <p className="mt-1 whitespace-nowrap font-dm-sans text-[11px] text-black/55 md:text-[clamp(9px,0.75vw,12.5px)]">
                           {stat.label}
                         </p>
                       </div>
@@ -178,13 +198,13 @@ export function WorkSection() {
         </div>
 
         {/* ─── Bottom: Stuff I've Worked On + Tools ─── */}
-        <div className="relative mt-8 flex w-full flex-col items-start gap-6 px-5 pb-8 md:absolute md:bottom-[3.5%] md:left-[2.5%] md:right-[2.5%] md:mt-0 md:w-auto md:flex-row md:items-end md:justify-between md:gap-[5%] md:px-0 md:pb-0">
-          <div className="md:max-w-[52%]">
+        <div className="relative mt-8 flex w-full flex-col items-start gap-6 px-5 pb-8 md:mt-0 md:shrink-0 md:flex-row md:items-end md:justify-between md:gap-[5%] md:px-[2.5vw] md:pb-[1.5%]">
+          <div className="md:max-w-[60%]">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="font-oswald text-[24px] font-semibold uppercase text-white mb-2 md:text-[clamp(20px,2.4vw,36px)]"
+              className="font-oswald text-[24px] font-semibold uppercase leading-none text-white mb-1.5 md:text-[clamp(18px,1.9vw,30px)]"
             >
               Stuff I've Worked On
             </motion.h2>
@@ -192,21 +212,12 @@ export function WorkSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.9 }}
-              className="font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)]"
+              className="font-dm-sans text-[13.5px] leading-snug text-white/80 md:text-[clamp(10px,0.9vw,14px)]"
             >
-              End-to-end web apps, mobile apps and SaaS products, from research
-              to UI. Mostly fintech, where a confusing screen costs someone real
-              money, so clarity is the whole job.
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.97 }}
-              className="mt-2 font-dm-sans text-[13.5px] leading-relaxed text-white/80 md:text-[clamp(10px,0.95vw,15px)]"
-            >
-              I listen before I draw, sit with the engineers through build, and
-              read the funnel after launch to find out whether it actually
-              worked. Every project starts with a better question.
+              End-to-end web, mobile and SaaS products, mostly fintech, where a
+              confusing screen costs someone real money. I listen before I draw,
+              stay with engineering through build, and read the funnel after
+              launch to see if it worked.
             </motion.p>
           </div>
 
@@ -220,16 +231,25 @@ export function WorkSection() {
             <p className="font-dm-sans text-[10px] uppercase tracking-[0.2em] text-white/50 mb-3 md:text-[clamp(8px,0.7vw,11px)]">
               Tools I have used
             </p>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-3 md:grid-cols-6 md:gap-x-[clamp(10px,1.2vw,20px)]">
+            <div className="grid grid-cols-3 gap-x-4 gap-y-3 md:grid-cols-5 md:gap-x-[clamp(10px,1.2vw,20px)]">
               {TOOLS.map(tool => (
                 <div key={tool.name} className="flex flex-col items-center gap-1.5">
-                  <span
-                    className="flex h-9 w-9 items-center justify-center rounded-xl font-oswald text-[13px] font-semibold uppercase text-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] md:text-[clamp(10px,0.95vw,15px)]"
-                    style={{ backgroundColor: tool.color }}
-                    aria-hidden="true"
-                  >
-                    {tool.mark}
-                  </span>
+                  {tool.logo ? (
+                    <span
+                      className={`flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] ${tool.pad ? "p-[18%]" : ""}`}
+                      aria-hidden="true"
+                    >
+                      <img src={tool.logo} alt="" className={`h-full w-full ${tool.pad ? "object-contain" : "object-cover"}`} />
+                    </span>
+                  ) : (
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-xl font-oswald text-[13px] font-semibold uppercase text-white md:h-[clamp(28px,2.6vw,42px)] md:w-[clamp(28px,2.6vw,42px)] md:text-[clamp(10px,0.95vw,15px)]"
+                      style={{ backgroundColor: tool.color }}
+                      aria-hidden="true"
+                    >
+                      {tool.mark}
+                    </span>
+                  )}
                   <span className="font-dm-sans text-[10px] text-white/70 md:text-[clamp(8px,0.68vw,11px)]">
                     {tool.name}
                   </span>
