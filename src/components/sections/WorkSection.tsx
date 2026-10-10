@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import freedWorkCardPreview from "../../assets/case-study-freed/freed-work-card-preview.png";
 import agentFlowCardPreview from "../../assets/case-study-agent-flow/agent-flow-card-preview.png";
 import emiScoreCardPreview from "../../assets/case-study-emi-score/emi-work-card-preview.webp";
+import figmaLogo from "../../assets/tools/figma.webp";
 import lovableLogo from "../../assets/tools/lovable.webp";
 import claudeLogo from "../../assets/tools/claude.webp";
 import chatgptLogo from "../../assets/tools/chatgpt.webp";
@@ -76,11 +77,10 @@ const PROJECTS: Project[] = [
 
 /** Real logos where we have them; monogram tiles for the rest. `pad` insets logos drawn on white. */
 const TOOLS: { name: string; mark: string; color: string; logo?: string; pad?: boolean }[] = [
-  { name: "Figma", mark: "F", color: "#F24E1E" },
+  { name: "Figma", mark: "F", color: "#F24E1E", logo: figmaLogo, pad: true },
   { name: "Lovable", mark: "L", color: "#FF4F8B", logo: lovableLogo, pad: true },
   { name: "Claude", mark: "C", color: "#D97757", logo: claudeLogo },
   { name: "ChatGPT", mark: "GPT", color: "#10A37F", logo: chatgptLogo },
-  { name: "FontForge", mark: "Ff", color: "#4C7BD1" },
   { name: "Adobe CC", mark: "Cc", color: "#ED2224", logo: adobeCcLogo },
 ];
 
@@ -231,7 +231,7 @@ export function WorkSection() {
             <p className="font-dm-sans text-[10px] uppercase tracking-[0.2em] text-white/50 mb-3 md:text-[clamp(8px,0.7vw,11px)]">
               Tools I have used
             </p>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-3 md:grid-cols-6 md:gap-x-[clamp(10px,1.2vw,20px)]">
+            <div className="grid grid-cols-3 gap-x-4 gap-y-3 md:grid-cols-5 md:gap-x-[clamp(10px,1.2vw,20px)]">
               {TOOLS.map(tool => (
                 <div key={tool.name} className="flex flex-col items-center gap-1.5">
                   {tool.logo ? (
