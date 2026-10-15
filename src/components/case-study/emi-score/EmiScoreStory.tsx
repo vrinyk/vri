@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import {
-  ArrowDown, ArrowLeft, ArrowRight, BadgeCheck, Brain, CalendarClock, Check, Code2, Eye, Gauge, HandCoins,
-  Landmark, Languages, Lock, MessagesSquare, Mic, PenTool, Route, Search, Sparkles, TrendingDown, Users, Wallet,
+  ArrowDown, ArrowLeft, ArrowRight, BadgeCheck, Brain, CalendarClock, ChartColumn, Check, Code2, CreditCard, Eye,
+  FlaskConical, Gauge, HandCoins, IndianRupee, Landmark, Languages, Layers, ListChecks, Lock, MessagesSquare, Mic,
+  MousePointerClick, PenTool, PiggyBank, Receipt, Route, Search, ShieldCheck, Target, Timer, TrendingDown, Users, Wallet,
 } from "lucide-react";
 import * as A from "./assets";
 import chatgptLogo from "../../../assets/tools/chatgpt.webp";
@@ -143,6 +144,7 @@ const Underline = ({ children }: { children: React.ReactNode }) => (
   <span className="font-bold" style={{ color: INK, boxShadow: `inset 0 -3px 0 ${ACCENT}99` }}>{children}</span>
 );
 
+
 /* ════════════════ PAGE ════════════════ */
 
 export default function EmiScoreStory() {
@@ -150,48 +152,76 @@ export default function EmiScoreStory() {
     <main style={{ background: PAPER, fontFamily: BODY, color: INK }} className="overflow-x-clip">
       <Hero />
       <Glimpse />
+      {/* 01 · The problem worth solving */}
       <Problem />
       <WhyItHappens />
       <TwoScores />
-      <Gaps />
+      <WhoItServes />
+      <HowItWorks />
       <MyPart />
-      <FirstDraftReview />
-      <Direction />
+      {/* 02 · Research and judgment */}
       <Research />
+      <Observed />
+      <Gaps />
+      {/* 03 · The decisions that shaped the experience */}
+      <DecisionsIntro />
+      <DecisionCapture />
+      <DecisionScore />
+      <DecisionFactors />
       <WorkBefore />
+      {/* 04 · Designing the score experience */}
+      <ScoreExperience />
+      <ExplainSection />
+      <TooHappy />
+      <WayOutSection />
+      <FinalCarousel />
+      {/* 05 · What testing changed */}
       <BackToPeople />
       <StillMissed />
-      <TooHappy />
-      <FinalCarousel />
-      <AskSection />
-      <VerdictSection />
-      <ExplainSection />
-      <WayOutSection />
       <Motion />
       <AiSection />
-      <Handoff />
+      {/* 06 · Impact and what I'd do next */}
+      <Impact />
       <Next />
     </main>
   );
 }
 
-/* ── 1 · Hero ─────────────────────────────────────────────── */
+/** Numbered chapter marker that opens each of the six parts. */
+const Chapter = ({ n, title, signal }: { n: string; title: string; signal: string }) => (
+  <section className="px-5 pt-24 md:px-10 md:pt-32">
+    <Reveal className="mx-auto flex w-full max-w-[1180px] flex-wrap items-end justify-between gap-4 border-b border-[#e3e5e9] pb-6">
+      <div className="flex items-baseline gap-5">
+        <span className="text-[56px] font-bold leading-none tracking-[-0.05em] md:text-[84px]" style={{ fontFamily: DISPLAY, color: ACCENT }}>{n}</span>
+        <span className="text-[24px] font-bold leading-tight tracking-[-0.02em] md:text-[34px]" style={{ fontFamily: DISPLAY, color: INK }}>{title}</span>
+      </div>
+      <span className="rounded-full px-4 py-1.5 text-[13px] font-semibold" style={{ background: TINT, color: NAVY }}>{signal}</span>
+    </Reveal>
+  </section>
+);
+
+/** Small "UX principle" tag used next to design decisions. */
+const Principle = ({ children }: { children: React.ReactNode }) => (
+  <span className="inline-flex items-center rounded-full border px-3 py-1 text-[13px] font-semibold" style={{ borderColor: `${NAVY}40`, color: NAVY }}>{children}</span>
+);
+
+/* ── Hero ─────────────────────────────────────────────────── */
 
 function Hero() {
   return (
     <section className="px-5 pb-16 pt-28 md:px-10 md:pt-32">
       <div className="mx-auto grid w-full max-w-[1180px] items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <Reveal>
-          <p className="mb-6 text-[13px] font-semibold uppercase tracking-[0.18em]" style={{ color: GREY }}>FREED · Product, UX writing & research</p>
+          <p className="mb-6 text-[13px] font-semibold uppercase tracking-[0.18em]" style={{ color: GREY }}>FREED · Product design, UX writing & research</p>
           <h1 className="text-[4rem] font-bold leading-[0.95] tracking-[-0.045em] md:text-[7.2rem]" style={{ fontFamily: DISPLAY, color: INK }}>
             EMI<br />Score<span style={{ color: ACCENT }}>.</span>
           </h1>
           <p className="mt-7 text-[20px] leading-[1.45] md:text-[24px]" style={{ color: GREY }}>
-            Before the next loan, a reality check.
+            Can I afford another loan right now?
             <br />
-            The number, the verdict, and the way out.
+            A score that answers it from your own numbers.
           </p>
-          <a href="#glimpse" className="mt-9 inline-flex items-center gap-3 border-b-2 pb-2 text-[18px] font-semibold" style={{ borderColor: ACCENT, color: INK, fontFamily: DISPLAY }}>
+          <a href="#problem" className="mt-9 inline-flex items-center gap-3 border-b-2 pb-2 text-[18px] font-semibold" style={{ borderColor: ACCENT, color: INK, fontFamily: DISPLAY }}>
             Inside the project <ArrowDown className="h-4 w-4" />
           </a>
         </Reveal>
@@ -203,10 +233,10 @@ function Hero() {
       </div>
       <div className="mx-auto mt-16 grid w-full max-w-[1180px] grid-cols-2 gap-y-6 md:grid-cols-5">
         {[
-          ["My role", "Product design"],
-          ["The scope", "Sign up ↗ Solution"],
+          ["My role", "Product designer"],
+          ["The scope", "Sign up ↗ Next step"],
           ["The team", "2 PMs · Me · Eng"],
-          ["The journey", "3 weeks"],
+          ["The timeline", "3 weeks"],
           ["Tested with", "● 22 people"],
         ].map(([k, v]) => (
           <div key={k}>
@@ -221,17 +251,17 @@ function Hero() {
   );
 }
 
-/* ── 2 · Glimpse ──────────────────────────────────────────── */
+/* ── Glimpse ──────────────────────────────────────────────── */
 
 function Glimpse() {
   return (
-    <Section id="glimpse" className="!pt-10">
+    <Section className="!pt-10">
       <Reveal>
-        <Headline one="Your next loan." two="Now with a verdict." center />
+        <Headline one="Your next loan," two="checked against your real budget." center />
       </Reveal>
       <div className="mt-14 flex flex-wrap items-end justify-center gap-8 md:gap-16">
         <Reveal><IPhone src={A.finalSignup} alt="Introducing EMI Score" width={250} tilt={-3} /></Reveal>
-        <Reveal delay={0.1}><IPhone src={A.finalScore} alt="EMI Score verdict" width={280} tall /></Reveal>
+        <Reveal delay={0.1}><IPhone src={A.finalScore} alt="EMI Score result" width={280} tall /></Reveal>
         <Reveal delay={0.2}><IPhone src={A.finalEmiBurden} alt="EMI burden explained with voice" width={250} tilt={3} /></Reveal>
       </div>
       <div className="mt-10 flex justify-center">
@@ -241,33 +271,40 @@ function Glimpse() {
   );
 }
 
-/* ── 3 · Problem ──────────────────────────────────────────── */
+/* ═══ 01 · The problem worth solving ═══ */
 
 function Problem() {
   return (
-    <Section tint>
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <Reveal>
-          <Eyebrow>The problem · what borrowers told me</Eyebrow>
-          <Headline one="Borrowing felt easy." two="Repaying didn't." />
-          <Lead>People came to FREED after the EMIs had already piled up. Nobody had asked them, before the loan, if they could afford one more.</Lead>
-          <p className="mt-8 text-[30px] leading-tight md:text-[34px]" style={{ fontFamily: HAND, color: NAVY }}>
-            "Main abhi ek aur loan le sakta hoon ya nahi?"
-          </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <img src={A.ill29} alt="A worried borrower looking at an EMI Score of 29" className="w-full rounded-[2rem] shadow-[0_30px_60px_-30px_rgba(2,65,110,0.6)]" />
-        </Reveal>
-      </div>
-    </Section>
+    <>
+      <div id="problem" />
+      <Chapter n="01" title="The problem worth solving" signal="Product thinking" />
+      <Section>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <Reveal>
+            <Eyebrow>Requirement vs. problem</Eyebrow>
+            <Headline one="The brief asked for a score." two="People needed a decision." />
+            <Lead>
+              My PM's requirement was "build an EMI Score". Before designing it, I asked what decision it should help with. In calls and interviews, borrowers kept asking the same thing.
+            </Lead>
+            <p className="mt-8 text-[30px] leading-tight md:text-[34px]" style={{ fontFamily: HAND, color: NAVY }}>
+              "Main abhi ek aur loan le sakta hoon ya nahi?"
+            </p>
+            <p className="mt-6 max-w-[560px] text-[18px] leading-[1.6]" style={{ color: INK }}>
+              So I framed the product around <Underline>loan affordability</Underline>: does your current financial situation actually allow one more loan, and if not, why not?
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <img src={A.ill29} alt="A worried borrower looking at an EMI Score of 29" className="w-full rounded-[2rem] shadow-[0_30px_60px_-30px_rgba(2,65,110,0.6)]" />
+          </Reveal>
+        </div>
+      </Section>
+    </>
   );
 }
 
-/* ── 4 · Why it happens ───────────────────────────────────── */
-
 const FLOW = [
   { icon: HandCoins, n: "01", t: "Need money", d: "" },
-  { icon: Landmark, n: "02", t: "Bank checks CIBIL", d: "Your past. Did you repay?", hi: true },
+  { icon: Landmark, n: "02", t: "Lender checks CIBIL", d: "Your past. Did you repay?", hi: true },
   { icon: BadgeCheck, n: "03", t: "Loan approved", d: "" },
   { icon: CalendarClock, n: "04", t: "One more EMI", d: "Added to the pile." },
   { icon: TrendingDown, n: "05", t: "Salary runs out", d: "Before the month does." },
@@ -275,9 +312,9 @@ const FLOW = [
 
 function WhyItHappens() {
   return (
-    <Section>
+    <Section tint>
       <Reveal>
-        <Eyebrow>Why it felt that way</Eyebrow>
+        <Eyebrow>Why credit scores don't answer it</Eyebrow>
         <Headline one="Approved on your past." two="Repaid from your future." />
       </Reveal>
       <div className="hide-scrollbar -mx-5 mt-16 overflow-x-auto px-5">
@@ -303,43 +340,41 @@ function WhyItHappens() {
       </div>
       <Reveal>
         <p className="mt-16 text-center text-[22px] leading-[1.5] md:text-[28px]" style={{ color: GREY, fontFamily: DISPLAY }}>
-          CIBIL checks <Underline>your past.</Underline>
+          A credit score tells a lender <Underline>whether you repaid.</Underline>
           <br />
-          Nobody checks <Underline>your next EMI.</Underline>
+          It never tells you <Underline>whether you can afford the next EMI.</Underline>
         </p>
       </Reveal>
     </Section>
   );
 }
 
-/* ── 5 · Two scores ───────────────────────────────────────── */
-
 function TwoScores() {
   return (
     <Section>
       <Reveal>
-        <Eyebrow>The core design problem</Eyebrow>
-        <Headline one="Two scores." two="One would be ignored." />
+        <Eyebrow>Credit score vs. EMI Score</Eyebrow>
+        <Headline one="Two scores," two="two different questions." />
       </Reveal>
       <div className="mt-14 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr]">
         <Reveal>
-          <p className="text-[15px]" style={{ color: GREY }}>Credit score · what people already know</p>
-          <p className="mt-2 text-[26px] font-bold" style={{ fontFamily: DISPLAY, color: GREY }}>Looks back.</p>
+          <p className="text-[15px]" style={{ color: GREY }}>Credit score · for the lender</p>
+          <p className="mt-2 text-[26px] font-bold" style={{ fontFamily: DISPLAY, color: GREY }}>"Will they repay?"</p>
           <svg viewBox="0 0 220 220" className="mx-auto mt-6 w-[220px]" role="img" aria-label="A credit score ring reading 650 out of 900">
             <circle cx="110" cy="110" r="88" fill="none" stroke="#e5e7eb" strokeWidth="16" />
             <circle cx="110" cy="110" r="88" fill="none" stroke="#9ca3af" strokeWidth="16" strokeDasharray={`${0.58 * 553} 553`} strokeLinecap="round" transform="rotate(-90 110 110)" />
             <text x="110" y="112" textAnchor="middle" fontFamily="Inter Tight, Arial" fontSize="44" fontWeight="700" fill="#6b7280">650</text>
             <text x="110" y="140" textAnchor="middle" fontFamily="Inter, Arial" fontSize="14" fill="#9ca3af">out of 900</text>
           </svg>
-          <p className="mt-6 text-[16px]" style={{ color: GREY }}>A ring. A grade. Read once, then forgotten.</p>
+          <p className="mt-6 text-[16px]" style={{ color: GREY }}>Repayment history. Read once, then forgotten.</p>
         </Reveal>
         <svg width="90" height="40" viewBox="0 0 90 40" fill="none" className="mx-auto hidden md:block" aria-hidden>
           <path d="M2 24 C 30 4, 55 4, 84 20" stroke={NAVY} strokeWidth="1.6" strokeDasharray="4 5" />
           <path d="M84 20 l-10 -1 M84 20 l-5 8" stroke={NAVY} strokeWidth="1.6" strokeLinecap="round" />
         </svg>
         <Reveal delay={0.1}>
-          <p className="text-[15px]" style={{ color: GREY }}>EMI Score · what I designed</p>
-          <p className="mt-2 text-[26px] font-bold" style={{ fontFamily: DISPLAY }}>Looks ahead.</p>
+          <p className="text-[15px]" style={{ color: GREY }}>EMI Score · for the borrower</p>
+          <p className="mt-2 text-[26px] font-bold" style={{ fontFamily: DISPLAY }}>"Can I afford one more?"</p>
           <div className="mx-auto mt-6 w-full max-w-[380px] rounded-[1.6rem] bg-white p-5 shadow-[0_24px_50px_-28px_rgba(18,20,23,0.4)]">
             <img src={A.emiLogo} alt="EMI Score logo" className="mx-auto w-[150px]" />
             <div className="mt-3 flex items-baseline justify-center gap-2">
@@ -348,14 +383,242 @@ function TwoScores() {
             </div>
             <p className="mx-auto mt-3 w-max rounded-md px-3 py-1 text-[13px] font-bold tracking-wide text-white" style={{ background: RED }}>DON'T TAKE A LOAN</p>
           </div>
-          <p className="mt-6 text-[16px]" style={{ color: GREY }}>A speedometer. A verdict. Something to act on.</p>
+          <p className="mt-6 text-[16px]" style={{ color: GREY }}>Current affordability, plus what to do next.</p>
         </Reveal>
       </div>
     </Section>
   );
 }
 
-/* ── 6 · Gaps ─────────────────────────────────────────────── */
+function WhoItServes() {
+  return (
+    <Section tint>
+      <div className="grid gap-12 lg:grid-cols-2">
+        <Reveal>
+          <Eyebrow>Who it serves</Eyebrow>
+          <Headline one="Salaried borrowers" two="already juggling EMIs." size="md" />
+          <div className="mt-8 space-y-4">
+            {[
+              "Tier 2 and tier 3 cities, first-time app users for finance",
+              "Two or more running loans or credit card dues",
+              "Considering one more loan to cover a gap",
+              "Comfortable in Hindi or Hinglish, wary of sharing money details",
+            ].map((t) => (
+              <p key={t} className="flex items-start gap-3 text-[18px]" style={{ color: INK }}>
+                <Users className="mt-1 h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={1.8} /> {t}
+              </p>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <Eyebrow>Why it matters</Eyebrow>
+          <Headline one="One wrong loan" two="becomes a debt trap." size="md" />
+          <div className="mt-8 space-y-4">
+            {[
+              ["For users", "A check before borrowing, instead of help only after EMIs pile up."],
+              ["For FREED", "A free, useful hook that lowers acquisition cost and leads people to the right debt solution."],
+            ].map(([k, v]) => (
+              <div key={k} className="rounded-2xl bg-white p-5 shadow-[0_12px_30px_-22px_rgba(18,20,23,.4)]">
+                <p className="text-[18px] font-bold" style={{ fontFamily: DISPLAY }}>{k}</p>
+                <p className="mt-1 text-[16px] leading-[1.55]" style={{ color: GREY }}>{v}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+/* How the score is built: 3 inputs → 3 factors → score → next step. */
+
+const INPUTS = [
+  { icon: IndianRupee, t: "Monthly in-hand salary" },
+  { icon: Receipt, t: "Monthly expenses" },
+  { icon: CalendarClock, t: "EMIs paid each month" },
+];
+const FACTORS = [
+  { icon: PiggyBank, t: "Savings", d: "What's left after EMIs and expenses" },
+  { icon: Wallet, t: "EMI burden", d: "Share of salary going to EMIs" },
+  { icon: CreditCard, t: "Credit score", d: "Pulled from the credit bureau" },
+];
+
+function HowItWorks() {
+  return (
+    <Section>
+      <Reveal>
+        <Eyebrow>How the EMI Score works</Eyebrow>
+        <Headline one="Three numbers in." two="Three factors out. One score." />
+        <Lead>
+          To calculate the score we needed three numbers from the user. That's why the journey starts by asking for them, and why every later screen points back to the same three factors.
+        </Lead>
+      </Reveal>
+      <div className="mt-14 grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr_auto_auto]">
+        <Reveal>
+          <p className="mb-4 text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>You tell us</p>
+          <div className="space-y-3">
+            {INPUTS.map((x) => (
+              <div key={x.t} className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3.5 shadow-[0_10px_26px_-20px_rgba(18,20,23,.45)]">
+                <x.icon className="h-5 w-5 shrink-0" style={{ color: ACCENT }} strokeWidth={1.8} />
+                <p className="text-[17px] font-semibold" style={{ fontFamily: DISPLAY }}>{x.t}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <ArrowRight className="mx-auto hidden h-7 w-7 lg:block" style={{ color: SOFT }} />
+        <Reveal delay={0.08}>
+          <p className="mb-4 text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>We work out</p>
+          <div className="space-y-3">
+            {FACTORS.map((x) => (
+              <div key={x.t} className="flex items-center gap-3 rounded-2xl px-4 py-3" style={{ background: TINT }}>
+                <x.icon className="h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={1.8} />
+                <div>
+                  <p className="text-[17px] font-bold" style={{ fontFamily: DISPLAY }}>{x.t}</p>
+                  <p className="text-[14px]" style={{ color: GREY }}>{x.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <ArrowRight className="mx-auto hidden h-7 w-7 lg:block" style={{ color: SOFT }} />
+        <Reveal delay={0.16} className="text-center">
+          <p className="mb-4 text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>You get</p>
+          <div className="mx-auto w-[220px] rounded-[1.6rem] bg-white p-5 shadow-[0_24px_50px_-28px_rgba(18,20,23,0.4)]">
+            <p className="text-[56px] font-bold leading-none" style={{ fontFamily: DISPLAY, color: NAVY }}>29</p>
+            <p className="text-[14px]" style={{ color: GREY }}>out of 100</p>
+            <p className="mx-auto mt-3 w-max rounded-md px-3 py-1 text-[12px] font-bold text-white" style={{ background: RED }}>DON'T TAKE A LOAN</p>
+            <p className="mt-4 text-[14px] font-semibold" style={{ color: ACCENT }}>+ the way out →</p>
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+const DID = [
+  { icon: Search, t: "Problem framing", d: "Requirement → user decision" },
+  { icon: Route, t: "User flow", d: "Sign up → score → next step" },
+  { icon: PenTool, t: "UI & visual system", d: "Score, factors, logo" },
+  { icon: Languages, t: "UX writing ×3", d: "English, हिंदी, Hinglish" },
+  { icon: MessagesSquare, t: "Research & testing", d: "Interviews + 22 sessions" },
+  { icon: Code2, t: "Handoff", d: "Specs + 40 analytics events" },
+];
+
+function MyPart() {
+  return (
+    <Section tint>
+      <div className="grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <Reveal>
+          <Eyebrow>My role</Eyebrow>
+          <Headline one="Three weeks." two="Two PMs. One designer." />
+          <Lead>I owned the experience end to end, from reframing the brief to the final pixel and the analytics spec.</Lead>
+          <div className="mt-10 space-y-5">
+            {[
+              ["Week 1", "Framing · market research · draft 1"],
+              ["Week 2", "Interviews · draft 2 · 22 usability sessions"],
+              ["Week 3", "Final design · review · handoff"],
+            ].map(([w, d], i) => (
+              <div key={w} className="flex items-center gap-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[14px] font-bold text-white" style={{ background: i === 1 ? ACCENT : INK }}>{i + 1}</span>
+                <div>
+                  <p className="text-[18px] font-bold" style={{ fontFamily: DISPLAY }}>{w}</p>
+                  <p className="text-[15px]" style={{ color: GREY }}>{d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {DID.map((d, i) => (
+            <Reveal key={d.t} delay={i * 0.05}>
+              <div className="flex h-full flex-col rounded-3xl bg-white p-6 shadow-[0_14px_34px_-24px_rgba(18,20,23,0.4)]">
+                <d.icon className="h-8 w-8" strokeWidth={1.5} style={{ color: ACCENT }} />
+                <p className="mt-6 text-[18px] font-bold leading-tight" style={{ fontFamily: DISPLAY }}>{d.t}</p>
+                <p className="mt-1 text-[14px]" style={{ color: GREY }}>{d.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ═══ 02 · Research and judgment ═══ */
+
+function Research() {
+  return (
+    <>
+      <Chapter n="02" title="Research and judgment" signal="Evidence → decisions" />
+      <Section>
+        <div className="grid items-center gap-14 lg:grid-cols-2">
+          <Reveal>
+            <Eyebrow>Market research · tier 2–3 users</Eyebrow>
+            <Headline one="I studied the apps" two="these users already trust." />
+            <Lead>Lending, gold-loan and savings apps, to see how they ask for money details without scaring people off.</Lead>
+            <div className="mt-8 space-y-4">
+              {["One question per screen (chunking)", "Trust signals placed before the ask", "Language switch on every screen", "Illustrations over paragraphs", "Round numbers, never exact"].map((t) => (
+                <p key={t} className="flex items-center gap-3 text-[19px]" style={{ color: INK }}>
+                  <Check className="h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={2.4} /> {t}
+                </p>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={0.1} className="relative flex justify-center gap-6">
+            <Note dir="down" className="absolute -top-20 right-0 hidden md:block">lending & gold-loan apps</Note>
+            <Phone src={A.mrGold1} alt="Reference: gold-loan app" width={180} />
+            <div className="mt-12"><Phone src={A.mrGold2} alt="Reference: lending app" width={180} /></div>
+          </Reveal>
+        </div>
+      </Section>
+    </>
+  );
+}
+
+/** What I saw in sessions with the PM concept and my first draft. Each finding → a decision. */
+function Observed() {
+  const rows = [
+    ["People read 29 as rupees", "\"Looks like we are saving 29 bucks out of 100.\"", "Add \"out of 100\" and an action label right under the number."],
+    ["The ring looked like CIBIL", "Their existing mental model took over. They read it as a grade.", "Drop the ring for a speedometer with colour bands."],
+    ["Finance terms lost them", "FOIR and \"EMI load\" meant nothing.", "Rewrite every factor in plain words, in three languages."],
+    ["Nobody reached the way out", "\"No connectivity in the screens.\" The plan sat below the fold.", "Give every score band one clear next step."],
+  ];
+  return (
+    <Section tint>
+      <Reveal>
+        <Eyebrow>What I observed in user sessions</Eyebrow>
+        <Headline one="What surprised me" two="changed the direction." />
+        <Lead>I put the PM's concept and my first draft in front of users and asked one question: what does this score mean to you?</Lead>
+      </Reveal>
+      <div className="mt-14 grid items-start gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
+        <div className="flex items-start justify-center gap-4 sm:gap-6">
+          <div className="text-center">
+            <Phone src={A.pmReport} alt="PM concept: report card" width={150} tall />
+            <p className="mt-3 text-[14px]" style={{ color: GREY }}>PM concept</p>
+          </div>
+          <div className="text-center">
+            <Phone src={A.v1Result} alt="My first draft: one long result page" width={150} tall />
+            <p className="mt-3 text-[14px]" style={{ color: GREY }}>My draft 1</p>
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="hidden grid-cols-[1fr_1.1fr_1.2fr] gap-4 px-5 text-[13px] font-semibold uppercase tracking-[0.06em] md:grid" style={{ color: GREY }}>
+            <span>Finding</span><span>Evidence</span><span>Decision</span>
+          </div>
+          {rows.map(([f, e, d], i) => (
+            <Reveal key={f} delay={i * 0.05}>
+              <div className="grid gap-2 rounded-2xl bg-white p-5 shadow-[0_10px_28px_-22px_rgba(18,20,23,.45)] md:grid-cols-[1fr_1.1fr_1.2fr] md:gap-4">
+                <p className="text-[18px] font-bold leading-tight" style={{ fontFamily: DISPLAY }}>{f}</p>
+                <p className="text-[15px] leading-[1.5]" style={{ color: GREY }}>{e}</p>
+                <p className="flex gap-2 text-[15px] font-semibold leading-[1.5]" style={{ color: NAVY }}><ArrowRight className="mt-0.5 h-4 w-4 shrink-0" />{d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
 
 function GapArt({ k }: { k: number }) {
   const card = "rounded-2xl bg-white px-4 py-3 shadow-[0_12px_28px_-18px_rgba(18,20,23,.45)]";
@@ -409,8 +672,8 @@ function Gaps() {
   return (
     <Section>
       <Reveal>
-        <Eyebrow>Pain points from interviews</Eyebrow>
-        <Headline one="Four gaps in confidence." />
+        <Eyebrow>The four questions the design had to answer</Eyebrow>
+        <Headline one="Four gaps in confidence." two="Each one became a design goal." />
       </Reveal>
       <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {GAPS.map((g, i) => (
@@ -427,164 +690,301 @@ function Gaps() {
   );
 }
 
-/* ── 7 · My part ──────────────────────────────────────────── */
+/* ═══ 03 · The decisions that shaped the experience ═══ */
 
-const DID = [
-  { icon: Search, t: "Market research", d: "Apps tier 2–3 users trust" },
-  { icon: Route, t: "User flow", d: "Sign up → score → solution" },
-  { icon: PenTool, t: "UI & visuals", d: "Score, verdicts, logo" },
-  { icon: Languages, t: "Copy ×3", d: "English, हिंदी, Hinglish" },
-  { icon: MessagesSquare, t: "Testing", d: "Interviews + 22 sessions" },
-  { icon: Code2, t: "Handoff", d: "Specs + 40 events" },
-];
+function DecisionsIntro() {
+  return (
+    <>
+      <Chapter n="03" title="The decisions that shaped the experience" signal="Design judgment" />
+      <Section className="!pb-6">
+        <Reveal>
+          <Headline one="Three decisions." two="Problem, options, choice, why." size="md" />
+          <div className="mt-8 rounded-[1.6rem] p-6 md:p-8" style={{ background: TINT }}>
+            <p className="text-[13px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>Making financial disclosure feel understandable</p>
+            <p className="mt-3 max-w-[860px] text-[19px] leading-[1.6] md:text-[21px]" style={{ color: INK, fontFamily: DISPLAY }}>
+              The flow required users to share sensitive financial information before seeing their score. I focused on making each step understandable and reducing the cognitive load of the journey, then used what I saw in testing to refine it.
+            </p>
+          </div>
+        </Reveal>
+      </Section>
+    </>
+  );
+}
 
-function MyPart() {
+/** One decision: problem → alternatives → decision → why, with before/after screens. */
+function Decision({
+  n, title, problem, options, choice, why, principles, before, after, beforeLabel = "Before", afterLabel = "Final", tint = false,
+}: {
+  n: string; title: string; problem: string; options: string[]; choice: string[]; why: string; principles: string[];
+  before: { src: string; alt: string; tall?: boolean }[]; after: { src: string; alt: string; tall?: boolean }[];
+  beforeLabel?: string; afterLabel?: string; tint?: boolean;
+}) {
+  return (
+    <Section tint={tint}>
+      <Reveal>
+        <Eyebrow>Decision {n}</Eyebrow>
+        <Headline one={title} size="md" />
+        <div className="mt-5 flex flex-wrap gap-2">{principles.map((p) => <Principle key={p}>{p}</Principle>)}</div>
+      </Reveal>
+      <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <Reveal className="space-y-7">
+          <div>
+            <p className="text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: RED }}>Problem</p>
+            <p className="mt-2 text-[17px] leading-[1.6]" style={{ color: INK }}>{problem}</p>
+          </div>
+          <div>
+            <p className="text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>Alternatives considered</p>
+            <ul className="mt-2 space-y-1.5">
+              {options.map((o) => (
+                <li key={o} className="flex items-start gap-2 text-[16px] leading-[1.5]" style={{ color: GREY }}>
+                  <span className="mt-[9px] h-[2px] w-3 shrink-0" style={{ background: SOFT }} />{o}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREEN }}>Decision</p>
+            <ul className="mt-2 space-y-1.5">
+              {choice.map((o) => (
+                <li key={o} className="flex items-start gap-2 text-[17px] font-semibold leading-[1.5]" style={{ color: INK }}>
+                  <Check className="mt-1 h-4 w-4 shrink-0" style={{ color: GREEN }} strokeWidth={2.6} />{o}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border-l-4 p-4" style={{ borderColor: ACCENT, background: "#fff" }}>
+            <p className="text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: ACCENT }}>Why</p>
+            <p className="mt-1 text-[16px] leading-[1.6]" style={{ color: INK }}>{why}</p>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1} className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
+          <div className="text-center">
+            <div className="flex gap-2 grayscale">
+              {before.map((s) => <Phone key={s.alt} src={s.src} alt={s.alt} width={118} tall={s.tall} />)}
+            </div>
+            <p className="mt-3 text-[13px]" style={{ color: GREY }}>{beforeLabel}</p>
+          </div>
+          <ArrowRight className="h-6 w-6 shrink-0 rotate-90 sm:rotate-0" style={{ color: SOFT }} />
+          <div className="text-center">
+            <div className="flex gap-2">
+              {after.map((s) => <Phone key={s.alt} src={s.src} alt={s.alt} width={150} tall={s.tall} />)}
+            </div>
+            <p className="mt-3 text-[13px]" style={{ color: GREY }}>{afterLabel}</p>
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+function DecisionCapture() {
+  return (
+    <Decision
+      n="01"
+      title="Simplifying financial data capture"
+      principles={["Reducing cognitive load", "Chunking", "Trust signals"]}
+      problem="Draft 1 asked for salary, savings and loans across five screens, with exact amounts and savings as ranges. People hesitated at every field and asked why we needed it."
+      options={["One long form with every field", "Savings and income as ranges", "Bank statement upload"]}
+      choice={[
+        "Only the 3 numbers the score needs, in 2 steps",
+        "Round numbers are fine, with examples inside the question",
+        "\"Safe & secure\" and \"no impact on credit score\" before the ask",
+        "Savings worked out from the inputs, never asked",
+      ]}
+      why="Every extra field is another reason to drop off. Asking only what the calculation needs, and saying why, lowers both the effort and the perceived risk of sharing."
+      before={[{ src: A.v14, alt: "Draft 1: salary" }, { src: A.v15, alt: "Draft 1: savings ranges" }]}
+      after={[{ src: A.finalIncome, alt: "Final: salary" }, { src: A.finalExpenses, alt: "Final: EMIs and expenses" }]}
+      beforeLabel="Draft 1 · 5 screens"
+      afterLabel="Final · 2 steps"
+    />
+  );
+}
+
+function DecisionScore() {
+  return (
+    <Decision
+      tint
+      n="02"
+      title="Making the score easy to interpret"
+      principles={["Mental models", "Recognition over recall", "Colour as a cue"]}
+      problem="A score ring looked like CIBIL, so people read it as a credit grade. A bare 29 was read as ₹29. The number alone didn't say whether a loan was affordable."
+      options={["A ring score, like credit apps", "A dark \"trading app\" gauge", "Just the number, with a paragraph below"]}
+      choice={[
+        "A speedometer \"out of 100\", visually distinct from CIBIL",
+        "Five colour bands, red to green",
+        "A plain action label under the number: \"Don't take a loan\"",
+      ]}
+      why="Users bring the credit-score mental model with them. A different shape and an explicit action label break that model, and colour tells them how serious it is before they read a word."
+      before={[{ src: A.v2Score, alt: "Draft 2 score" }]}
+      after={[{ src: A.finalScore, alt: "Final score", tall: true }]}
+      beforeLabel="Draft 2"
+    />
+  );
+}
+
+function DecisionFactors() {
+  return (
+    <Decision
+      n="03"
+      title="Explaining the factors behind the score"
+      principles={["Progressive disclosure", "Plain language", "Vernacular UX"]}
+      problem="People wanted to know why their score was low, but they skipped every paragraph of explanation. Terms like FOIR made it worse."
+      options={["Long explanations under the score", "An accordion of FAQs (tried and dropped)", "A separate \"learn more\" page"]}
+      choice={[
+        "Savings, EMI burden and credit score as three tappable cards with the user's real numbers",
+        "Each opens one chart, one line and one target",
+        "A short voice note per factor, in English, Hindi or Hinglish",
+      ]}
+      why="Showing the three factors with the user's own numbers makes the score believable. Details appear only when someone taps, and listening is easier than reading for many of these users."
+      before={[{ src: A.v2Emiburden, alt: "Draft 2 EMI burden" }]}
+      after={[{ src: A.finalEmiBurden, alt: "Final EMI burden with voice" }]}
+      beforeLabel="Draft 2"
+    />
+  );
+}
+
+function WorkBefore() {
   return (
     <Section tint>
-      <div className="grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <Reveal>
-          <Eyebrow>My role</Eyebrow>
-          <Headline one="Three weeks." two="Two PMs. One designer." />
-          <Lead>A new requirement with a PRD and a reference concept. Everything from flow to final pixel was mine.</Lead>
-          <div className="mt-10 space-y-5">
-            {[
-              ["Week 1", "Brief · research · brainstorm · draft 1"],
-              ["Week 2", "Interviews · draft 2 · 22 usability tests"],
-              ["Week 3", "Draft 3 · review · handoff"],
-            ].map(([w, d], i) => (
-              <div key={w} className="flex items-center gap-4">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[14px] font-bold text-white" style={{ background: i === 1 ? ACCENT : INK }}>{i + 1}</span>
-                <div>
-                  <p className="text-[18px] font-bold" style={{ fontFamily: DISPLAY }}>{w}</p>
-                  <p className="text-[15px]" style={{ color: GREY }}>{d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {DID.map((d, i) => (
-            <Reveal key={d.t} delay={i * 0.05}>
-              <div className="flex h-full flex-col rounded-3xl bg-white p-6 shadow-[0_14px_34px_-24px_rgba(18,20,23,0.4)]">
-                <d.icon className="h-8 w-8" strokeWidth={1.5} style={{ color: ACCENT }} />
-                <p className="mt-6 text-[18px] font-bold leading-tight" style={{ fontFamily: DISPLAY }}>{d.t}</p>
-                <p className="mt-1 text-[14px]" style={{ color: GREY }}>{d.d}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ── 8 · First draft review ───────────────────────────────── */
-
-function FirstDraftReview() {
-  return (
-    <Section>
       <Reveal>
-        <Eyebrow>Where it started</Eyebrow>
-        <Headline one="Could people get the answer?" />
-        <Lead>I put the PM's concept and my first draft in front of users and asked one thing: what does this score mean to you?</Lead>
+        <Eyebrow>Early flows vs. what shipped</Eyebrow>
+        <Headline one="Work before it worked." />
+        <Lead>Three drafts, five user segments, eight loader frames. I dropped an accordion of explanations, a dark gauge and savings asked as ranges.</Lead>
       </Reveal>
-      <div className="mt-14 grid items-center gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
-        <div className="flex items-start justify-center gap-4 sm:gap-6">
-          <div className="text-center">
-            <Phone src={A.pmReport} alt="PM concept: report card" width={150} tall />
-            <p className="mt-3 text-[14px]" style={{ color: GREY }}>PM concept</p>
+      <div className="mt-14 space-y-12">
+        <Reveal><GreyRow label="Draft 1" items={[{ src: A.v11, alt: "Draft 1 welcome" }, { src: A.v12, alt: "Draft 1 sign up" }, { src: A.v14, alt: "Draft 1 salary" }, { src: A.v15, alt: "Draft 1 savings ranges" }, { src: A.v16, alt: "Draft 1 loader" }, { src: A.v1Result, alt: "Draft 1 result", tall: true }]} /></Reveal>
+        <Reveal><GreyRow label="Draft 2 · tested" items={[{ src: A.v2Landing, alt: "Draft 2 intro" }, { src: A.v2Income, alt: "Draft 2 salary" }, { src: A.v2Expenses, alt: "Draft 2 expenses" }, { src: A.v2SavingsPicked, alt: "Draft 2 savings" }, { src: A.v2Score, alt: "Draft 2 score" }, { src: A.v2Means, alt: "Draft 2 meaning" }]} /></Reveal>
+        <Reveal><GreyRow label="Loader storyboard" width={96} items={[A.loader1, A.loader2, A.loader3, A.loader4, A.loader5, A.loader6, A.loader7, A.loader8].map((s, i) => ({ src: s, alt: `Loader frame ${i + 1}` }))} /></Reveal>
+      </div>
+      <p className="mt-6 text-[26px]" style={{ fontFamily: HAND, color: NAVY }}>hover to bring them back to colour →</p>
+    </Section>
+  );
+}
+
+/* ═══ 04 · Designing the score experience ═══ */
+
+function ScoreExperience() {
+  return (
+    <>
+      <Chapter n="04" title="Designing the score experience" signal="Interaction & visual craft" />
+      <Section>
+        <Reveal className="lg:pl-[18%]">
+          <Eyebrow>Information hierarchy</Eyebrow>
+          <Headline one="Score. Meaning." two="Three factors. Next step." />
+        </Reveal>
+        <div className="mt-16 grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div className="space-y-16">
+            <Reveal><Callout title="1 · The score" body="29 out of 100, on a speedometer. Never read as ₹29 again." /></Reveal>
+            <Reveal><Callout title="2 · What it means" body={'"Don\'t take a loan", in plain words. The colour says it first.'} /></Reveal>
           </div>
-          <div className="text-center">
-            <Phone src={A.v1Result} alt="My first draft: one long result page" width={150} tall />
-            <p className="mt-3 text-[14px]" style={{ color: GREY }}>My draft 1</p>
+          <Reveal className="flex justify-center"><IPhone src={A.finalScore} alt="EMI Score result" width={300} tall /></Reveal>
+          <div className="space-y-16">
+            <Reveal><Callout side="right" title="3 · Why" body="Savings 2% · EMI burden 90% · Credit 650. Each one tappable." /></Reveal>
+            <Reveal><Callout side="right" title="4 · What to do" body="One clear next step, matched to the score band." /></Reveal>
           </div>
         </div>
-        <div className="space-y-10">
-          {[
-            ["A number, no verdict", "\"Looks like we are saving 29 bucks out of 100.\""],
-            ["It looked like CIBIL", "A ring score. People read it as a grade."],
-            ["Finance words", "FOIR and EMI load meant nothing to them."],
-            ["The way out was lost", "\"No connectivity in the screens.\" Nobody scrolled to the plan."],
-          ].map(([t, d], i) => (
-            <Reveal key={t} delay={i * 0.06}>
-              <div className="flex items-start gap-4">
-                <span className="mt-3 hidden h-0 w-16 border-t-[2px] border-dotted lg:block" style={{ borderColor: `${NAVY}80` }} />
-                <div>
-                  <p className="text-[24px] font-bold leading-tight tracking-[-0.02em] md:text-[28px]" style={{ fontFamily: DISPLAY }}>{t}</p>
-                  <p className="mt-2 text-[17px] leading-[1.5]" style={{ color: GREY }}>{d}</p>
-                </div>
+        <Reveal>
+          <p className="mx-auto mt-16 max-w-[900px] text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>Five bands, five plain-language outcomes</p>
+          <div className="mx-auto mt-3 grid max-w-[900px] grid-cols-5 overflow-hidden rounded-2xl text-center text-white">
+            {[["0–20", "Don't take a loan", RED], ["21–40", "Avoid a new loan", "#e8641a"], ["41–60", "Pay loans first", "#e8a23a"], ["61–80", "Think first", "#8dbf4e"], ["81–100", "Borrow if needed", GREEN]].map(([r, v, c]) => (
+              <div key={r} className="px-2 py-4" style={{ background: c }}>
+                <p className="text-[13px] font-semibold opacity-90">{r}</p>
+                <p className="mt-1 text-[13px] font-bold leading-tight md:text-[15px]">{v}</p>
               </div>
-            </Reveal>
-          ))}
+            ))}
+          </div>
+        </Reveal>
+      </Section>
+    </>
+  );
+}
+
+function ExplainSection() {
+  return (
+    <Section tint>
+      <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <Reveal>
+          <Eyebrow>Explaining each factor</Eyebrow>
+          <Headline one="Don't read it." two="Hear it." />
+          <div className="mt-10 space-y-6">
+            {[
+              [Mic, "A voice note per factor", "In English, Hindi or Hinglish."],
+              [Eye, "One chart, one line", "Your number against the safe zone."],
+              [Target, "One target", "Keep EMIs under 40%. Save 30%. Reach 750."],
+            ].map(([Icon, t, d]) => {
+              const I = Icon as typeof Mic;
+              return (
+                <div key={t as string} className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white shadow-[0_10px_24px_-16px_rgba(18,20,23,.4)]"><I className="h-6 w-6" style={{ color: ACCENT }} strokeWidth={1.6} /></span>
+                  <div>
+                    <p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>{t as string}</p>
+                    <p className="text-[16px]" style={{ color: GREY }}>{d as string}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
+        <div className="flex items-end justify-center gap-5">
+          <Reveal><IPhone src={A.finalEmiBurden} alt="EMI burden explainer with voice" width={250} tilt={-3} /></Reveal>
+          <Reveal delay={0.1} className="hidden sm:block"><IPhone src={A.finalCredit} alt="Credit score explainer" width={220} tilt={3} /></Reveal>
         </div>
       </div>
     </Section>
   );
 }
 
-/* ── 9 · Design direction ─────────────────────────────────── */
-
-function Direction() {
-  return (
-    <section className="px-5 md:px-10">
-      <Reveal className="mx-auto w-full max-w-[1180px] md:p-14">
-        <div className="rounded-[2rem] p-8 md:p-14" style={{ background: TINT }}>
-          <Eyebrow>The design direction</Eyebrow>
-          <Headline one="Give the verdict," two="not just the number." size="md" />
-          <p className="mt-5 max-w-[640px] text-[18px] leading-[1.6]" style={{ color: GREY }}>Earn trust first, ask for little, answer in plain words, and always end on a way out.</p>
-          <div className="relative mt-12 grid gap-10 md:grid-cols-4">
-            <span className="absolute left-0 right-0 top-[6px] hidden border-t-[2px] border-dotted md:block" style={{ borderColor: `${NAVY}55` }} />
-            {[
-              ["Introduce", "Show both outcomes", "Before asking anything."],
-              ["Ask", "Two round numbers", "Salary, then EMIs + expenses."],
-              ["Answer", "A verdict, in colour", "Number, meaning, reasons."],
-              ["Act", "A way out", "The right FREED program."],
-            ].map(([k, t, d]) => (
-              <div key={k} className="relative">
-                <span className="relative z-10 block h-3.5 w-3.5 rounded-full" style={{ background: NAVY }} />
-                <p className="mt-6 text-[16px]" style={{ color: NAVY }}>{k}</p>
-                <p className="mt-2 text-[22px] font-bold leading-tight" style={{ fontFamily: DISPLAY }}>{t}</p>
-                <p className="mt-2 text-[16px]" style={{ color: GREY }}>{d}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-12 border-t pt-6 text-[17px]" style={{ borderColor: "#dfe3ea", color: GREY }}>
-            Explain every factor along the way, in the user's own language.
-          </div>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
-/* ── 10 · Research ────────────────────────────────────────── */
-
-function Research() {
+function TooHappy() {
+  const [open, setOpen] = useState(false);
   return (
     <Section>
-      <div className="grid items-center gap-14 lg:grid-cols-2">
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto_auto]">
         <Reveal>
-          <Eyebrow>Market research</Eyebrow>
-          <Headline one="I borrowed ideas" two="from apps they trust." />
-          <div className="mt-10 space-y-4">
-            {["One question per screen", "Trust chips before the ask", "Language switch on every screen", "Illustrations over paragraphs", "Round numbers, never exact"].map((t) => (
-              <p key={t} className="flex items-center gap-3 text-[19px]" style={{ color: INK }}>
-                <Check className="h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={2.4} /> {t}
-              </p>
-            ))}
-          </div>
+          <Eyebrow>Visual cues · tone</Eyebrow>
+          <Headline one={'"Still too happy."'} two="Bad news needs weight." />
+          <Lead>My first warning banner used a warm illustration. In review it felt cheerful for a serious message. After two colour passes: "use a stamp or something."</Lead>
+          <button type="button" onClick={() => setOpen(true)} className="mt-8 block w-full max-w-[360px] overflow-hidden rounded-2xl shadow-[0_20px_40px_-24px_rgba(18,20,23,.4)]">
+            <img src={A.itSlack} alt="Review thread: still too happy, use a stamp" className="w-full" />
+          </button>
+          {open && <Zoom src={A.itSlack} alt="Review thread" onClose={() => setOpen(false)} />}
         </Reveal>
-        <Reveal delay={0.1} className="relative flex justify-center gap-6">
-          <Note dir="down" className="absolute -top-20 right-0 hidden md:block">lending & gold-loan apps</Note>
-          <Phone src={A.mrGold1} alt="Reference: gold-loan app" width={180} />
-          <div className="mt-12"><Phone src={A.mrGold2} alt="Reference: lending app" width={180} /></div>
+        <Note dir="right" className="hidden lg:block">so I made it a stamp</Note>
+        <Reveal delay={0.1}><IPhone src={A.finalStamp} alt="Final: red stamp, No new loan right now" width={260} /></Reveal>
+      </div>
+    </Section>
+  );
+}
+
+function WayOutSection() {
+  return (
+    <Section tint>
+      <div className="grid items-center gap-14 lg:grid-cols-[auto_minmax(0,1fr)]">
+        <Reveal className="flex justify-center"><IPhone src={A.finalOfferings} alt="Solutions page" width={290} tall /></Reveal>
+        <Reveal>
+          <Eyebrow>The next step</Eyebrow>
+          <Headline one="A low score." two="A plan, not a dead end." />
+          <Lead>This is where the business goal lives. The plan uses the person's own numbers, so the way out feels personal, not like an ad.</Lead>
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {[[Wallet, "Settlement", "Save ₹1,37,000"], [ShieldCheck, "FreedShield", "Stop recovery calls"], [Gauge, "Credit goal", "612 → 750+"]].map(([I, t, d]) => {
+              const Icon = I as typeof Wallet;
+              return (
+                <div key={t as string}>
+                  <Icon className="h-8 w-8" strokeWidth={1.5} style={{ color: NAVY }} />
+                  <p className="mt-4 text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>{t as string}</p>
+                  <p className="text-[16px]" style={{ color: GREY }}>{d as string}</p>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-10 text-[26px]" style={{ fontFamily: HAND, color: NAVY }}>one flow, five segments: DRP · DRP-i · DCP · DCP-i · DEP</p>
         </Reveal>
       </div>
     </Section>
   );
 }
 
-/* ── 11 · Work before it worked ───────────────────────────── */
+
+/* ── Shared pieces kept from the earlier layout ───────────── */
 
 function GreyRow({ label, items, width = 130 }: { label: string; items: { src: string; alt: string; tall?: boolean }[]; width?: number }) {
   return (
@@ -601,128 +1001,6 @@ function GreyRow({ label, items, width = 130 }: { label: string; items: { src: s
   );
 }
 
-function WorkBefore() {
-  return (
-    <Section>
-      <Reveal>
-        <Headline one="Work before it worked." />
-        <Lead>Three drafts, five user segments, eight loader frames. I dropped an accordion of explanations, a dark "trading app" gauge and savings asked as ranges.</Lead>
-      </Reveal>
-      <div className="mt-14 space-y-12">
-        <Reveal><GreyRow label="Draft 1" items={[{ src: A.v11, alt: "Draft 1 welcome" }, { src: A.v12, alt: "Draft 1 sign up" }, { src: A.v14, alt: "Draft 1 salary" }, { src: A.v15, alt: "Draft 1 savings ranges" }, { src: A.v16, alt: "Draft 1 loader" }, { src: A.v1Result, alt: "Draft 1 result", tall: true }]} /></Reveal>
-        <Reveal><GreyRow label="Draft 2 · tested" items={[{ src: A.v2Landing, alt: "Draft 2 intro" }, { src: A.v2Income, alt: "Draft 2 salary" }, { src: A.v2Expenses, alt: "Draft 2 expenses" }, { src: A.v2SavingsPicked, alt: "Draft 2 savings" }, { src: A.v2Score, alt: "Draft 2 score" }, { src: A.v2Means, alt: "Draft 2 meaning" }]} /></Reveal>
-        <Reveal><GreyRow label="Loader storyboard" width={96} items={[A.loader1, A.loader2, A.loader3, A.loader4, A.loader5, A.loader6, A.loader7, A.loader8].map((s, i) => ({ src: s, alt: `Loader frame ${i + 1}` }))} /></Reveal>
-      </div>
-      <p className="mt-6 text-[26px]" style={{ fontFamily: HAND, color: NAVY }}>hover to bring them back to colour →</p>
-    </Section>
-  );
-}
-
-/* ── 12 · Back to people ──────────────────────────────────── */
-
-function BackToPeople() {
-  return (
-    <Section>
-      <div className="relative">
-        <Reveal>
-          <Eyebrow>Before handoff · usability testing</Eyebrow>
-          <Headline one="Back to people." two="Not just my assumptions." />
-          <p className="mt-6 text-[17px]" style={{ color: GREY }}>22 participants <span className="mx-3 opacity-40">|</span> ~2 min each <span className="mx-3 opacity-40">|</span> In-person</p>
-        </Reveal>
-        <div className="mt-16 grid items-center gap-12 lg:grid-cols-2">
-          <Reveal className="flex items-end gap-5">
-            <Gauge className="mb-6 h-16 w-16 shrink-0" strokeWidth={1.2} style={{ color: ACCENT }} />
-            <div>
-              <p className="leading-none tracking-[-0.05em]" style={{ fontFamily: DISPLAY }}>
-                <span className="text-[120px] font-bold md:text-[150px]" style={{ color: INK }}>14</span>
-                <span className="text-[80px] font-medium md:text-[100px]" style={{ color: SOFT }}> / 22</span>
-              </p>
-              <p className="mt-3 text-[19px]" style={{ color: INK }}>told EMI Score apart from CIBIL, without help.</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="rounded-[2rem] p-8 md:p-10" style={{ background: TINT }}>
-              <p className="text-[26px] font-bold" style={{ fontFamily: DISPLAY }}>What made sense</p>
-              <div className="mt-6 space-y-4">
-                {["Colours alone said \"crisis\"", "The score felt \"very close to reality\"", "Journey was easy · 3.7 / 5", "\"More sharable than credit score\""].map((t) => (
-                  <p key={t} className="flex items-center gap-3 text-[18px]" style={{ color: GREY }}>
-                    <Check className="h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={2.4} /> {t}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ── 13 · They still missed things ────────────────────────── */
-
-function StillMissed() {
-  const items = [
-    { n: "5", t: "still read it as a credit score.", before: A.v2Score, after: A.finalScore, fix: "A verdict stamp right under the number, and \"out of 100\" beside it." },
-    { n: "Most", t: "skipped every paragraph.", before: A.v2Emiburden, after: A.finalEmiBurden, fix: "One line per factor, plus a voice note in Hindi and Hinglish." },
-  ];
-  return (
-    <Section>
-      <Reveal><Headline one="They got it." two="They still missed things." /></Reveal>
-      <div className="mt-14 grid gap-14 lg:grid-cols-2">
-        {items.map((it, i) => (
-          <Reveal key={it.t} delay={i * 0.1}>
-            <p className="text-[26px] font-bold leading-tight md:text-[30px]" style={{ fontFamily: DISPLAY }}>
-              <span className="mr-3 text-[46px] md:text-[56px]" style={{ color: ACCENT }}>{it.n}</span>{it.t}
-            </p>
-            <div className="mt-8 flex items-center gap-4">
-              <div className="text-center grayscale">
-                <Phone src={it.before} alt="Before" width={150} />
-                <p className="mt-2 text-[13px]" style={{ color: GREY }}>Tested</p>
-              </div>
-              <ArrowRight className="h-6 w-6 shrink-0" style={{ color: SOFT }} />
-              <div className="text-center">
-                <Phone src={it.after} alt="After" width={150} />
-                <p className="mt-2 text-[13px]" style={{ color: GREY }}>Shipped</p>
-              </div>
-            </div>
-            <p className="mt-6 text-[18px] font-bold" style={{ color: ACCENT, fontFamily: DISPLAY }}>What changed</p>
-            <p className="mt-1 max-w-[460px] text-[17px] leading-[1.6]" style={{ color: GREY }}>{it.fix}</p>
-          </Reveal>
-        ))}
-      </div>
-      <Reveal>
-        <p className="mt-14 text-[22px]" style={{ color: GREY, fontFamily: DISPLAY }}>
-          <span className="mr-3 text-[40px] font-bold" style={{ color: ACCENT }}>1</span>
-          <span className="font-bold" style={{ color: INK }}>pause in the whole flow:</span> "what counts as expenses?" → examples now sit inside the question.
-        </p>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 14 · Too happy ───────────────────────────────────────── */
-
-function TooHappy() {
-  const [open, setOpen] = useState(false);
-  return (
-    <Section tint>
-      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto_auto]">
-        <Reveal>
-          <Eyebrow>Design review</Eyebrow>
-          <Headline one={'"Still too happy."'} two="Bad news needs weight." />
-          <Lead>My first warning banner used a warm illustration. In review it felt cheerful. Two colour passes later: "use a stamp or something."</Lead>
-          <button type="button" onClick={() => setOpen(true)} className="mt-8 block w-full max-w-[360px] overflow-hidden rounded-2xl shadow-[0_20px_40px_-24px_rgba(18,20,23,.4)]">
-            <img src={A.itSlack} alt="Review thread: still too happy, use a stamp" className="w-full" />
-          </button>
-          {open && <Zoom src={A.itSlack} alt="Review thread" onClose={() => setOpen(false)} />}
-        </Reveal>
-        <Note dir="right" className="hidden lg:block">so I made it a stamp</Note>
-        <Reveal delay={0.1}><IPhone src={A.finalStamp} alt="Final: red stamp, No new loan right now" width={260} /></Reveal>
-      </div>
-    </Section>
-  );
-}
-
 /* ── 15 · Final carousel ──────────────────────────────────── */
 
 const FINAL = [
@@ -731,7 +1009,7 @@ const FINAL = [
   { src: A.finalIncome, cap: "One round number." },
   { src: A.finalExpenses, cap: "Examples inside the question." },
   { src: A.finalLoader, cap: "The wait does a job." },
-  { src: A.finalScore, cap: "A verdict, in colour.", tall: true },
+  { src: A.finalScore, cap: "Score, meaning, three factors.", tall: true },
   { src: A.finalMeans, cap: "All five bands, one tap." },
   { src: A.finalEmiBurden, cap: "Hear it in your language." },
   { src: A.finalOfferings, cap: "A plan, not a dead end.", tall: true },
@@ -770,135 +1048,6 @@ function FinalCarousel() {
             </div>
           ))}
         </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ── 16 · Ask ─────────────────────────────────────────────── */
-
-function AskSection() {
-  return (
-    <Section>
-      <Reveal className="lg:pl-[18%]">
-        <Eyebrow>01 · Earning trust</Eyebrow>
-        <Headline one="Show the outcome." two="Then ask two numbers." />
-      </Reveal>
-      <div className="mt-16 grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="space-y-16">
-          <Reveal><Callout title="Both outcomes, up front" body="A stressed 29 and a relieved 78, before any money question." /></Reveal>
-          <Reveal><Callout title="As per PAN" body="Tells people why we need their name: to match the credit report." /></Reveal>
-        </div>
-        <Reveal className="flex justify-center"><IPhone src={A.finalSignup} alt="Intro and sign up" width={280} /></Reveal>
-        <div className="space-y-16">
-          <Reveal><Callout side="right" title="Two steps, not five" body="In-hand salary, then EMIs + expenses. Round numbers are fine." /></Reveal>
-          <Reveal><Callout side="right" title="Safe & secure, every screen" body="And no impact on the credit score, said before the ask." /></Reveal>
-        </div>
-      </div>
-      <div className="mt-14 flex flex-wrap justify-center gap-8">
-        <Phone src={A.finalIncome} alt="Step 1: salary" width={170} caption="Step 1 · salary" />
-        <Phone src={A.finalExpenses} alt="Step 2: EMIs and expenses" width={170} caption="Step 2 · EMIs + expenses" />
-      </div>
-    </Section>
-  );
-}
-
-/* ── 17 · Verdict ─────────────────────────────────────────── */
-
-function VerdictSection() {
-  return (
-    <Section tint>
-      <Reveal className="lg:pl-[18%]">
-        <Eyebrow>02 · The verdict</Eyebrow>
-        <Headline one="One number." two="One verdict. Three reasons." />
-      </Reveal>
-      <div className="mt-16 grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="space-y-20">
-          <Reveal><Callout title="29 out of 100" body="Never read as ₹29 again." /></Reveal>
-          <Reveal><Callout title="Don't take a loan" body="An instruction, not a grade. The colour says it first." /></Reveal>
-        </div>
-        <Reveal className="flex justify-center"><IPhone src={A.finalScore} alt="EMI Score result" width={300} tall /></Reveal>
-        <div className="space-y-20">
-          <Reveal><Callout side="right" title="See what it means" body="All five bands, in one tap." /></Reveal>
-          <Reveal><Callout side="right" title="Real numbers, tappable" body="Savings 2% · EMI burden 90% · Credit 650." /></Reveal>
-        </div>
-      </div>
-      <Reveal>
-        <div className="mx-auto mt-16 grid max-w-[900px] grid-cols-5 overflow-hidden rounded-2xl text-center text-white">
-          {[["0–20", "Don't take a loan", RED], ["21–40", "Avoid a new loan", "#e8641a"], ["41–60", "Pay loans first", "#e8a23a"], ["61–80", "Think first", "#8dbf4e"], ["81–100", "Borrow if needed", GREEN]].map(([r, v, c]) => (
-            <div key={r} className="px-2 py-4" style={{ background: c }}>
-              <p className="text-[13px] font-semibold opacity-90">{r}</p>
-              <p className="mt-1 text-[13px] font-bold leading-tight md:text-[15px]">{v}</p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 18 · Explain ─────────────────────────────────────────── */
-
-function ExplainSection() {
-  return (
-    <Section>
-      <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto]">
-        <Reveal>
-          <Eyebrow>03 · Explaining the score</Eyebrow>
-          <Headline one="Don't read it." two="Hear it." />
-          <div className="mt-10 space-y-6">
-            {[
-              [Mic, "A voice note per factor", "In English, Hindi or Hinglish."],
-              [Eye, "One chart, one line", "Your number against the safe zone."],
-              [Sparkles, "One target", "Keep EMIs under 40%. Save 30%. Reach 750."],
-            ].map(([Icon, t, d]) => {
-              const I = Icon as typeof Mic;
-              return (
-                <div key={t as string} className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white shadow-[0_10px_24px_-16px_rgba(18,20,23,.4)]"><I className="h-6 w-6" style={{ color: ACCENT }} strokeWidth={1.6} /></span>
-                  <div>
-                    <p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>{t as string}</p>
-                    <p className="text-[16px]" style={{ color: GREY }}>{d as string}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Reveal>
-        <div className="flex items-end justify-center gap-5">
-          <Reveal><IPhone src={A.finalEmiBurden} alt="EMI burden explainer with voice" width={250} tilt={-3} /></Reveal>
-          <Reveal delay={0.1} className="hidden sm:block"><IPhone src={A.finalCredit} alt="Credit score explainer" width={220} tilt={3} /></Reveal>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ── 19 · Way out ─────────────────────────────────────────── */
-
-function WayOutSection() {
-  return (
-    <Section tint>
-      <div className="grid items-center gap-14 lg:grid-cols-[auto_minmax(0,1fr)]">
-        <Reveal className="flex justify-center"><IPhone src={A.finalOfferings} alt="Solutions page" width={290} tall /></Reveal>
-        <Reveal>
-          <Eyebrow>04 · The way out</Eyebrow>
-          <Headline one="A low score." two="A plan, not a dead end." />
-          <Lead>This is where the business goal lives. The plan uses the person's own numbers.</Lead>
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {[[Wallet, "Settlement", "Save ₹1,37,000"], [Lock, "FreedShield", "Stop recovery calls"], [Gauge, "Credit goal", "612 → 750+"]].map(([I, t, d]) => {
-              const Icon = I as typeof Wallet;
-              return (
-                <div key={t as string}>
-                  <Icon className="h-8 w-8" strokeWidth={1.5} style={{ color: NAVY }} />
-                  <p className="mt-4 text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>{t as string}</p>
-                  <p className="text-[16px]" style={{ color: GREY }}>{d as string}</p>
-                </div>
-              );
-            })}
-          </div>
-          <p className="mt-10 text-[26px]" style={{ fontFamily: HAND, color: NAVY }}>one flow, five segments: DRP · DRP-i · DCP · DCP-i · DEP</p>
-        </Reveal>
       </div>
     </Section>
   );
@@ -1015,36 +1164,170 @@ const SCATTER = [
   { src: A.v2Means, x: "64%", y: "62%", r: -7, w: 104, o: 0.6 },
 ];
 
-function Handoff() {
+/* ═══ 05 · What testing changed ═══ */
+
+function BackToPeople() {
   return (
-    <Section>
-      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+    <>
+      <Chapter n="05" title="What testing changed" signal="Iteration" />
+      <Section>
         <Reveal>
-          <Eyebrow>Refined. Locked. Ready to build.</Eyebrow>
-          <Headline one="The handoff wasn't" two="the finish line." size="md" />
-          <div className="mt-8 flex items-center gap-6 text-[17px]">
-            <div><p style={{ color: GREY }}>Design</p><p className="font-bold">Make it clear.</p></div>
-            <span style={{ color: GREY }}>⟷</span>
-            <div><p style={{ color: GREY }}>Engineering</p><p className="font-bold">Make it measurable.</p></div>
-          </div>
-          <p className="mt-12 text-[96px] font-bold leading-none tracking-[-0.05em] md:text-[120px]" style={{ fontFamily: DISPLAY, color: ACCENT }}>40+</p>
-          <p className="mt-2 text-[19px]">analytics events, from sign up to solution.</p>
-          <div className="mt-10 grid grid-cols-2 gap-8">
-            <div><p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>3 languages</p><p className="text-[15px]" style={{ color: GREY }}>Every string, every verdict.</p></div>
-            <div><p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>5 segments</p><p className="text-[15px]" style={{ color: GREY }}>Own verdict copy and solution.</p></div>
-          </div>
+          <Eyebrow>Usability testing · draft 2</Eyebrow>
+          <Headline one="Back to people." two="Not just my assumptions." />
+          <p className="mt-6 text-[17px]" style={{ color: GREY }}>22 participants <span className="mx-3 opacity-40">|</span> ~2 min each <span className="mx-3 opacity-40">|</span> In person, on the clickable prototype</p>
+          <Lead>I asked each person to complete the flow, then explain their score back to me in their own words. That second part is how I measured comprehension.</Lead>
         </Reveal>
-        <div className="relative hidden h-[620px] overflow-hidden lg:block" aria-hidden>
-          {SCATTER.map((s, i) => (
-            <img key={i} src={s.src} alt="" className="absolute rounded-2xl shadow-[0_18px_36px_-20px_rgba(18,20,23,.45)]" style={{ left: s.x, top: s.y, width: s.w, transform: `rotate(${s.r}deg)`, opacity: s.o }} />
-          ))}
+        <div className="mt-16 grid items-center gap-12 lg:grid-cols-2">
+          <Reveal className="flex items-end gap-5">
+            <Gauge className="mb-6 h-16 w-16 shrink-0" strokeWidth={1.2} style={{ color: ACCENT }} />
+            <div>
+              <p className="leading-none tracking-[-0.05em]" style={{ fontFamily: DISPLAY }}>
+                <span className="text-[120px] font-bold md:text-[150px]" style={{ color: INK }}>14</span>
+                <span className="text-[80px] font-medium md:text-[100px]" style={{ color: SOFT }}> / 22</span>
+              </p>
+              <p className="mt-3 text-[19px]" style={{ color: INK }}>told the EMI Score apart from CIBIL, without help.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="rounded-[2rem] p-8 md:p-10" style={{ background: TINT }}>
+              <p className="text-[26px] font-bold" style={{ fontFamily: DISPLAY }}>What worked</p>
+              <div className="mt-6 space-y-4">
+                {["Colour alone signalled \"this is serious\"", "The score felt \"very close to reality\"", "Ease of the journey: 3.7 / 5", "\"More sharable than a credit score\""].map((t) => (
+                  <p key={t} className="flex items-center gap-3 text-[18px]" style={{ color: GREY }}>
+                    <Check className="h-5 w-5 shrink-0" style={{ color: NAVY }} strokeWidth={2.4} /> {t}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
+      </Section>
+    </>
+  );
+}
+
+function StillMissed() {
+  const items = [
+    { n: "5", t: "still read it as a credit score.", before: A.v2Score, after: A.finalScore, fix: "A plain action label right under the number, \"out of 100\" beside it, and a speedometer that looks nothing like a CIBIL ring." },
+    { n: "Most", t: "skipped every paragraph.", before: A.v2Emiburden, after: A.finalEmiBurden, fix: "One line per factor, one chart, one target, plus a voice note in Hindi and Hinglish." },
+  ];
+  return (
+    <Section tint>
+      <Reveal>
+        <Eyebrow>Before and after testing</Eyebrow>
+        <Headline one="They got it." two="They still missed things." />
+      </Reveal>
+      <div className="mt-14 grid gap-14 lg:grid-cols-2">
+        {items.map((it, i) => (
+          <Reveal key={it.t} delay={i * 0.1}>
+            <p className="text-[26px] font-bold leading-tight md:text-[30px]" style={{ fontFamily: DISPLAY }}>
+              <span className="mr-3 text-[46px] md:text-[56px]" style={{ color: ACCENT }}>{it.n}</span>{it.t}
+            </p>
+            <div className="mt-8 flex items-center gap-4">
+              <div className="text-center grayscale">
+                <Phone src={it.before} alt="Before testing" width={150} />
+                <p className="mt-2 text-[13px]" style={{ color: GREY }}>Tested</p>
+              </div>
+              <ArrowRight className="h-6 w-6 shrink-0" style={{ color: SOFT }} />
+              <div className="text-center">
+                <Phone src={it.after} alt="After testing" width={150} />
+                <p className="mt-2 text-[13px]" style={{ color: GREY }}>Final</p>
+              </div>
+            </div>
+            <p className="mt-6 text-[18px] font-bold" style={{ color: ACCENT, fontFamily: DISPLAY }}>What I changed</p>
+            <p className="mt-1 max-w-[460px] text-[17px] leading-[1.6]" style={{ color: GREY }}>{it.fix}</p>
+          </Reveal>
+        ))}
       </div>
+      <Reveal>
+        <p className="mt-14 text-[22px]" style={{ color: GREY, fontFamily: DISPLAY }}>
+          <span className="mr-3 text-[40px] font-bold" style={{ color: ACCENT }}>1</span>
+          <span className="font-bold" style={{ color: INK }}>pause in the whole flow:</span> "what counts as expenses?" → examples now sit inside the question.
+        </p>
+        <div className="mt-10 flex items-start gap-4 rounded-2xl border border-dashed p-6" style={{ borderColor: `${NAVY}55` }}>
+          <FlaskConical className="mt-1 h-6 w-6 shrink-0" style={{ color: NAVY }} strokeWidth={1.6} />
+          <p className="text-[17px] leading-[1.6]" style={{ color: INK }}>
+            <span className="font-bold">Still unvalidated:</span> these changes went into the final design without a second round of testing. The first thing I'd re-test is whether more than 14 of 22 now tell the score apart from CIBIL.
+          </p>
+        </div>
+      </Reveal>
     </Section>
   );
 }
 
-/* ── 23 · Next ────────────────────────────────────────────── */
+/* ═══ 06 · Impact and what I'd do next ═══ */
+
+function Impact() {
+  return (
+    <>
+      <Chapter n="06" title="Impact and what I'd do next" signal="Outcome thinking" />
+      <Section>
+        <Reveal>
+          <Eyebrow>Status</Eyebrow>
+          <Headline one="Designed, tested, handed off." two="Post-launch numbers are still to come." size="md" />
+          <Lead>I'm keeping what we measured separate from what we expect, so the claims stay honest.</Lead>
+        </Reveal>
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          <Reveal>
+            <div className="h-full rounded-[1.8rem] bg-white p-7 shadow-[0_18px_40px_-28px_rgba(18,20,23,.45)] md:p-9">
+              <p className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREEN }}><ChartColumn className="h-4 w-4" /> Measured in testing</p>
+              <div className="mt-6 grid grid-cols-2 gap-6">
+                {[["14 / 22", "told it apart from CIBIL"], ["3.7 / 5", "ease of the journey"], ["~2 min", "to finish the flow"], ["5 → 2", "data-entry screens"]].map(([v, l]) => (
+                  <div key={l}>
+                    <p className="text-[34px] font-bold leading-none tracking-[-0.03em] md:text-[40px]" style={{ fontFamily: DISPLAY, color: INK }}>{v}</p>
+                    <p className="mt-2 text-[15px]" style={{ color: GREY }}>{l}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div className="h-full rounded-[1.8rem] p-7 md:p-9" style={{ background: TINT }}>
+              <p className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-[0.06em]" style={{ color: NAVY }}><Timer className="h-4 w-4" /> What I'd track after launch</p>
+              <div className="mt-6 space-y-4">
+                {[
+                  [ListChecks, "Completion rate", "Sign up to score, end to end"],
+                  [Layers, "Drop-off at financial data entry", "Salary, expenses and EMI steps"],
+                  [Brain, "Score comprehension", "Do people act in line with their band?"],
+                  [MousePointerClick, "Progression to the next step", "Taps from score to a FREED solution"],
+                ].map(([I, t, d]) => {
+                  const Icon = I as typeof Brain;
+                  return (
+                    <div key={t as string} className="flex items-start gap-3">
+                      <Icon className="mt-1 h-5 w-5 shrink-0" style={{ color: ACCENT }} strokeWidth={1.8} />
+                      <div>
+                        <p className="text-[18px] font-bold" style={{ fontFamily: DISPLAY }}>{t as string}</p>
+                        <p className="text-[15px]" style={{ color: GREY }}>{d as string}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="mt-6 text-[15px]" style={{ color: GREY }}>All four are covered by the 40+ analytics events in the handoff.</p>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+      <Section tint>
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          <Reveal>
+            <Eyebrow>My contribution</Eyebrow>
+            <Headline one="I wasn't just designing screens." two="I was helping people make a better decision." size="md" />
+            <div className="mt-8 grid grid-cols-2 gap-8">
+              <div><p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>3 languages</p><p className="text-[15px]" style={{ color: GREY }}>Every string, every outcome.</p></div>
+              <div><p className="text-[20px] font-bold" style={{ fontFamily: DISPLAY }}>5 segments</p><p className="text-[15px]" style={{ color: GREY }}>Own copy and next step.</p></div>
+            </div>
+          </Reveal>
+          <div className="relative hidden h-[560px] overflow-hidden lg:block" aria-hidden>
+            {SCATTER.map((s, i) => (
+              <img key={i} src={s.src} alt="" className="absolute rounded-2xl shadow-[0_18px_36px_-20px_rgba(18,20,23,.45)]" style={{ left: s.x, top: s.y, width: s.w, transform: `rotate(${s.r}deg)`, opacity: s.o }} />
+            ))}
+          </div>
+        </div>
+      </Section>
+    </>
+  );
+}
 
 function Next() {
   return (
@@ -1054,28 +1337,21 @@ function Next() {
           <Eyebrow>What I learned</Eyebrow>
           <Headline one="Back to users." two="Keep improving." />
           <div className="mt-10 space-y-3 text-[18px]" style={{ color: GREY }}>
-            {["Lead with the verdict.", "Plain words beat correct words.", "Trust lives in the small lines.", "Tone is design."].map((t) => (
+            {["Frame the decision before designing the screen.", "Ask only what the calculation needs.", "Plain words beat correct words.", "Trust lives in the small lines.", "Tone is design."].map((t) => (
               <p key={t} className="flex items-center gap-3"><Brain className="h-5 w-5 shrink-0" style={{ color: ACCENT }} strokeWidth={1.6} />{t}</p>
             ))}
           </div>
         </Reveal>
         <div className="space-y-12">
           {[
-            ["01", "Make it shareable.", "One tester said it's more sharable than a credit score."],
+            ["01", "Re-test comprehension.", "Validate the final score screen with a second round."],
             ["02", "Count all income.", "Side income and freelancing, not just salary."],
-            ["03", "Test again.", "Do monthly nudges turn a one-time check into a habit?"],
+            ["03", "Make it a habit.", "Do monthly nudges turn a one-time check into a routine?"],
           ].map(([n, t, d], k) => (
             <Reveal key={n} delay={k * 0.06} className="flex gap-6">
               <span className="pt-2 text-[17px]" style={{ color: "#3b6fd8" }}>{n}</span>
               <div>
-                <p className="flex items-center gap-3 text-[26px] font-bold tracking-[-0.02em]" style={{ fontFamily: DISPLAY }}>
-                  {t}
-                  {n === "03" && (
-                    <svg width="56" height="34" viewBox="0 0 56 34" fill="none" aria-hidden>
-                      <path d="M10 10 C 30 -4, 54 10, 44 24 C 36 34, 16 30, 12 22 M10 10 l10 -2 M10 10 l3 9" stroke="#3b6fd8" strokeWidth="1.6" strokeLinecap="round" />
-                    </svg>
-                  )}
-                </p>
+                <p className="text-[26px] font-bold tracking-[-0.02em]" style={{ fontFamily: DISPLAY }}>{t}</p>
                 <p className="mt-2 text-[17px]" style={{ color: GREY }}>{d}</p>
               </div>
             </Reveal>
