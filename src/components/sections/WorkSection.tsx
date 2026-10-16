@@ -27,7 +27,7 @@ const PROJECTS: Project[] = [
     title: "EMI Score: should I take another loan?",
     tags: ["Mobile App", "0 to 1", "Vernacular UX"],
     blurb:
-      "How 22 borrower interviews turned a confusing score into one clear answer: take the loan, or don't.",
+      "How three numbers from a borrower's month became a clear answer to \"can I afford one more loan?\"",
     image: emiScoreCardPreview,
     href: "/case-studies/emi-score",
     stats: [
