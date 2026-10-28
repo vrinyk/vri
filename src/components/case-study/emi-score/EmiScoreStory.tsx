@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import {
   ArrowDown, ArrowLeft, ArrowRight, BadgeCheck, Brain, CalendarClock, ChartColumn, Check, Code2, CreditCard, Eye,
@@ -151,13 +151,15 @@ export default function EmiScoreStory() {
   return (
     <main style={{ background: PAPER, fontFamily: BODY, color: INK }} className="overflow-x-clip">
       <Hero />
-      <Glimpse />
+      <AtAGlance />
+      <ChapterNav />
       {/* 01 · The problem worth solving */}
       <Problem />
       <WhyItHappens />
       <TwoScores />
       <WhoItServes />
       <HowItWorks />
+      <FlowMap />
       <MyPart />
       <DesignProcess />
       {/* 02 · Research and judgment */}
@@ -175,7 +177,7 @@ export default function EmiScoreStory() {
       <ExplainSection />
       <TooHappy />
       <WayOutSection />
-      <FinalCarousel />
+      <Walkthrough />
       {/* 05 · What testing changed */}
       <BackToPeople />
       <StillMissed />
@@ -190,7 +192,7 @@ export default function EmiScoreStory() {
 
 /** Numbered chapter marker that opens each of the six parts. */
 const Chapter = ({ n, title, signal }: { n: string; title: string; signal: string }) => (
-  <section className="px-5 pt-24 md:px-10 md:pt-32">
+  <section id={`ch-${n}`} className="scroll-mt-6 px-5 pt-24 md:px-10 md:pt-32">
     <Reveal className="mx-auto flex w-full max-w-[1180px] flex-wrap items-end justify-between gap-4 border-b border-[#e3e5e9] pb-6">
       <div className="flex items-baseline gap-5">
         <span className="text-[56px] font-bold leading-none tracking-[-0.05em] md:text-[84px]" style={{ fontFamily: DISPLAY, color: ACCENT }}>{n}</span>
@@ -252,21 +254,129 @@ function Hero() {
   );
 }
 
-/* ── Glimpse ──────────────────────────────────────────────── */
+/* ── At a glance: the whole case study in four boxes ─────── */
 
-function Glimpse() {
+function AtAGlance() {
+  const rows: [string, string, string][] = [
+    ["Problem", "Borrowers take loans they can't afford. Credit scores only show past repayment.", "01"],
+    ["Users", "Salaried borrowers in tier 2–3 cities, already paying EMIs.", "02"],
+    ["Solution", "3 numbers in → a score, its 3 factors, and a clear next step.", "04"],
+    ["Outcome", "14 of 22 told it apart from CIBIL. Handed off with 40+ events.", "06"],
+  ];
   return (
-    <Section className="!pt-10">
+    <Section className="!pt-4">
       <Reveal>
-        <Headline one="Your next loan," two="checked against your real budget." center />
+        <Eyebrow>At a glance</Eyebrow>
       </Reveal>
-      <div className="mt-14 flex flex-wrap items-end justify-center gap-8 md:gap-16">
-        <Reveal><IPhone src={A.finalSignup} alt="Introducing EMI Score" width={250} tilt={-3} /></Reveal>
-        <Reveal delay={0.1}><IPhone src={A.finalScore} alt="EMI Score result" width={280} tall /></Reveal>
-        <Reveal delay={0.2}><IPhone src={A.finalEmiBurden} alt="EMI burden explained with voice" width={250} tilt={3} /></Reveal>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {rows.map(([k, v, ch], i) => (
+          <Reveal key={k} delay={i * 0.05}>
+            <a href={`#ch-${ch}`} className="group flex h-full flex-col rounded-[1.5rem] p-6 transition-colors" style={{ background: TINT }}>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.08em]" style={{ color: ACCENT }}>{k}</p>
+              <p className="mt-3 flex-1 text-[18px] font-semibold leading-snug" style={{ fontFamily: DISPLAY, color: INK }}>{v}</p>
+              <p className="mt-4 text-[13px] font-semibold" style={{ color: GREY }}>See part {ch} →</p>
+            </a>
+          </Reveal>
+        ))}
       </div>
-      <div className="mt-10 flex justify-center">
-        <Note dir="down-left">a glimpse now. the whole story below.</Note>
+    </Section>
+  );
+}
+
+/* ── Chapter nav: the six parts, so a reader always knows where they are ── */
+
+const CHAPTERS: [string, string][] = [
+  ["01", "Problem"], ["02", "Research"], ["03", "Decisions"], ["04", "Score experience"], ["05", "Testing"], ["06", "Impact"],
+];
+
+function ChapterNav() {
+  return (
+    <nav className="sticky top-0 z-30 border-y border-[#eceef1] px-5 md:px-10" style={{ background: `${PAPER}f2`, backdropFilter: "blur(8px)" }}>
+      <div className="hide-scrollbar mx-auto flex w-full max-w-[1180px] gap-6 overflow-x-auto py-3">
+        {CHAPTERS.map(([n, t]) => (
+          <a key={n} href={`#ch-${n}`} className="flex shrink-0 items-baseline gap-2 text-[15px] font-semibold" style={{ color: INK, fontFamily: DISPLAY }}>
+            <span style={{ color: ACCENT }}>{n}</span>{t}
+          </a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+/* ── Flow map: the whole journey in one row, before the details ── */
+
+const STAGES = [
+  { k: "Trust", src: A.finalSignup, t: "Intro + sign up" },
+  { k: "Verify", src: A.finalOtp, t: "OTP" },
+  { k: "Input", src: A.finalIncome, t: "Salary" },
+  { k: "Input", src: A.finalExpenses, t: "Expenses + EMIs" },
+  { k: "Wait", src: A.finalLoader, t: "Calculating" },
+  { k: "Score", src: A.finalScore, t: "EMI Score" },
+  { k: "Understand", src: A.finalEmiBurden, t: "Factor detail" },
+  { k: "Act", src: A.finalOfferings, t: "Next step" },
+];
+
+function FlowMap() {
+  return (
+    <Section tint>
+      <Reveal>
+        <Eyebrow>User flow</Eyebrow>
+        <Headline one="The whole journey," two="in eight screens." />
+      </Reveal>
+      <div className="hide-scrollbar -mx-5 mt-12 overflow-x-auto px-5 pb-4">
+        <div className="flex w-max items-start">
+          {STAGES.map((st, i) => (
+            <div key={st.t} className="flex items-start">
+              <div className="flex w-[132px] flex-col items-center text-center">
+                <span className="mb-3 rounded-full px-3 py-1 text-[12px] font-semibold" style={{ background: "#fff", color: NAVY }}>{st.k}</span>
+                <Phone src={st.src} alt={st.t} width={118} />
+                <p className="mt-3 text-[14px] font-semibold" style={{ fontFamily: DISPLAY }}>{i + 1}. {st.t}</p>
+              </div>
+              {i < STAGES.length - 1 && <Arrow className="mx-1 mt-[150px]" />}
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="mt-4 text-[24px]" style={{ fontFamily: HAND, color: NAVY }}>each screen, explained in part 04 →</p>
+    </Section>
+  );
+}
+
+/* ── Walkthrough: every final screen, what the user does and why ── */
+
+const STEPS = [
+  { src: A.finalSignup, t: "Intro + sign up", does: "Sees a low and a high score example, then enters name and number.", why: "Shows the outcome before asking for anything. Builds trust and sets expectations.", tag: "Trust signals" },
+  { src: A.finalOtp, t: "OTP verification", does: "Verifies the phone number.", why: "Lets us fetch the credit report. \"No impact on credit score\" removes the main fear.", tag: "Reassurance" },
+  { src: A.finalIncome, t: "Monthly in-hand salary", does: "Types one round number.", why: "One question per screen. Round numbers lower effort.", tag: "Chunking" },
+  { src: A.finalExpenses, t: "Expenses + EMIs", does: "Enters monthly EMIs and expenses.", why: "Examples sit inside the question, so nobody stops to ask what counts.", tag: "Reduce cognitive load" },
+  { src: A.finalLoader, t: "Calculating", does: "Waits a few seconds.", why: "The loader names each factor being checked, so the score feels earned, not random.", tag: "Perceived effort" },
+  { src: A.finalScore, t: "EMI Score", does: "Sees 29/100, \"Don't take a loan\", and three factors.", why: "Score, meaning, reasons, next step, in that order. Colour signals severity first.", tag: "Information hierarchy", tall: true },
+  { src: A.finalEmiBurden, t: "Factor detail", does: "Taps EMI burden; reads one line or plays the voice note.", why: "Detail only on demand. Voice in Hindi and Hinglish beats paragraphs.", tag: "Progressive disclosure" },
+  { src: A.finalOfferings, t: "Next step", does: "Sees a FREED plan built from their own numbers.", why: "A low score ends with a way out, not a dead end. This is the business goal.", tag: "Clear call to action", tall: true },
+];
+
+function Walkthrough() {
+  return (
+    <Section>
+      <Reveal>
+        <Eyebrow>The final flow · screen by screen</Eyebrow>
+        <Headline one="What the user does." two="Why it's designed that way." />
+      </Reveal>
+      <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-2">
+        {STEPS.map((st, i) => (
+          <Reveal key={st.t} delay={(i % 2) * 0.06} className="flex gap-5">
+            <div className="shrink-0"><Phone src={st.src} alt={st.t} width={150} tall={st.tall} /></div>
+            <div className="pt-1">
+              <p className="text-[14px] font-semibold" style={{ color: ACCENT }}>Step {i + 1}</p>
+              <p className="mt-1 text-[22px] font-bold leading-tight tracking-[-0.02em]" style={{ fontFamily: DISPLAY }}>{st.t}</p>
+              <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>User</p>
+              <p className="mt-1 text-[16px] leading-snug" style={{ color: INK }}>{st.does}</p>
+              <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.06em]" style={{ color: GREY }}>Why</p>
+              <p className="mt-1 text-[16px] leading-snug" style={{ color: INK }}>{st.why}</p>
+              <span className="mt-3 inline-block"><Principle>{st.tag}</Principle></span>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </Section>
   );
@@ -1055,59 +1165,7 @@ function GreyRow({ label, items, width = 130 }: { label: string; items: { src: s
   );
 }
 
-/* ── 15 · Final carousel ──────────────────────────────────── */
-
-const FINAL = [
-  { src: A.finalSignup, cap: "Both outcomes, before any ask." },
-  { src: A.finalOtp, cap: "Verified with Experian." },
-  { src: A.finalIncome, cap: "One round number." },
-  { src: A.finalExpenses, cap: "Examples inside the question." },
-  { src: A.finalLoader, cap: "The wait does a job." },
-  { src: A.finalScore, cap: "Score, meaning, three factors.", tall: true },
-  { src: A.finalMeans, cap: "All five bands, one tap." },
-  { src: A.finalEmiBurden, cap: "Hear it in your language." },
-  { src: A.finalOfferings, cap: "A plan, not a dead end.", tall: true },
-];
-
-function FinalCarousel() {
-  const ref = useRef<HTMLDivElement>(null);
-  const go = (d: number) => ref.current?.scrollBy({ left: d * 340, behavior: "smooth" });
-  return (
-    <Section>
-      <Reveal>
-        <p className="text-center text-[14px] font-semibold uppercase tracking-[0.08em]" style={{ color: GREY }}>The complete experience</p>
-        <h2 className="mt-4 text-center text-[2.6rem] font-bold tracking-[-0.04em] md:text-[4.6rem]" style={{ fontFamily: DISPLAY }}>The final EMI Score.</h2>
-      </Reveal>
-      <div className="mt-12 flex items-center justify-between">
-        <p className="flex items-center gap-3 text-[19px]" style={{ color: GREY }}>Scroll through the journey <ArrowRight className="h-5 w-5" /></p>
-        <div className="flex gap-3">
-          <button type="button" aria-label="Previous" onClick={() => go(-1)} className="flex h-14 w-14 items-center justify-center rounded-full border" style={{ borderColor: "#d8dbe0" }}><ArrowLeft className="h-5 w-5" /></button>
-          <button type="button" aria-label="Next" onClick={() => go(1)} className="flex h-14 w-14 items-center justify-center rounded-full border" style={{ borderColor: INK }}><ArrowRight className="h-5 w-5" /></button>
-        </div>
-      </div>
-      <div ref={ref} className="hide-scrollbar -mx-5 mt-10 snap-x overflow-x-auto px-5 pb-6">
-        <div className="flex w-max items-start gap-2">
-          {FINAL.map((f, i) => (
-            <div key={f.cap} className="flex snap-start items-start">
-              <div className="flex w-[260px] flex-col items-center">
-                <IPhone src={f.src} alt={f.cap} width={250} tall={f.tall} />
-                <p className="mt-6 max-w-[230px] rounded-2xl px-5 py-4 text-[17px] leading-snug" style={{ background: TINT, color: GREY }}>{f.cap}</p>
-              </div>
-              {i < FINAL.length - 1 && (
-                <span className="mx-3 mt-[250px] flex items-center" aria-hidden>
-                  <span className="h-2 w-2 rounded-full border" style={{ borderColor: SOFT }} />
-                  <Arrow />
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ── 20 · Motion ──────────────────────────────────────────── */
+/* ── Motion: the tested prototype ─────────────────────────── */
 
 const PROTOS = [
   { label: "Tested prototype", src: "/emi-score/prototype.html" },
